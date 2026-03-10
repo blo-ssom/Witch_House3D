@@ -5,7 +5,7 @@ public class PlayerMove : MonoBehaviour
 {
     [Header("Move Settings")]
     public float walkSpeed = 3f;
-    public float runSpeed = 5.5f;
+    public float runSpeed = 3.2f;
     public float gravity = -9.81f;
 
     private CharacterController controller;
