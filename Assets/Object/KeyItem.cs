@@ -2,16 +2,21 @@ using UnityEngine;
 
 public class KeyItem : Interactable
 {
-    public override string GetInteractPrompt()
-    {
-        return "E : 열쇠 줍기";
-    }
+    public KeyType keyType;
 
     public override void Interact(PlayerInventory playerInventory)
     {
+        
         if (playerInventory == null) return;
 
-        playerInventory.GetKey();
+        playerInventory.AddKey(keyType);
+    // 추가: 방3 열쇠 획득 시 샹들리에 이벤트 발동
+        if (keyType == KeyType.Room3)
+        {
+            var chandelier = FindObjectOfType<ChandelierEvent>();
+            if (chandelier != null) chandelier.TriggerEvent();
+        }
+
         Destroy(gameObject);
     }
 }

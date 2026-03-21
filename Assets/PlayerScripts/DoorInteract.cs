@@ -8,7 +8,9 @@ public class DoorInteract : Interactable
     public Transform doorPivot;
     public float openAngle = 90f;
     public float openSpeed = 2f;
+
     public bool isLocked = true;
+    public KeyType requiredKey = KeyType.None;   // 추가
 
     private bool isOpen = false;
     private Quaternion closedRotation;
@@ -41,14 +43,14 @@ public class DoorInteract : Interactable
     {
         if (isLocked)
         {
-            if (playerInventory != null && playerInventory.hasKey)
+            if (playerInventory != null && playerInventory.HasKey(requiredKey))
             {
                 isLocked = false;
                 OpenDoor();
             }
             else
             {
-                Debug.Log("문이 잠겨 있다.");
+                Debug.Log($"{requiredKey} 열쇠가 필요하다.");
             }
 
             return;

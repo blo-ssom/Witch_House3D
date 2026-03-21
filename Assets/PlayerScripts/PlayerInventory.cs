@@ -1,12 +1,22 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 public class PlayerInventory : MonoBehaviour
 {
-    public bool hasKey = false;
+    private HashSet<KeyType> ownedKeys = new HashSet<KeyType>();
 
-    public void GetKey()
+    public void AddKey(KeyType keyType)
     {
-        hasKey = true;
-        Debug.Log("열쇠를 획득했다.");
+        if (keyType == KeyType.None) return;
+
+        ownedKeys.Add(keyType);
+        Debug.Log($"{keyType} 열쇠 획득");
     }
+
+    public bool HasKey(KeyType keyType)
+    {
+        if (keyType == KeyType.None)
+            return true;
+
+        return ownedKeys.Contains(keyType);
+    } 
 }
