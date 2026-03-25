@@ -109,6 +109,9 @@ public class GhostChase : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
+        if (GameOverManager.Instance != null){
+        GameOverManager.Instance.ShowGameOver();
+        }
         // 게임오버 UI 표시
         if (gameOverUI != null)
             gameOverUI.SetActive(true);
