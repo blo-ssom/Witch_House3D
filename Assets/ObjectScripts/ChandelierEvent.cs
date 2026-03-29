@@ -73,8 +73,6 @@ public class ChandelierEvent : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         // 1. 충격음
-        if (audioSource != null && crashSound != null)
-            audioSource.PlayOneShot(crashSound);
 
         // 2. 카메라 흔들기
         if (cameraShake != null)
@@ -133,6 +131,11 @@ public class ChandelierEvent : MonoBehaviour
             chandelierObject.transform.position = Vector3.Lerp(startPos, endPos, t);
             yield return null;
         }
+        if (audioSource != null && crashSound != null)
+        {
+            audioSource.PlayOneShot(crashSound);
+        }
+            
         chandelierObject.transform.position = endPos;
     }
 
