@@ -7,5 +7,6 @@ using UnityEngine;
         Room3,
         PathToRoom2,
         Room2,
-        MainHall
+        MainHall,
+        Floor2
     }
