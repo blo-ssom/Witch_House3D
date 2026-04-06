@@ -227,27 +227,40 @@ A가 살아있다고 생각한 주인공은 편지에 적힌 장소로 향한다
 - [x] 바닥 꺼짐 → 지하 씬 전환 (FloorBreakTrigger)
 - [x] URP 포스트 프로세싱
 - [x] 1층 복도 PBR 텍스처 적용
+- [x] 2층 친구의 방 귀신 이벤트 (Floor2GhostEvent)
+- [x] 지하 2차 추격 트리거 (UndergroundChaseEvent + AltarInteractable)
+- [x] 현관 탈출 트리거 (EscapeTrigger)
+- [x] 시작 화면 인트로 연출 (IntroSequence)
+- [x] 엔딩 편지 변화 연출 (EndingSequence)
 
 ---
 
 ## 7. 다음 작업 순서
 
 ### 1순위 (기능 완성)
-- [ ] 친구의 방 이벤트 트리거 구현
+- [x] 친구의 방 이벤트 트리거 구현 (Floor2GhostEvent)
   - 노트 + 열쇠 획득 시 문 잠금
   - 거울 귀신 서서히 등장 연출
-  - 반대편 문 자동 개방
+  - ~~반대편 문 자동 개방~~ (보류)
   - GhostChase.StartChase() 호출
-- [ ] 지하 씬 2차 추격 트리거
-- [ ] 현관 탈출 엔딩 구현
-- [ ] 시작 화면 (편지 연출)
-- [ ] 엔딩 화면 (편지 변화 연출)
+- [x] 지하 씬 2차 추격 트리거 (UndergroundChaseEvent)
+- [x] 현관 탈출 엔딩 구현 (EscapeTrigger)
+- [x] 시작 화면 (편지 연출) (IntroSequence)
+- [x] 엔딩 화면 (편지 변화 연출) (EndingSequence)
 
 ### 2순위 (분위기)
 - [ ] 전체 텍스처 적용 (벽지, 바닥, 천장)
 - [ ] 각 방 조명 세팅
 - [ ] URP 포스트 프로세싱 전체 적용
 - [ ] 사운드 추가 (앰비언스, 상호작용음, 추격 BGM)
+- [ ] Lock Your Door 스타일 분위기 작업 (Claude 코드 도움 가능)
+  - [ ] SSAO 강화 (PC_Renderer.asset Intensity 1.0+, Radius 0.5+)
+  - [ ] 손전등 시스템 스크립트
+  - [ ] 분위기 설정 스크립트 (런타임 Fog + Ambient Light)
+  - [ ] Ambient Light 거의 검정 (#050505) — 에디터
+  - [ ] Point Light 각 방 배치 (낮은 Intensity, 주황색) — 에디터
+  - [ ] Post-Processing: 낮은 Exposure, 높은 Contrast, Vignette — 에디터
+  - [ ] 짧은 거리 어두운 Fog — 에디터
 
 ### 3순위 (마감)
 - [ ] NavMesh Link 계단 연결 확인
