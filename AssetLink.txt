@@ -1,0 +1,40 @@
+Unity Asset Store
+  - https://assetstore.unity.com/packages/3d/props/interior/house-interior-free-258782 — 실내 가구 프롭, 깔끔한 퀄리티
+  - https://assetstore.unity.com/packages/3d/props/interior/house-structure-staircase-121137 — 계단 에셋, 딱 필요한 거
+  - https://assetstore.unity.com/packages/3d/environments/pbr-hospital-horror-pack-free-80117/reviews — PBR 호러 환경,
+  분위기 참고용으로도 좋음
+  - https://assetstore.unity.com/packages/3d/props/furniture/low-poly-simple-furniture-free-240197 — 간단한 가구 세트
+  - https://assetstore.unity.com/packages/3d/props/furniture/furniture-free-low-poly-3d-models-pack-260522 — 가구 모델
+  팩
+  - https://assetstore.unity.com/packages/3d/environments/old-house-medieval-props-120370 — 오래된 집 + 소품
+
+  itch.io
+  - https://itch.io/game-assets/free/tag-3d/tag-horror — 무료 3D 호러 에셋 모음
+  - https://itch.io/game-assets/free/tag-horror/tag-unity — Unity 호환 호러 에셋
+
+  호러 인테리어 (유료지만 추천)
+
+  - https://assetstore.unity.com/packages/3d/props/interior/horror-house-low-poly-modular-pack-234574 — 호러 하우스
+  모듈러
+  - https://assetstore.unity.com/packages/3d/environments/horror-mansion-interior-modular-pack-164773 — 맨션 인테리어,
+  프로젝트 컨셉에 가장 잘 맞음
+  - https://assetstore.unity.com/packages/3d/props/interior/horror-environment-pack-75750 — 호러 환경 전반
+
+  사운드 (무료)
+
+  - https://assetstore.unity.com/packages/audio/music/free-horror-ambience-2-215651 — 호러 앰비언스 무료
+  - https://assetstore.unity.com/packages/audio/music/horror-chase-ambience-music-210570 — 추격 BGM + 앰비언스, 딱
+  필요한 거
+  -
+  https://assetstore.unity.com/packages/audio/sound-fx/40-horror-ambience-sounds-sfx-pack-scary-creepy-ambiences-244342
+  — 공포 효과음 40개+
+  - https://www.fesliyanstudios.com/royalty-free-music/downloads-c/scary-horror-music/8 — 로열티 프리 호러 BGM
+  (웹사이트)
+  - https://soundcloud.com/dhsfx/sets/unnerving-ambient-sounds — 불안한 앰비언트 사운드
+
+
+
+-------------------------------------------------------
+https://foxdevart.itch.io/victorian-study-3d-asset-pack
+
+https://sketchfab.com/3d-models/ringu-sadako-1d0b8fbe870b4ddb9f3237fab956e0a9 - 유령
