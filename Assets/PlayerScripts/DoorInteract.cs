@@ -25,7 +25,6 @@ public class DoorInteract : Interactable
             audioSource = GetComponent<AudioSource>();
 
         closedRotation = doorPivot.localRotation;
-        openedRotation = closedRotation * Quaternion.Euler(0f, openAngle, 0f);
     }
 
     private void Update()
@@ -46,7 +45,7 @@ public class DoorInteract : Interactable
             if (playerInventory != null && playerInventory.HasKey(requiredKey))
             {
                 isLocked = false;
-                OpenDoor();
+                OpenDoor(playerInventory);
             }
             else
             {
@@ -59,11 +58,22 @@ public class DoorInteract : Interactable
         if (isOpen)
             CloseDoor();
         else
-            OpenDoor();
+            OpenDoor(playerInventory);
     }
 
-    private void OpenDoor()
+    private void OpenDoor(PlayerInventory playerInventory)
     {
+        // 플레이어가 문의 앞쪽에 있으면 앞으로, 뒤쪽에 있으면 뒤로 열림
+        Transform playerTransform = playerInventory != null
+            ? playerInventory.transform
+            : Camera.main.transform;
+
+        Vector3 toDoor = doorPivot.position - playerTransform.position;
+        float dot = Vector3.Dot(doorPivot.forward, toDoor);
+        float direction = dot > 0f ? 1f : -1f;
+
+        openedRotation = closedRotation * Quaternion.Euler(0f, openAngle * direction, 0f);
+
         isOpen = true;
         Debug.Log("문 열기 실행");
 
