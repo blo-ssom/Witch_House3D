@@ -1,0 +1,35 @@
+{
+  "Textures": {
+    "T_DoorA_BC": "/Game/ClassicMansion/Textures/T_DoorA_BC.T_DoorA_BC",
+    "T_DoorA_M": "/Game/ClassicMansion/Textures/T_DoorA_M.T_DoorA_M",
+    "T_DoorA_N": "/Game/ClassicMansion/Textures/T_DoorA_N.T_DoorA_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_DoorA_N.T_DoorA_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {
+      "ExponentIn": 5.0,
+      "B": 0.7,
+      "EmissiveMultiplier": 5.0,
+      "EnableFresnel": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "bUsedWithSkeletalMesh": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "54387625-4719C190-7421C6BE-5DD7E5BE",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

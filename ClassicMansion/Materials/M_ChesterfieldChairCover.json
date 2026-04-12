@@ -1,0 +1,31 @@
+{
+  "Textures": {
+    "T_Cloth_BC": "/Game/ClassicMansion/Textures/T_Cloth_BC.T_Cloth_BC",
+    "T_ChesterfieldChairCover_N": "/Game/ClassicMansion/Textures/T_ChesterfieldChairCover_N.T_ChesterfieldChairCover_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_ChesterfieldChairCover_N.T_ChesterfieldChairCover_N"
+  },
+  "Parameters": {
+    "BlendMode": 1,
+    "ShadingModel": 2,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "ShadingModels": {
+        "ShadingModelField": 4
+      },
+      "TwoSided": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "StateId": "AE90BAF5-A34451A7-8E07E188-BF9B734B",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

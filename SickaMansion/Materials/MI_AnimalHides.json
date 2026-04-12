@@ -1,0 +1,38 @@
+{
+  "Textures": {
+    "PM_Diffuse": "/Game/SickaMansion/Textures/T_AnimalHide_BaseColor.T_AnimalHide_BaseColor",
+    "BaseColor": "/Game/SickaMansion/Textures/T_AnimalHide_BaseColor.T_AnimalHide_BaseColor",
+    "PM_Normals": "/Game/SickaMansion/Textures/T_AnimalHide_Normal.T_AnimalHide_Normal",
+    "Normal": "/Game/SickaMansion/Textures/T_AnimalHide_Normal.T_AnimalHide_Normal",
+    "PM_SpecularMasks": "/Game/SickaMansion/Textures/T_AnimalHide_ORM.T_AnimalHide_ORM",
+    "ORM": "/Game/SickaMansion/Textures/T_AnimalHide_ORM.T_AnimalHide_ORM"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {
+      "FurrNormal Intensity": 1.8,
+      "FurrTile": 32.0,
+      "Normal Intensity": 0.35,
+      "Roughness MIN": 0.6,
+      "RefractionDepthBias": 0.0
+    },
+    "Switches": {
+      "FurrNormal ?": true
+    },
+    "Properties": {
+      "bHasStaticPermutationResource": true,
+      "BasePropertyOverrides": {
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": true,
+    "HasTopNormals": true,
+    "HasTopSpecularMasks": true,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "Textures": {
+    "BlendFunc_DefBlend": "/Engine/EngineMaterials/BlendFunc_DefBlend.BlendFunc_DefBlend",
+    "BlendFunc_DefBase": "/Engine/EngineMaterials/BlendFunc_DefBase.BlendFunc_DefBase",
+    "T_Glass_M": "/Game/ClassicMansion/Textures/T_Glass_M.T_Glass_M",
+    "T_Grunge_BC": "/Game/ClassicMansion/Textures/T_Grunge_BC.T_Grunge_BC"
+  },
+  "Parameters": {
+    "BlendMode": 2,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bScreenSpaceReflections": true,
+      "TranslucencyLightingMode": "ETranslucencyLightingMode::TLM_Surface",
+      "bUsedWithSkeletalMesh": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsesDistortion": true,
+      "bRootNodeOverridesDefaultDistortion": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "RefractionMethod": "ERefractionMode::RM_IndexOfRefraction",
+      "StateId": "B79F0D96-483E805C-468438A8-6B7253F7",
+      "bIncludedInBaseGame": true,
+      "LightmassSettings": {
+        "DiffuseBoost": 0.0
+      }
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": true,
+    "IsNull": false
+  }
+}

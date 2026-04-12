@@ -1,0 +1,29 @@
+{
+  "Textures": {
+    "T_Chair_BC": "/Game/ClassicMansion/Textures/T_Chair_BC.T_Chair_BC",
+    "T_Chair_N": "/Game/ClassicMansion/Textures/T_Chair_N.T_Chair_N",
+    "T_Chair_R": "/Game/ClassicMansion/Textures/T_Chair_R.T_Chair_R",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Chair_N.T_Chair_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "B8441BB9-A77AD75D-159A21B9-390B7CC9",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

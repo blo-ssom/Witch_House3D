@@ -1,0 +1,30 @@
+{
+  "Textures": {
+    "T_Sack_BC": "/Game/ClassicMansion/Textures/T_Sack_BC.T_Sack_BC",
+    "T_Sack_R": "/Game/ClassicMansion/Textures/T_Sack_R.T_Sack_R",
+    "T_Sack_N": "/Game/ClassicMansion/Textures/T_Sack_N.T_Sack_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Sack_N.T_Sack_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "TwoSided": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "6769C455-ACAD51EF-3B2AB798-2EEE7FE0",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

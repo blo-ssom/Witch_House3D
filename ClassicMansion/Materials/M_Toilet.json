@@ -1,0 +1,28 @@
+{
+  "Textures": {
+    "T_Toilet_BC": "/Game/ClassicMansion/Textures/T_Toilet_BC.T_Toilet_BC",
+    "T_Toilet_M": "/Game/ClassicMansion/Textures/T_Toilet_M.T_Toilet_M",
+    "T_Toilet_N": "/Game/ClassicMansion/Textures/T_Toilet_N.T_Toilet_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Toilet_N.T_Toilet_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "266B4E79-ACBA24FC-17EDF7BF-FFDCADBB",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "Textures": {
+    "T_Swords_BC": "/Game/ClassicMansion/Textures/T_Swords_BC.T_Swords_BC",
+    "T_Swords_M": "/Game/ClassicMansion/Textures/T_Swords_M.T_Swords_M",
+    "T_Swords_N": "/Game/ClassicMansion/Textures/T_Swords_N.T_Swords_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Swords_N.T_Swords_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "94CBE09F-A4F530EA-74DE5DAA-5A79AB1B",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

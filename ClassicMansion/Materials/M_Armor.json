@@ -1,0 +1,29 @@
+{
+  "Textures": {
+    "T_Armor_BC": "/Game/ClassicMansion/Textures/T_Armor_BC.T_Armor_BC",
+    "T_Armor_M": "/Game/ClassicMansion/Textures/T_Armor_M.T_Armor_M",
+    "T_Armor_N": "/Game/ClassicMansion/Textures/T_Armor_N.T_Armor_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Armor_N.T_Armor_N",
+    "PM_SpecularMasks": "/Game/ClassicMansion/Textures/T_Armor_M.T_Armor_M"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "8977C299-A55B2D57-C7E76B97-DDB92D19",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

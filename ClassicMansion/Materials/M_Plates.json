@@ -1,0 +1,26 @@
+{
+  "Textures": {
+    "T_Plates_BC": "/Game/ClassicMansion/Textures/T_Plates_BC.T_Plates_BC",
+    "T_Plates_R": "/Game/ClassicMansion/Textures/T_Plates_R.T_Plates_R"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "72C224CD-A84B5177-10244190-2EDB7FC2",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

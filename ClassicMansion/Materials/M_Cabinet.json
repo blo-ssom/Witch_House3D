@@ -1,0 +1,29 @@
+{
+  "Textures": {
+    "T_Cabinet_BC": "/Game/ClassicMansion/Textures/T_Cabinet_BC.T_Cabinet_BC",
+    "T_Cabinet_M": "/Game/ClassicMansion/Textures/T_Cabinet_M.T_Cabinet_M",
+    "T_Cabinet_N": "/Game/ClassicMansion/Textures/T_Cabinet_N.T_Cabinet_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Cabinet_N.T_Cabinet_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "2C76F0C8-AEB54DDF-C1047D88-596FFBCD",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

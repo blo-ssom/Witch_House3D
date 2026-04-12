@@ -1,0 +1,31 @@
+{
+  "Textures": {
+    "T_WineBottles_BC": "/Game/ClassicMansion/Textures/T_WineBottles_BC.T_WineBottles_BC",
+    "T_WineBottles_M": "/Game/ClassicMansion/Textures/T_WineBottles_M.T_WineBottles_M",
+    "T_WineBottles_N": "/Game/ClassicMansion/Textures/T_WineBottles_N.T_WineBottles_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_WineBottles_N.T_WineBottles_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 2,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "ShadingModels": {
+        "ShadingModelField": 4
+      },
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "7A618291-AC95A5CF-420C68BC-D8F01BCA",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

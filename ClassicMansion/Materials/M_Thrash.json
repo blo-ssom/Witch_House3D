@@ -1,0 +1,28 @@
+{
+  "Textures": {
+    "T_Thrash_BC": "/Game/ClassicMansion/Textures/T_Thrash_BC.T_Thrash_BC",
+    "T_Thrash_N": "/Game/ClassicMansion/Textures/T_Thrash_N.T_Thrash_N",
+    "T_Thrash_R": "/Game/ClassicMansion/Textures/T_Thrash_R.T_Thrash_R",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Thrash_N.T_Thrash_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "D92E99B9-A75907F6-A988ADB8-E5E0089E",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

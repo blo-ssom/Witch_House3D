@@ -1,0 +1,28 @@
+{
+  "Textures": {
+    "T_Switch_BC": "/Game/ClassicMansion/Textures/T_Switch_BC.T_Switch_BC",
+    "T_Switch_M": "/Game/ClassicMansion/Textures/T_Switch_M.T_Switch_M",
+    "T_Switch_N": "/Game/ClassicMansion/Textures/T_Switch_N.T_Switch_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Switch_N.T_Switch_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "18E7F8A2-A8D50CFA-8FB683B3-39147B35",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

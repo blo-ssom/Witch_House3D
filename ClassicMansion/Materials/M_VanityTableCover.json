@@ -1,0 +1,30 @@
+{
+  "Textures": {
+    "T_Cloth_BC": "/Game/ClassicMansion/Textures/T_Cloth_BC.T_Cloth_BC",
+    "T_VanityTableCover_N": "/Game/ClassicMansion/Textures/T_VanityTableCover_N.T_VanityTableCover_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_VanityTableCover_N.T_VanityTableCover_N"
+  },
+  "Parameters": {
+    "BlendMode": 1,
+    "ShadingModel": 6,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "ShadingModels": {
+        "ShadingModelField": 64
+      },
+      "TwoSided": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "StateId": "AB8C71DA-A00ECB7A-4A8EB88B-73380071",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

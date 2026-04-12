@@ -1,0 +1,28 @@
+{
+  "Textures": {
+    "T_CupboardB_BC": "/Game/ClassicMansion/Textures/T_CupboardB_BC.T_CupboardB_BC",
+    "T_CupboardB_M": "/Game/ClassicMansion/Textures/T_CupboardB_M.T_CupboardB_M",
+    "T_CupboardB_N": "/Game/ClassicMansion/Textures/T_CupboardB_N.T_CupboardB_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_CupboardB_N.T_CupboardB_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "BC21BFCE-A9A97272-61BB4580-81BB3A5D",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

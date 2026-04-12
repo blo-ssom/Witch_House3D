@@ -1,0 +1,35 @@
+{
+  "Textures": {
+    "PM_Diffuse": "/Game/SickaMansion/Textures/T_DinnerWareSet_BaseColor.T_DinnerWareSet_BaseColor",
+    "BaseColor": "/Game/SickaMansion/Textures/T_DinnerWareSet_BaseColor.T_DinnerWareSet_BaseColor",
+    "PM_Normals": "/Game/SickaMansion/Textures/T_DinnerWareSet_Normal.T_DinnerWareSet_Normal",
+    "Normal": "/Game/SickaMansion/Textures/T_DinnerWareSet_Normal.T_DinnerWareSet_Normal",
+    "PM_SpecularMasks": "/Game/SickaMansion/Textures/T_DinnerWareSet_ORM.T_DinnerWareSet_ORM",
+    "ORM": "/Game/SickaMansion/Textures/T_DinnerWareSet_ORM.T_DinnerWareSet_ORM"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {
+      "Roughness MIN": 0.25,
+      "RefractionDepthBias": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "bHasStaticPermutationResource": true,
+      "BasePropertyOverrides": {
+        "bOverride_TwoSided": true,
+        "TwoSided": true,
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": true,
+    "HasTopNormals": true,
+    "HasTopSpecularMasks": true,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

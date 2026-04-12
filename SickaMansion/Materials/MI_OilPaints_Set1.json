@@ -1,0 +1,28 @@
+{
+  "Textures": {
+    "PM_Diffuse": "/Game/SickaMansion/Textures/T_OilpaintSet1.T_OilpaintSet1",
+    "BaseColor": "/Game/SickaMansion/Textures/T_OilpaintSet1.T_OilpaintSet1"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {
+      "RefractionDepthBias": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "BasePropertyOverrides": {
+        "TwoSided": true,
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": true,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

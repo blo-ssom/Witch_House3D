@@ -1,0 +1,29 @@
+{
+  "Textures": {
+    "T_Plunger_BC": "/Game/ClassicMansion/Textures/T_Plunger_BC.T_Plunger_BC",
+    "T_Plunger_R": "/Game/ClassicMansion/Textures/T_Plunger_R.T_Plunger_R",
+    "T_Plunger_N": "/Game/ClassicMansion/Textures/T_Plunger_N.T_Plunger_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Plunger_N.T_Plunger_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithMeshParticles": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "8B2F0624-AB21D595-93BD229D-30A7EBBF",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "Textures": {
+    "T_ChesterfieldSofa_BC": "/Game/ClassicMansion/Textures/T_ChesterfieldSofa_BC.T_ChesterfieldSofa_BC",
+    "T_ChesterfieldSofa_N": "/Game/ClassicMansion/Textures/T_ChesterfieldSofa_N.T_ChesterfieldSofa_N",
+    "T_ChesterfieldSofa_R": "/Game/ClassicMansion/Textures/T_ChesterfieldSofa_R.T_ChesterfieldSofa_R",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_ChesterfieldSofa_N.T_ChesterfieldSofa_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "66ED2A3C-A01446C1-355C58B9-89C54AEC",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

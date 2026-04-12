@@ -1,0 +1,27 @@
+{
+  "Textures": {
+    "T_PaintingD_BC": "/Game/ClassicMansion/Textures/T_PaintingD_BC.T_PaintingD_BC",
+    "T_Painting_N": "/Game/ClassicMansion/Textures/T_Painting_N.T_Painting_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Painting_N.T_Painting_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "DF3276E2-A54797F7-ADB5E0B7-BF74DDD4",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

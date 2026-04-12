@@ -1,0 +1,31 @@
+{
+  "Textures": {
+    "T_Cloth_BC": "/Game/ClassicMansion/Textures/T_Cloth_BC.T_Cloth_BC",
+    "T_BergereCover_N": "/Game/ClassicMansion/Textures/T_BergereCover_N.T_BergereCover_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_BergereCover_N.T_BergereCover_N"
+  },
+  "Parameters": {
+    "BlendMode": 1,
+    "ShadingModel": 2,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "ShadingModels": {
+        "ShadingModelField": 4
+      },
+      "TwoSided": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "StateId": "768314BA-ABD6A22F-1B1FE5A3-1DE82046",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

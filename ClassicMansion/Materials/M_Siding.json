@@ -1,0 +1,28 @@
+{
+  "Textures": {
+    "T_Siding_BC": "/Game/ClassicMansion/Textures/T_Siding_BC.T_Siding_BC",
+    "T_Siding_M": "/Game/ClassicMansion/Textures/T_Siding_M.T_Siding_M",
+    "T_Siding_N": "/Game/ClassicMansion/Textures/T_Siding_N.T_Siding_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Siding_N.T_Siding_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "BC230DE3-ACE24335-8CB46198-36AEA781",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

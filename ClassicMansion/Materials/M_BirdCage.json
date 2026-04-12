@@ -1,0 +1,28 @@
+{
+  "Textures": {
+    "T_BirdCage_BC": "/Game/ClassicMansion/Textures/T_BirdCage_BC.T_BirdCage_BC",
+    "T_BirdCage_M": "/Game/ClassicMansion/Textures/T_BirdCage_M.T_BirdCage_M",
+    "T_BirdCage_N": "/Game/ClassicMansion/Textures/T_BirdCage_N.T_BirdCage_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_BirdCage_N.T_BirdCage_N"
+  },
+  "Parameters": {
+    "BlendMode": 1,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithSkeletalMesh": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "StateId": "F1C953E9-A8ECD045-09AD7DAA-855A9719",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

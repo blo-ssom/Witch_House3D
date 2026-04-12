@@ -1,0 +1,27 @@
+{
+  "Textures": {
+    "T_RifleCabinet_BC": "/Game/ClassicMansion/Textures/T_RifleCabinet_BC.T_RifleCabinet_BC",
+    "T_RifleCabinet_M": "/Game/ClassicMansion/Textures/T_RifleCabinet_M.T_RifleCabinet_M",
+    "T_RifleCabinet_N": "/Game/ClassicMansion/Textures/T_RifleCabinet_N.T_RifleCabinet_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_RifleCabinet_N.T_RifleCabinet_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "CEC8E3DC-A36F7543-05281496-38C399AC",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

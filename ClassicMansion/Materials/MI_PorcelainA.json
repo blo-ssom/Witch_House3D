@@ -1,0 +1,52 @@
+{
+  "Textures": {},
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {
+      "ColorA": {
+        "R": 0.434696,
+        "G": 0.47,
+        "B": 0.436866,
+        "A": 1.0,
+        "Hex": "B0B7B1"
+      },
+      "ColorB": {
+        "R": 0.375,
+        "G": 0.283657,
+        "B": 0.106875,
+        "A": 1.0,
+        "Hex": "A5915C"
+      },
+      "ColorC": {
+        "R": 0.055,
+        "G": 0.052144,
+        "B": 0.049876,
+        "A": 1.0,
+        "Hex": "42403F"
+      }
+    },
+    "Scalars": {
+      "MetallicA": 0.0,
+      "MetallicB": 1.0,
+      "MetallicC": 0.0,
+      "RoughnessA": 0.284403,
+      "RoughnessB": 0.146789,
+      "RoughnessC": 0.220183,
+      "RefractionDepthBias": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "BasePropertyOverrides": {
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": true
+  }
+}

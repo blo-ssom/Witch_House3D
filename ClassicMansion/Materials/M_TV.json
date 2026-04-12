@@ -1,0 +1,31 @@
+{
+  "Textures": {
+    "T_TV_BC": "/Game/ClassicMansion/Textures/T_TV_BC.T_TV_BC",
+    "T_TV_M": "/Game/ClassicMansion/Textures/T_TV_M.T_TV_M",
+    "T_TV_N": "/Game/ClassicMansion/Textures/T_TV_N.T_TV_N",
+    "T_Noise_BC": "/Game/ClassicMansion/Textures/T_Noise_BC.T_Noise_BC",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_TV_N.T_TV_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {
+      "EmissivePower": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "1BD8B8F5-A7768C1A-EB6F93BB-1032B0CF",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

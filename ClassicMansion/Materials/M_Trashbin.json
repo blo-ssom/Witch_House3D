@@ -1,0 +1,28 @@
+{
+  "Textures": {
+    "T_Trashbin_R": "/Game/ClassicMansion/Textures/T_Trashbin_R.T_Trashbin_R",
+    "T_Trashbin_N": "/Game/ClassicMansion/Textures/T_Trashbin_N.T_Trashbin_N",
+    "T_Trashbin_BC": "/Game/ClassicMansion/Textures/T_Trashbin_BC.T_Trashbin_BC",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Trashbin_N.T_Trashbin_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "2943B857-AAA3486C-2B008E87-634EC9B1",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

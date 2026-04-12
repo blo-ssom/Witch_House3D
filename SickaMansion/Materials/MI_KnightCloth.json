@@ -1,0 +1,37 @@
+{
+  "Textures": {
+    "PM_Diffuse": "/Game/SickaMansion/Textures/T_KnightCloth_BaseColor.T_KnightCloth_BaseColor",
+    "BaseColor": "/Game/SickaMansion/Textures/T_KnightCloth_BaseColor.T_KnightCloth_BaseColor",
+    "PM_Normals": "/Game/SickaMansion/Textures/T_KnightCloth_Normal.T_KnightCloth_Normal",
+    "Normal": "/Game/SickaMansion/Textures/T_KnightCloth_Normal.T_KnightCloth_Normal",
+    "PM_SpecularMasks": "/Game/SickaMansion/Textures/T_KnightCloth_ORM.T_KnightCloth_ORM",
+    "ORM": "/Game/SickaMansion/Textures/T_KnightCloth_ORM.T_KnightCloth_ORM"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {
+      "Normal Intensity": 2.0,
+      "Roughness MAX": 1.0,
+      "Roughness MIN": 0.1,
+      "RefractionDepthBias": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "bHasStaticPermutationResource": true,
+      "BasePropertyOverrides": {
+        "bOverride_TwoSided": true,
+        "TwoSided": true,
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": true,
+    "HasTopNormals": true,
+    "HasTopSpecularMasks": true,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

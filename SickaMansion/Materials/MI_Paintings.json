@@ -1,0 +1,31 @@
+{
+  "Textures": {
+    "PM_Diffuse": "/Game/SickaMansion/Textures/T_Paintings_BaseColor.T_Paintings_BaseColor",
+    "BaseColor": "/Game/SickaMansion/Textures/T_Paintings_BaseColor.T_Paintings_BaseColor",
+    "PM_Normals": "/Game/SickaMansion/Textures/T_Paintings_Normal.T_Paintings_Normal",
+    "Normal": "/Game/SickaMansion/Textures/T_Paintings_Normal.T_Paintings_Normal",
+    "PM_SpecularMasks": "/Game/SickaMansion/Textures/T_Paintings_ORM.T_Paintings_ORM",
+    "ORM": "/Game/SickaMansion/Textures/T_Paintings_ORM.T_Paintings_ORM"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {
+      "RefractionDepthBias": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "BasePropertyOverrides": {
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": true,
+    "HasTopNormals": true,
+    "HasTopSpecularMasks": true,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

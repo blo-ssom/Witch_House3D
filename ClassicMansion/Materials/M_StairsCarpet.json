@@ -1,0 +1,33 @@
+{
+  "Textures": {
+    "BlendFunc_DefBlend": "/Engine/EngineMaterials/BlendFunc_DefBlend.BlendFunc_DefBlend",
+    "BlendFunc_DefBase": "/Engine/EngineMaterials/BlendFunc_DefBase.BlendFunc_DefBase",
+    "T_StairsCarpet_M": "/Game/ClassicMansion/Textures/T_StairsCarpet_M.T_StairsCarpet_M",
+    "T_StairsCarpet_N": "/Game/ClassicMansion/Textures/T_StairsCarpet_N.T_StairsCarpet_N",
+    "T_StairsCarpet_BC": "/Game/ClassicMansion/Textures/T_StairsCarpet_BC.T_StairsCarpet_BC",
+    "T_Grunge_BC": "/Game/ClassicMansion/Textures/T_Grunge_BC.T_Grunge_BC",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_StairsCarpet_N.T_StairsCarpet_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "TwoSided": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "01229430-4CB20A9E-789261BA-C6375EC1",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "Textures": {
+    "PM_Diffuse": "/Game/SickaMansion/Textures/T_CellarWoodenPlanks_BaseColor.T_CellarWoodenPlanks_BaseColor",
+    "BaseColor": "/Game/SickaMansion/Textures/T_CellarWoodenPlanks_BaseColor.T_CellarWoodenPlanks_BaseColor",
+    "PM_Normals": "/Game/SickaMansion/Textures/T_CellarWoodenPlanks_Normal.T_CellarWoodenPlanks_Normal",
+    "Normal": "/Game/SickaMansion/Textures/T_CellarWoodenPlanks_Normal.T_CellarWoodenPlanks_Normal",
+    "PM_SpecularMasks": "/Game/SickaMansion/Textures/T_CellarWoodenPlanks_ORM.T_CellarWoodenPlanks_ORM",
+    "ORM": "/Game/SickaMansion/Textures/T_CellarWoodenPlanks_ORM.T_CellarWoodenPlanks_ORM"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {
+      "Normal Intensity": 2.0,
+      "Roughness Contrast": 0.25,
+      "Roughness MAX": 0.9,
+      "Roughness MIN": 0.0,
+      "RefractionDepthBias": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "BasePropertyOverrides": {
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": true,
+    "HasTopNormals": true,
+    "HasTopSpecularMasks": true,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

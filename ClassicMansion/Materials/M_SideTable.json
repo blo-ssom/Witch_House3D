@@ -1,0 +1,28 @@
+{
+  "Textures": {
+    "T_SideTable_BC": "/Game/ClassicMansion/Textures/T_SideTable_BC.T_SideTable_BC",
+    "T_SideTable_M": "/Game/ClassicMansion/Textures/T_SideTable_M.T_SideTable_M",
+    "T_SideTable_N": "/Game/ClassicMansion/Textures/T_SideTable_N.T_SideTable_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_SideTable_N.T_SideTable_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "F00D1F64-ACCB0321-93DB7998-001A7868",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

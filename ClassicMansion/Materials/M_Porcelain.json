@@ -1,0 +1,58 @@
+{
+  "Textures": {
+    "T_Porcelain_N": "/Game/ClassicMansion/Textures/T_Porcelain_N.T_Porcelain_N",
+    "T_Porcelain_BC": "/Game/ClassicMansion/Textures/T_Porcelain_BC.T_Porcelain_BC",
+    "T_Porcelain_M": "/Game/ClassicMansion/Textures/T_Porcelain_M.T_Porcelain_M",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Porcelain_N.T_Porcelain_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {
+      "ColorA": {
+        "R": 0.5,
+        "G": 0.5,
+        "B": 0.5,
+        "A": 1.0,
+        "Hex": "BCBCBC"
+      },
+      "ColorB": {
+        "R": 0.5,
+        "G": 0.5,
+        "B": 0.5,
+        "A": 1.0,
+        "Hex": "BCBCBC"
+      },
+      "ColorC": {
+        "R": 0.5,
+        "G": 0.5,
+        "B": 0.5,
+        "A": 1.0,
+        "Hex": "BCBCBC"
+      }
+    },
+    "Scalars": {
+      "MetallicA": 0.0,
+      "MetallicB": 0.0,
+      "MetallicC": 0.0,
+      "RoughnessA": 0.5,
+      "RoughnessB": 0.5,
+      "RoughnessC": 0.5
+    },
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "540B32DB-A2D6CE18-DB4D3289-1E0C4475",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

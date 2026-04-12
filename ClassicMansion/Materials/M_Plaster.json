@@ -1,0 +1,35 @@
+{
+  "Textures": {
+    "T_Plaster_R": "/Game/ClassicMansion/Textures/T_Plaster_R.T_Plaster_R",
+    "T_Plaster_BC": "/Game/ClassicMansion/Textures/T_Plaster_BC.T_Plaster_BC",
+    "T_Plaster_N": "/Game/ClassicMansion/Textures/T_Plaster_N.T_Plaster_N",
+    "T_Grunge_BC": "/Game/ClassicMansion/Textures/T_Grunge_BC.T_Grunge_BC",
+    "DefaultDiffuse": "/Engine/EngineMaterials/DefaultDiffuse.DefaultDiffuse",
+    "BlendFunc_DefBlend": "/Engine/EngineMaterials/BlendFunc_DefBlend.BlendFunc_DefBlend",
+    "BlendFunc_DefBase": "/Engine/EngineMaterials/BlendFunc_DefBase.BlendFunc_DefBase",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Plaster_N.T_Plaster_N",
+    "PM_Diffuse": "/Engine/EngineMaterials/DefaultDiffuse.DefaultDiffuse"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "TwoSided": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "24494220-ADA70906-B51A2D86-846A4F2B",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

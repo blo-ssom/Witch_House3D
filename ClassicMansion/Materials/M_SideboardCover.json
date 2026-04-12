@@ -1,0 +1,30 @@
+{
+  "Textures": {
+    "T_Cloth_BC": "/Game/ClassicMansion/Textures/T_Cloth_BC.T_Cloth_BC",
+    "T_SideboardCover_N": "/Game/ClassicMansion/Textures/T_SideboardCover_N.T_SideboardCover_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_SideboardCover_N.T_SideboardCover_N"
+  },
+  "Parameters": {
+    "BlendMode": 1,
+    "ShadingModel": 2,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "ShadingModels": {
+        "ShadingModelField": 4
+      },
+      "TwoSided": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "StateId": "9AD4A65E-A4B393E7-570C64A6-3FDE20C0",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

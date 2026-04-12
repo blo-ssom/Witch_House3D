@@ -1,0 +1,32 @@
+{
+  "Textures": {
+    "T_Firewood_BC": "/Game/ClassicMansion/Textures/T_Firewood_BC.T_Firewood_BC",
+    "T_Firewood_M": "/Game/ClassicMansion/Textures/T_Firewood_M.T_Firewood_M",
+    "T_Firewood_N": "/Game/ClassicMansion/Textures/T_Firewood_N.T_Firewood_N",
+    "T_Plaster_R": "/Game/ClassicMansion/Textures/T_Plaster_R.T_Plaster_R",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Firewood_N.T_Firewood_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {
+      "EmissivePower": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "144A6C48-AA8A9D0E-E4189192-AFC12D53",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

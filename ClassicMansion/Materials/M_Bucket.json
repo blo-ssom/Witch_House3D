@@ -1,0 +1,30 @@
+{
+  "Textures": {
+    "T_Bucket_BC": "/Game/ClassicMansion/Textures/T_Bucket_BC.T_Bucket_BC",
+    "T_Bucket_M": "/Game/ClassicMansion/Textures/T_Bucket_M.T_Bucket_M",
+    "T_Bucket_N": "/Game/ClassicMansion/Textures/T_Bucket_N.T_Bucket_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Bucket_N.T_Bucket_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithMeshParticles": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "7F89E525-AD8E0B6E-98F036B8-9000B26D",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

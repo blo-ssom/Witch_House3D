@@ -1,0 +1,33 @@
+{
+  "Textures": {
+    "PM_Diffuse": "/Game/SickaMansion/Textures/T_SofaCollection_BaseColor.T_SofaCollection_BaseColor",
+    "BaseColor": "/Game/SickaMansion/Textures/T_SofaCollection_BaseColor.T_SofaCollection_BaseColor",
+    "PM_Normals": "/Game/SickaMansion/Textures/T_SofaCollection_Normal.T_SofaCollection_Normal",
+    "Normal": "/Game/SickaMansion/Textures/T_SofaCollection_Normal.T_SofaCollection_Normal",
+    "PM_SpecularMasks": "/Game/SickaMansion/Textures/T_SofaCollection_ORM.T_SofaCollection_ORM",
+    "ORM": "/Game/SickaMansion/Textures/T_SofaCollection_ORM.T_SofaCollection_ORM"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {
+      "Roughness MAX": 0.95,
+      "Roughness MIN": 0.2,
+      "RefractionDepthBias": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "BasePropertyOverrides": {
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": true,
+    "HasTopNormals": true,
+    "HasTopSpecularMasks": true,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

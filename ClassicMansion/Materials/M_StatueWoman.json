@@ -1,0 +1,28 @@
+{
+  "Textures": {
+    "T_StatueWoman_BC": "/Game/ClassicMansion/Textures/T_StatueWoman_BC.T_StatueWoman_BC",
+    "T_StatueWoman_N": "/Game/ClassicMansion/Textures/T_StatueWoman_N.T_StatueWoman_N",
+    "T_StatueWoman_R": "/Game/ClassicMansion/Textures/T_StatueWoman_R.T_StatueWoman_R",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_StatueWoman_N.T_StatueWoman_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "7F414C30-A1907832-312EA792-3A30D272",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

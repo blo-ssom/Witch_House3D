@@ -1,0 +1,27 @@
+{
+  "Textures": {
+    "T_Mirror_BC": "/Game/ClassicMansion/Textures/T_Mirror_BC.T_Mirror_BC",
+    "T_Mirror_M": "/Game/ClassicMansion/Textures/T_Mirror_M.T_Mirror_M",
+    "T_Mirror_N": "/Game/ClassicMansion/Textures/T_Mirror_N.T_Mirror_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Mirror_N.T_Mirror_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "AD68A08D-4C346D5E-F2F93AA6-DEDE3E99",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

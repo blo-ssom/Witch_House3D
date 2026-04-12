@@ -1,0 +1,48 @@
+{
+  "Textures": {
+    "PM_Diffuse": "/Game/SickaMansion/Textures/T_Chandelier_BaseColor.T_Chandelier_BaseColor",
+    "BaseColor": "/Game/SickaMansion/Textures/T_Chandelier_BaseColor.T_Chandelier_BaseColor",
+    "PM_Normals": "/Game/SickaMansion/Textures/T_Chandelier_Normal.T_Chandelier_Normal",
+    "Normal": "/Game/SickaMansion/Textures/T_Chandelier_Normal.T_Chandelier_Normal",
+    "PM_SpecularMasks": "/Game/SickaMansion/Textures/T_Chandelier_ORM.T_Chandelier_ORM",
+    "ORM": "/Game/SickaMansion/Textures/T_Chandelier_ORM.T_Chandelier_ORM"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {
+      "Emissive Color": {
+        "R": 0.5625,
+        "G": 0.330833,
+        "B": 0.169223,
+        "A": 1.0,
+        "Hex": "C69C72"
+      }
+    },
+    "Scalars": {
+      "Emissive Power": 4.5,
+      "Metallic MAX": 1.0,
+      "Metallic MIN": 0.5,
+      "Roughness MAX": 0.85,
+      "RefractionDepthBias": 0.0
+    },
+    "Switches": {
+      "Emissive?": true
+    },
+    "Properties": {
+      "bHasStaticPermutationResource": true,
+      "BasePropertyOverrides": {
+        "bOverride_TwoSided": true,
+        "TwoSided": true,
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": true,
+    "HasTopNormals": true,
+    "HasTopSpecularMasks": true,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

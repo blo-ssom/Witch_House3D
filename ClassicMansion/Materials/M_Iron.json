@@ -1,0 +1,38 @@
+{
+  "Textures": {
+    "T_Iron_BC": "/Game/ClassicMansion/Textures/T_Iron_BC.T_Iron_BC",
+    "T_Iron_M": "/Game/ClassicMansion/Textures/T_Iron_M.T_Iron_M",
+    "T_Iron_N": "/Game/ClassicMansion/Textures/T_Iron_N.T_Iron_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Iron_N.T_Iron_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {
+      "EmissiveColor": {
+        "R": 0.0,
+        "G": 0.0,
+        "B": 0.0,
+        "A": 1.0,
+        "Hex": "000000"
+      }
+    },
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithSkeletalMesh": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "195C75A4-4E19418C-945ACDB6-89AB5152",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

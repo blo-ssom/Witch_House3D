@@ -1,0 +1,33 @@
+{
+  "Textures": {
+    "PM_Diffuse": "/Game/SickaMansion/Textures/T_BookPile_BaseColor.T_BookPile_BaseColor",
+    "BaseColor": "/Game/SickaMansion/Textures/T_BookPile_BaseColor.T_BookPile_BaseColor",
+    "PM_Normals": "/Game/SickaMansion/Textures/T_BookPile_Normal.T_BookPile_Normal",
+    "Normal": "/Game/SickaMansion/Textures/T_BookPile_Normal.T_BookPile_Normal",
+    "PM_SpecularMasks": "/Game/SickaMansion/Textures/T_BookPile_ORM.T_BookPile_ORM",
+    "ORM": "/Game/SickaMansion/Textures/T_BookPile_ORM.T_BookPile_ORM"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {
+      "Normal Intensity": 1.5,
+      "Roughness MIN": 0.15,
+      "RefractionDepthBias": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "BasePropertyOverrides": {
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": true,
+    "HasTopNormals": true,
+    "HasTopSpecularMasks": true,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

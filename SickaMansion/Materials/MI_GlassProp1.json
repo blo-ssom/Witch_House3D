@@ -1,0 +1,41 @@
+{
+  "Textures": {},
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {
+      "Color": {
+        "R": 0.007922,
+        "G": 0.011576,
+        "B": 0.012561,
+        "A": 1.0,
+        "Hex": "151C1D"
+      }
+    },
+    "Scalars": {
+      "opacity": 0.1,
+      "Opacity 2": 0.12,
+      "refraction": 1.0,
+      "Roughness": 0.1,
+      "Roughness 2": 0.2,
+      "Tile": 1.0,
+      "RefractionDepthBias": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "bHasStaticPermutationResource": true,
+      "BasePropertyOverrides": {
+        "bOverride_TwoSided": true,
+        "TwoSided": true,
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": true
+  }
+}

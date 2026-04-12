@@ -1,0 +1,31 @@
+{
+  "Textures": {
+    "T_Plants_BC": "/Game/ClassicMansion/Textures/T_Plants_BC.T_Plants_BC",
+    "T_Plants_R": "/Game/ClassicMansion/Textures/T_Plants_R.T_Plants_R",
+    "T_Plants_N": "/Game/ClassicMansion/Textures/T_Plants_N.T_Plants_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Plants_N.T_Plants_N"
+  },
+  "Parameters": {
+    "BlendMode": 1,
+    "ShadingModel": 2,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "ShadingModels": {
+        "ShadingModelField": 4
+      },
+      "TwoSided": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "StateId": "4C348B28-A7EBC9AD-A34A7FB5-26C1D16B",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

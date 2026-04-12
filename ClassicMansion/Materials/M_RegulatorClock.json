@@ -1,0 +1,27 @@
+{
+  "Textures": {
+    "T_RegulatorClock_BC": "/Game/ClassicMansion/Textures/T_RegulatorClock_BC.T_RegulatorClock_BC",
+    "T_RegulatorClock_M": "/Game/ClassicMansion/Textures/T_RegulatorClock_M.T_RegulatorClock_M",
+    "T_RegulatorClock_N": "/Game/ClassicMansion/Textures/T_RegulatorClock_N.T_RegulatorClock_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_RegulatorClock_N.T_RegulatorClock_N"
+  },
+  "Parameters": {
+    "BlendMode": 1,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "StateId": "7A664581-AF1532AB-CC86EFA4-AEC719A5",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

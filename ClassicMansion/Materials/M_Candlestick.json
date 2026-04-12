@@ -1,0 +1,32 @@
+{
+  "Textures": {
+    "T_Candlestick_BC": "/Game/ClassicMansion/Textures/T_Candlestick_BC.T_Candlestick_BC",
+    "T_Candlestick_M": "/Game/ClassicMansion/Textures/T_Candlestick_M.T_Candlestick_M",
+    "T_Candlestick_N": "/Game/ClassicMansion/Textures/T_Candlestick_N.T_Candlestick_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Candlestick_N.T_Candlestick_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 2,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "ShadingModels": {
+        "ShadingModelField": 4
+      },
+      "bUsedWithParticleSprites": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "E506BD75-A3E93214-55213EAB-7484B59D",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

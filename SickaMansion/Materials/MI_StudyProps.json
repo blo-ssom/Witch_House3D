@@ -1,0 +1,32 @@
+{
+  "Textures": {
+    "PM_Diffuse": "/Game/SickaMansion/Textures/T_StudyProps_BaseColor.T_StudyProps_BaseColor",
+    "BaseColor": "/Game/SickaMansion/Textures/T_StudyProps_BaseColor.T_StudyProps_BaseColor",
+    "PM_Normals": "/Game/SickaMansion/Textures/T_StudyProps_Normal.T_StudyProps_Normal",
+    "Normal": "/Game/SickaMansion/Textures/T_StudyProps_Normal.T_StudyProps_Normal",
+    "PM_SpecularMasks": "/Game/SickaMansion/Textures/T_StudyProps_ORM.T_StudyProps_ORM",
+    "ORM": "/Game/SickaMansion/Textures/T_StudyProps_ORM.T_StudyProps_ORM"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {
+      "Roughness MIN": 0.1,
+      "RefractionDepthBias": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "BasePropertyOverrides": {
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": true,
+    "HasTopNormals": true,
+    "HasTopSpecularMasks": true,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "Textures": {
+    "T_Parquet_M": "/Game/ClassicMansion/Textures/T_Parquet_M.T_Parquet_M",
+    "T_Parquet_N": "/Game/ClassicMansion/Textures/T_Parquet_N.T_Parquet_N",
+    "T_Parquet_BC": "/Game/ClassicMansion/Textures/T_Parquet_BC.T_Parquet_BC",
+    "T_DustyFloor_R": "/Game/ClassicMansion/Textures/T_DustyFloor_R.T_DustyFloor_R",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Parquet_N.T_Parquet_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "EE09A0E7-466FA170-9D02B5B4-C0A8BCCB",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

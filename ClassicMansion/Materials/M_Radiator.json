@@ -1,0 +1,28 @@
+{
+  "Textures": {
+    "T_Radiator_BC": "/Game/ClassicMansion/Textures/T_Radiator_BC.T_Radiator_BC",
+    "T_Radiator_M": "/Game/ClassicMansion/Textures/T_Radiator_M.T_Radiator_M",
+    "T_Radiator_N": "/Game/ClassicMansion/Textures/T_Radiator_N.T_Radiator_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Radiator_N.T_Radiator_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "E46E43CB-AED39598-0BB75EB2-4FB57033",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "Textures": {
+    "T_Lights_BC": "/Game/ClassicMansion/Textures/T_Lights_BC.T_Lights_BC",
+    "T_Lights_M": "/Game/ClassicMansion/Textures/T_Lights_M.T_Lights_M",
+    "T_Lights_N": "/Game/ClassicMansion/Textures/T_Lights_N.T_Lights_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Lights_N.T_Lights_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 2,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "ShadingModels": {
+        "ShadingModelField": 4
+      },
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "1850C9BE-47D3431E-AA03A180-9F8BB7C9",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

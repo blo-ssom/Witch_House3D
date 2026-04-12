@@ -1,0 +1,28 @@
+{
+  "Textures": {
+    "T_Ash_BC": "/Game/ClassicMansion/Textures/T_Ash_BC.T_Ash_BC",
+    "T_Ash_R": "/Game/ClassicMansion/Textures/T_Ash_R.T_Ash_R",
+    "T_Ash_N": "/Game/ClassicMansion/Textures/T_Ash_N.T_Ash_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Ash_N.T_Ash_N"
+  },
+  "Parameters": {
+    "BlendMode": 1,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "DitherOpacityMask": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "StateId": "DEC38C7D-A2248DE0-81D2FFB7-32642EB9",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

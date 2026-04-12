@@ -1,0 +1,29 @@
+{
+  "Textures": {
+    "T_BedDouble_BC": "/Game/ClassicMansion/Textures/T_BedDouble_BC.T_BedDouble_BC",
+    "T_BedDouble_R": "/Game/ClassicMansion/Textures/T_BedDouble_R.T_BedDouble_R",
+    "T_BedDouble_N": "/Game/ClassicMansion/Textures/T_BedDouble_N.T_BedDouble_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_BedDouble_N.T_BedDouble_N"
+  },
+  "Parameters": {
+    "BlendMode": 1,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "TwoSided": true,
+      "DitherOpacityMask": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "StateId": "974A41FD-AE29092E-740E63AB-F4A73115",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

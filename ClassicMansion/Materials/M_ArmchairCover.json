@@ -1,0 +1,32 @@
+{
+  "Textures": {
+    "T_Cloth_BC": "/Game/ClassicMansion/Textures/T_Cloth_BC.T_Cloth_BC",
+    "T_ArmchairCover_N": "/Game/ClassicMansion/Textures/T_ArmchairCover_N.T_ArmchairCover_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_ArmchairCover_N.T_ArmchairCover_N",
+    "PM_SpecularMasks": "/Game/ClassicMansion/Textures/T_ArmchairCover_N.T_ArmchairCover_N"
+  },
+  "Parameters": {
+    "BlendMode": 1,
+    "ShadingModel": 2,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "ShadingModels": {
+        "ShadingModelField": 4
+      },
+      "TwoSided": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "StateId": "111C3C31-A4721E95-6A8D30BE-04DC6AB8",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

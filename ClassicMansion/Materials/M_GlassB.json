@@ -1,0 +1,35 @@
+{
+  "Textures": {
+    "T_Glass_M": "/Game/ClassicMansion/Textures/T_Glass_M.T_Glass_M"
+  },
+  "Parameters": {
+    "BlendMode": 2,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bScreenSpaceReflections": true,
+      "TranslucencyLightingMode": "ETranslucencyLightingMode::TLM_Surface",
+      "bUsedWithSkeletalMesh": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsesDistortion": true,
+      "bRootNodeOverridesDefaultDistortion": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "RefractionMethod": "ERefractionMode::RM_IndexOfRefraction",
+      "StateId": "F961BECB-4B411381-F4E59DA4-6A7005F9",
+      "bIncludedInBaseGame": true,
+      "LightmassSettings": {
+        "bCastShadowAsMasked": true
+      }
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": true,
+    "IsNull": false
+  }
+}

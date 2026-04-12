@@ -1,0 +1,29 @@
+{
+  "Textures": {
+    "T_CofeeTable_BC": "/Game/ClassicMansion/Textures/T_CofeeTable_BC.T_CofeeTable_BC",
+    "T_CofeeTable_N": "/Game/ClassicMansion/Textures/T_CofeeTable_N.T_CofeeTable_N",
+    "T_CofeeTable_R": "/Game/ClassicMansion/Textures/T_CofeeTable_R.T_CofeeTable_R",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_CofeeTable_N.T_CofeeTable_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "bUsedWithStaticLighting": true,
+      "bUsedWithInstancedStaticMeshes": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "213C04BE-A346546F-4CA8A783-D31A9272",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

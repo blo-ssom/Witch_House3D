@@ -1,0 +1,29 @@
+{
+  "Textures": {
+    "T_CoatA_BC": "/Game/ClassicMansion/Textures/T_CoatA_BC.T_CoatA_BC",
+    "T_Coat_R": "/Game/ClassicMansion/Textures/T_Coat_R.T_Coat_R",
+    "T_Coat_N": "/Game/ClassicMansion/Textures/T_Coat_N.T_Coat_N",
+    "PM_Normals": "/Game/ClassicMansion/Textures/T_Coat_N.T_Coat_N"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {},
+    "Switches": {},
+    "Properties": {
+      "TwoSided": true,
+      "bUsedWithStaticLighting": true,
+      "bUsedWithNanite": true,
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "6EEFAC84-A71E0A78-25F35D8F-F7772AAC",
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": false,
+    "HasTopNormals": false,
+    "HasTopSpecularMasks": false,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}

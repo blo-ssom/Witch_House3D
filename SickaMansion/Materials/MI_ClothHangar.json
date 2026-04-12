@@ -1,0 +1,32 @@
+{
+  "Textures": {
+    "PM_Diffuse": "/Game/SickaMansion/Textures/T_ClothHangar_BaseColor.T_ClothHangar_BaseColor",
+    "BaseColor": "/Game/SickaMansion/Textures/T_ClothHangar_BaseColor.T_ClothHangar_BaseColor",
+    "PM_Normals": "/Game/SickaMansion/Textures/T_ClothHangar_Normal.T_ClothHangar_Normal",
+    "Normal": "/Game/SickaMansion/Textures/T_ClothHangar_Normal.T_ClothHangar_Normal",
+    "PM_SpecularMasks": "/Game/SickaMansion/Textures/T_ClothHangar_ORM.T_ClothHangar_ORM",
+    "ORM": "/Game/SickaMansion/Textures/T_ClothHangar_ORM.T_ClothHangar_ORM"
+  },
+  "Parameters": {
+    "BlendMode": 0,
+    "ShadingModel": 0,
+    "Colors": {},
+    "Scalars": {
+      "Roughness MIN": 0.1,
+      "RefractionDepthBias": 0.0
+    },
+    "Switches": {},
+    "Properties": {
+      "BasePropertyOverrides": {
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "HasTopDiffuse": true,
+    "HasTopNormals": true,
+    "HasTopSpecularMasks": true,
+    "HasTopEmissive": false,
+    "IsTranslucent": false,
+    "IsNull": false
+  }
+}
