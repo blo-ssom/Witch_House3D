@@ -88,6 +88,24 @@ public class DoorInteract : Interactable
         }
     }
 
+    public void ForceOpen(Transform opener)
+    {
+        if (isOpen) return;
+
+        isLocked = false;
+
+        Vector3 toDoor = doorPivot.position - opener.position;
+        float dot = Vector3.Dot(doorPivot.forward, toDoor);
+        float direction = dot > 0f ? 1f : -1f;
+
+        openedRotation = closedRotation * Quaternion.Euler(0f, openAngle * direction, 0f);
+
+        isOpen = true;
+
+        if (audioSource != null && doorOpenSound != null)
+            audioSource.PlayOneShot(doorOpenSound);
+    }
+
     private void CloseDoor()
     {
         isOpen = false;

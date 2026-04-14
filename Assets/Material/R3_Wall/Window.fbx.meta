@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c4f686c6613e86849a8a4573c547a579
+guid: 8c27d9be26559024487e946aa1e5ac24
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MI_FloorSeamless
-    second: {fileID: 2100000, guid: 0ffa20c5cf6e1a94faad3c21223f1e59, type: 2}
+      name: M_GlassA
+    second: {fileID: 2100000, guid: c5070d8a177471146ba3922220f79d33, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
