@@ -39,6 +39,17 @@ public class PhotoPuzzleManager : MonoBehaviour
     public AudioClip boxOpenSound;
     public AudioClip keyRevealSound;
 
+    /// <summary>
+    /// 조각 하나 수집 시 발생 (pieceID 전달). Room2AtmosphereEvent가 구독.
+    /// </summary>
+    public event System.Action<int> OnPieceCollected;
+
+    /// <summary>
+    /// 조각 3개 모두 수집 시 발생. 구독자가 있으면 연출 측에서 RevealKey() 호출 담당.
+    /// 구독자가 없으면 즉시 보관함 개방 (기존 동작).
+    /// </summary>
+    public event System.Action OnAllPiecesCollected;
+
     private bool[] collected = new bool[3];
     private int collectedCount = 0;
     private bool puzzleSolved = false;
@@ -85,8 +96,24 @@ public class PhotoPuzzleManager : MonoBehaviour
             NoteUI.Instance.OpenNote(status);
         }
 
+        if (OnPieceCollected != null)
+            OnPieceCollected.Invoke(pieceID);
+
         if (collectedCount >= 3)
-            StartCoroutine(SolvePuzzle());
+        {
+            if (OnAllPiecesCollected != null)
+                OnAllPiecesCollected.Invoke();
+            else
+                StartCoroutine(SolvePuzzle());
+        }
+    }
+
+    /// <summary>
+    /// Room2MirrorEvent가 거울 연출 완료 후 호출.
+    /// </summary>
+    public void RevealKey()
+    {
+        StartCoroutine(SolvePuzzle());
     }
 
     private IEnumerator SolvePuzzle()

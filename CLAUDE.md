@@ -50,6 +50,9 @@ Assets/
 - `ChandelierEvent` — Room3 키 획득 시 자동 발동 (조명 깜빡임 → 낙하 → 잔해)
 - `FloorBreakTrigger` — 바닥 붕괴 → 1.5초 낙하 → 페이드아웃 → UnderGround 씬 로드
 - `Floor2GhostEvent` — 열쇠 + 노트 조건 충족 시 문 잠금 → 귀신 페이드인 → 추격 시작
+- `Room2MirrorEvent` — 거울 3사이클 미스디렉션 연출. **현재 방2에서는 미사용, 2층 이식 검토 중**
+- `Room2ExitCue` — P.T.식 퇴장 여운. Room2MirrorEvent와 세트 (현재 보류)
+- `Room2AtmosphereEvent` — 방2 MVP 연출. `PhotoPuzzleManager.OnPieceCollected`/`OnAllPiecesCollected` 구독. 조각별 해프닝 (조명 깜빡임/책 떨어짐/불꽃 튐 + 엄마 일기 NoteUI) + 완성 후 사진 텍스처 전환 → `RevealKey()` 호출
 
 ### 적 AI
 - `GhostChase` — NavMeshAgent 기반, 4m/s 추격, 10m 감지, 1.2m 포착 거리
