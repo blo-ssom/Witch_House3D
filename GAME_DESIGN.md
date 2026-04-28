@@ -267,6 +267,7 @@ A가 살아있다고 생각한 주인공은 편지에 적힌 장소로 향한다
 - [x] 마우스 시점 (PlayerLook)
 - [x] 상호작용 Raycast (PlayerInteraction)
 - [x] 인벤토리 - 열쇠 (PlayerInventory)
+- [x] 손전등 (PlayerFlashlight: F키 토글, 좁은 콘, 헤드밥 sway, 회전 lag, Perlin flicker)
 
 ### 퍼즐 & 이벤트
 - [x] 방1 액자 뒤집기 퍼즐 (PaintingFlip)
