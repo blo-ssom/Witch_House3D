@@ -14,6 +14,10 @@ public class PlayerFlashlight : MonoBehaviour
     public Color lightColor = new Color(1f, 0.82f, 0.55f);
     public LightShadows shadowMode = LightShadows.Hard;
 
+    [Header("Shadow Bias (Peter Panning 방지)")]
+    [Range(0f, 0.5f)] public float shadowBias = 0.02f;
+    [Range(0f, 0.5f)] public float shadowNormalBias = 0.1f;
+
     [Header("Mount")]
     public Transform swayTarget;
     public Vector3 handOffset = new Vector3(0.2f, -0.1f, 0.3f);
@@ -135,6 +139,8 @@ public class PlayerFlashlight : MonoBehaviour
         flashlight.intensity = intensity;
         flashlight.color = lightColor;
         flashlight.shadows = shadowMode;
+        flashlight.shadowBias = shadowBias;
+        flashlight.shadowNormalBias = shadowNormalBias;
     }
 
     private Light CreateFlashlight()

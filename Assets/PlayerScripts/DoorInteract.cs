@@ -5,6 +5,7 @@ public class DoorInteract : Interactable
     public AudioSource audioSource;
     public AudioClip doorOpenSound;
     public AudioClip doorCloseSound;
+    public AudioClip doorLockedSound;
     public Transform doorPivot;
     public float openAngle = 90f;
     public float openSpeed = 2f;
@@ -49,6 +50,8 @@ public class DoorInteract : Interactable
             }
             else
             {
+                if (audioSource != null && doorLockedSound != null)
+                    audioSource.PlayOneShot(doorLockedSound);
                 Debug.Log($"{requiredKey} 열쇠가 필요하다.");
             }
 
