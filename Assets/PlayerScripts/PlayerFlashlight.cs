@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerFlashlight : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class PlayerFlashlight : MonoBehaviour
     [Header("Shadow Bias (Peter Panning 방지)")]
     [Range(0f, 0.5f)] public float shadowBias = 0.02f;
     [Range(0f, 0.5f)] public float shadowNormalBias = 0.1f;
+    [Range(0.05f, 1f)] public float shadowNearPlane = 0.1f;
 
     [Header("Mount")]
     public Transform swayTarget;
@@ -141,6 +143,13 @@ public class PlayerFlashlight : MonoBehaviour
         flashlight.shadows = shadowMode;
         flashlight.shadowBias = shadowBias;
         flashlight.shadowNormalBias = shadowNormalBias;
+        flashlight.shadowNearPlane = shadowNearPlane;
+
+        var urpData = flashlight.GetUniversalAdditionalLightData();
+        if (urpData != null)
+        {
+            urpData.usePipelineSettings = false;
+        }
     }
 
     private Light CreateFlashlight()
