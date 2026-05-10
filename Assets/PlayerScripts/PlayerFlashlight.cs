@@ -22,7 +22,7 @@ public class PlayerFlashlight : MonoBehaviour
 
     [Header("Mount")]
     public Transform swayTarget;
-    public Vector3 handOffset = new Vector3(0.2f, -0.1f, 0.3f);
+    public Vector3 handOffset = new Vector3(0.2f, -0.05f, 0.3f);
 
     [Header("Sway (Handheld Feel)")]
     public bool enableSway = true;

@@ -25,6 +25,12 @@ public class PaintingFlip : Interactable
     [Header("Hidden Key (KeyItem 오브젝트 연결)")]
     public GameObject hiddenKey;
 
+    [Header("People Overlay (액자 속 엄마+아들)")]
+    [Tooltip("액자에서 사라지는 사람 오버레이 Renderer. 자식 quad에 Transparent 머티리얼 사용 권장. 비워두면 페이드 없음.")]
+    public Renderer peopleRenderer;
+    [Tooltip("페이드 지속 시간. 0이면 flipDuration 값을 사용해 플립과 동시에 끝남.")]
+    public float    peopleFadeDuration = 0f;
+
     [Header("SFX")]
     public AudioSource audioSource;
     public AudioClip   flipSound;
@@ -64,6 +70,13 @@ public class PaintingFlip : Interactable
         if (audioSource != null && flipSound != null)
             audioSource.PlayOneShot(flipSound);
 
+        // 사람 페이드 아웃 (플립과 동시 진행)
+        if (peopleRenderer != null)
+        {
+            float fadeDur = peopleFadeDuration > 0f ? peopleFadeDuration : flipDuration;
+            StartCoroutine(FadeOutPeople(fadeDur));
+        }
+
         // 회전 애니메이션
         Quaternion from = Quaternion.Euler(fallenRotation);
         Quaternion to   = Quaternion.Euler(uprightRotation);
@@ -84,6 +97,26 @@ public class PaintingFlip : Interactable
         // 0.3초 후 열쇠 등장
         yield return new WaitForSeconds(0.3f);
         RevealKey();
+    }
+
+    private IEnumerator FadeOutPeople(float duration)
+    {
+        Material mat = peopleRenderer.material; // 인스턴스 생성
+        Color startColor = mat.color;
+        float startAlpha = startColor.a;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            Color c = mat.color;
+            c.a = Mathf.Lerp(startAlpha, 0f, t);
+            mat.color = c;
+            yield return null;
+        }
+
+        peopleRenderer.gameObject.SetActive(false);
     }
 
     private void RevealKey()
