@@ -8,7 +8,7 @@ public class DoorInteract : Interactable
     public AudioClip doorLockedSound;
     public Transform doorPivot;
     public float openAngle = 90f;
-    public float openSpeed = 2f;
+    public float openSpeed = 4f;
 
     public bool isLocked = true;
     public KeyType requiredKey = KeyType.None;   // 추가

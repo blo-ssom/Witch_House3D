@@ -17,6 +17,13 @@ public class KeyItem : Interactable
             if (chandelier != null) chandelier.TriggerEvent();
         }
 
+    // 추가: 방2 열쇠 획득 시 4개 석상이 추적 시작
+        if (keyType == KeyType.Room2)
+        {
+            var statueManager = FindObjectOfType<Room3StatueManager>();
+            if (statueManager != null) statueManager.ActivateAll();
+        }
+
         Destroy(gameObject);
     }
 }
