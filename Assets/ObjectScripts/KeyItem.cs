@@ -27,6 +27,9 @@ public class KeyItem : Interactable
 
             var painting = FindObjectOfType<PaintingFallEvent>();
             if (painting != null) painting.Trigger();
+
+            var paintingRB = FindObjectOfType<PaintingFallEventRB>();
+            if (paintingRB != null) paintingRB.Trigger();
         }
 
     // 추가: 방2 열쇠 획득 시 4개 석상이 추적 시작

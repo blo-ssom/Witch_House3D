@@ -37,7 +37,7 @@ public class PaintingFallEvent : MonoBehaviour
     public Renderer visibilityTarget;
     [Tooltip("열쇠 픽업 후 이 시간(초)이 지나야 낙하 가능. 너무 빠른 트리거 방지.")]
     public float armDelay = 0.3f;
-
+    
     [Header("SFX")]
     public AudioSource audioSource;
     public AudioClip   thudSound;
@@ -87,19 +87,21 @@ public class PaintingFallEvent : MonoBehaviour
 
     private void FallNow()
     {
-        fired = true;
-        armed = false;
+        // fired = true;
+        // armed = false;
 
-        transform.position    = fallenPosition;
-        transform.eulerAngles = fallenRotation;
-        transform.localScale  = fallenScale;
+        // transform.position    = fallenPosition;
+        // transform.eulerAngles = fallenRotation;
+        // transform.localScale  = fallenScale;
 
-        if (paintingRenderer != null && afterTexture != null)
-            paintingRenderer.material.mainTexture = afterTexture;
+        // if (paintingRenderer != null && afterTexture != null)
+        //     paintingRenderer.material.mainTexture = afterTexture;
 
         if (audioSource != null && thudSound != null)
             audioSource.PlayOneShot(thudSound);
 
-        Debug.Log("[PaintingFallEvent] 액자 낙하!");
+        // Debug.Log("[PaintingFallEvent] 액자 낙하!");
+
+
     }
 }
