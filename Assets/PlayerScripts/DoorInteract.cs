@@ -109,6 +109,12 @@ public class DoorInteract : Interactable
             audioSource.PlayOneShot(doorOpenSound);
     }
 
+    public void ForceUnlock()
+    {
+        isLocked = false;
+        Debug.Log($"{name} 잠금 해제됨");
+    }
+
     private void CloseDoor()
     {
         isOpen = false;

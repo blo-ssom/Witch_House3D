@@ -26,22 +26,31 @@ Assets/
 ### 핵심 설계 패턴
 
 **상호작용 시스템 (Interactable 상속 구조)**
-- `Interactable` (base class) → `KeyItem`, `NoteItem`, `PhotoPiece`, `PaintingFlip`, `PortraitCover`
+- `Interactable` (base class) → `KeyItem`, `NoteItem`, `PhotoPiece`, `PaintingFlip`, `PortraitCover`, `TableClothInteract`, `MirrorRevealEvent`, `MemoryBox`, `DoorInteract`
 - `PlayerInteraction`이 3m Raycast로 감지 → E키 입력 시 `Interact(PlayerInventory)` 호출
 - 새 상호작용 오브젝트 추가 시 반드시 `Interactable`을 상속하고 `Interact()`, `GetInteractPrompt()` 오버라이드
 
 **싱글톤 매니저**
-- `NoteUI.Instance` — 노트 표시 UI
+- `NoteUI.Instance` — 단면 노트 표시 UI
+- `FlipNoteUI.Instance` — 양면 메모 UI (Sprite 2장 + R/우클릭 플립 + 닫힘 콜백)
 - `GameUI.Instance` — HUD 상호작용 프롬프트
 - `GameOverManager.Instance` — 게임오버 처리
 - `PhotoPuzzleManager.Instance` — 방2 퍼즐 상태
 
 **이벤트 기반 통신**
-- `NoteItem.OnNoteRead` (static event) — 노트 읽기 완료 시 발행
-- `Floor2GhostEvent`가 이 이벤트를 구독하여 귀신 등장 트리거
+- `NoteItem.OnNoteRead` (static event, string noteID) — 노트 읽기 완료 시 발행
+- `PhotoPuzzleManager.OnPieceCollected` (int id) / `OnAllPiecesCollected` — `Room2AtmosphereEvent`, `MemoryBox`가 구독
+- 구독자가 있는 이벤트(예: `OnAllPiecesCollected`)는 `PhotoPuzzleManager`가 직접 `SolvePuzzle()` 호출하지 않고 구독자에게 RevealKey 책임을 위임
+- `Floor2GhostEvent` (1차 안), `Floor2MirrorEvent` (7단계 정식) 모두 `NoteItem.OnNoteRead` + `PlayerInventory.HasKey`로 조건 추적
+- 둘 다 두면 충돌 가능 — 친구의 방엔 한쪽만 부착할 것
+
+**Helper Trigger 패턴**
+- 매니저 컴포넌트가 OnTriggerEnter를 직접 받기 어려운 경우 (자식 콜라이더 필요) `MirrorBranchInteract`, `Floor2NorthDoorTrigger` 같은 별도 헬퍼 컴포넌트를 자식 GameObject + BoxCollider(IsTrigger)에 부착하여 매니저의 메소드 호출
+- ⚠️ 헬퍼는 **반드시 자기 이름의 .cs 파일로 분리** (파일명 = 클래스명). Unity는 파일당 MonoBehaviour 1개만 인식하므로 매니저와 같은 파일에 *동봉하면 보조 헬퍼가 Add Component 메뉴에 안 뜸* → 씬에서 못 붙임. (2026-05-25 `MirrorBranchInteract`/`Floor2NorthDoorTrigger`를 동봉 → 별도 파일로 분리)
 
 **열쇠 시스템**
-- `KeyType` enum: None, Room3, PathToRoom2, Room2, MainHall, Floor2
+- `KeyType` enum: None, PathToRoom1, PathToRomm3, Room3, PathToRoom2, Room2, MainHall, Floor2, DrawerSmall
+- `DrawerSmall`은 페이크 방 작은 열쇠 — 친구의 방 책상 서랍(DoorInteract) 해제용
 - `PlayerInventory`가 `HashSet<KeyType>`으로 관리
 - `DoorInteract`가 `PlayerInventory.HasKey()`로 문 잠금 확인
 
@@ -50,9 +59,12 @@ Assets/
 - `ChandelierEvent` — Room3 키 획득 시 자동 발동 (조명 깜빡임 → 낙하 → 잔해)
 - `FloorBreakTrigger` — 바닥 붕괴 → 1.5초 낙하 → 페이드아웃 → UnderGround 씬 로드
 - `Floor2GhostEvent` — 열쇠 + 노트 조건 충족 시 문 잠금 → 귀신 페이드인 → 추격 시작
-- `Room2MirrorEvent` — 거울 3사이클 미스디렉션 연출. **현재 방2에서는 미사용, 2층 이식 검토 중**
+- `Room2MirrorEvent` — 거울 3사이클 미스디렉션 연출 (구버전). `Floor2MirrorEvent`로 대체됨, 폐기 검토
 - `Room2ExitCue` — P.T.식 퇴장 여운. Room2MirrorEvent와 세트 (현재 보류)
-- `Room2AtmosphereEvent` — 방2 MVP 연출. `PhotoPuzzleManager.OnPieceCollected`/`OnAllPiecesCollected` 구독. 조각별 해프닝 (조명 깜빡임/책 떨어짐/불꽃 튐 + 엄마 일기 NoteUI) + 완성 후 사진 텍스처 전환 → `RevealKey()` 호출
+- `Room2AtmosphereEvent` — 방2 MVP 연출. `PhotoPuzzleManager.OnPieceCollected`/`OnAllPiecesCollected` 구독. 조각별 해프닝 (조명 깜빡임/책 떨어짐/불꽃 튐 + 엄마 일기 NoteUI) + 완성 후 사진 텍스처 전환. `useMemoryBox=true`이면 RevealKey 호출 위임
+- `MemoryBox` — 방2 기록 보관실 보관함 (Interactable). `OnAllPiecesCollected` 구독 → 자물쇠 해제 → E키로 `FlipNoteUI` 자동 진입 → 닫힘 콜백에서 분위기 변화(벽난로 끔/거울 손자국/방 조명 다운) + `PhotoPuzzleManager.RevealKey()`
+- `FakeRoomMirrorEvent` — 2층 거울 잔상 (Visage식). **2026-05-22 구조 변경: 페이크 방 → Mirror Branch dead-end로 이동.** `MirrorBranchEvent`로 리네임 예정. 거울 E키 트리거 → 잔상 → 친구의 방 south 문 `ForceUnlock()` + 작은 열쇠 활성화. 자식 `FakeRoomDoorProximity` 헬퍼는 폐기 (dead-end이므로 출입문 없음)
+- `Floor2MirrorEvent` — 2층 친구의 방 7단계 시퀀스 (정식). south 문은 처음 잠김 (Mirror Branch 거울 잔상이 해제 트리거). 조건 3개(엄마 일기 + 메인 키 + 친구 메모) → south 잠금 → 조명 페이드 + 스포트라이트 → 거울 응시/뒤돌아봄/다시 응시 사이클 → north 개방 → `Floor2NorthDoorTrigger` 헬퍼 발동 → 거울 폭발 + `GhostChase.StartChase()`
 
 ### 적 AI
 - `GhostChase` — NavMeshAgent 기반, 4m/s 추격, 10m 감지, 1.2m 포착 거리
@@ -82,3 +94,9 @@ Assets/
 - 귀신 투명도 제어 시 머티리얼 blend mode를 런타임에 변경하는 패턴 사용 (Floor2GhostEvent 참조)
 - 텍스처는 2K 해상도 통일, PBR 워크플로우 (URP Lit 셰이더)
 - 프리팹: `Assets/Prefebs/` (Door, Door_Pivot, Key)
+
+## 보조 가이드 문서
+
+- `MIRROR_SETUP.md` — 방2 거울 옵션 B (페이크 텍스처 스왑) 셋업
+- `MEMORYBOX_SETUP.md` — 방2 보관함 + 양면 메모 (FlipNoteUI) 와이어링
+- `FLOOR2_SETUP.md` — 2층 Mirror Branch·친구의 방·Chase Corridor 통합 셋업 (2026-05-22 구조 변경 반영)

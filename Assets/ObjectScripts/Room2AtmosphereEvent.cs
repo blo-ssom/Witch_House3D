@@ -55,6 +55,10 @@ public class Room2AtmosphereEvent : MonoBehaviour
     public float photoRevealDelay = 0.5f;
     public float photoRevealHoldTime = 1f;
 
+    [Header("MemoryBox 흐름 (옵션)")]
+    [Tooltip("MemoryBox 컴포넌트를 같이 쓰면 ON. true면 본 컴포넌트는 RevealKey() 호출하지 않고 키 등장 책임을 MemoryBox에게 위임.")]
+    public bool useMemoryBox = false;
+
     [Header("SFX")]
     public AudioSource audioSource;
     public AudioClip flickerSfx;
@@ -169,10 +173,12 @@ public class Room2AtmosphereEvent : MonoBehaviour
         yield return new WaitForSeconds(photoRevealHoldTime);
 
         // 보관함 개방 + 열쇠 등장 (PhotoPuzzleManager 기존 로직)
-        if (photoPuzzle != null)
+        // MemoryBox 사용 시엔 키 등장 책임을 MemoryBox로 위임 (양면 메모 확인 후 RevealKey)
+        if (!useMemoryBox && photoPuzzle != null)
             photoPuzzle.RevealKey();
 
-        Debug.Log("[Room2AtmosphereEvent] 완료 → 메인홀 열쇠 개방");
+        Debug.Log("[Room2AtmosphereEvent] 완료 → " +
+                  (useMemoryBox ? "MemoryBox에 키 등장 위임" : "메인홀 열쇠 개방"));
     }
 
     private IEnumerator WaitForNoteClose()

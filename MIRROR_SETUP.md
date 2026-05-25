@@ -1,5 +1,9 @@
 # 방2 거울 작업 가이드 (옵션 B — 페이크 텍스처 스왑)
 
+> ⛔ **폐기 (2026-05-25)** — 방2 거울 전면 폐기. 거울 모티프는 2층(Mirror Branch + 친구의 방) 전용으로 정리.
+> 방2 3번째 조각은 거울이 아니라 *천 덮인 가구 밑/구석 상자* 등에 숨김. `MirrorRevealEvent.cs`도 폐기.
+> 이 문서는 기록용으로만 남김 — 따라 하지 말 것.
+
 > 작성일: 2026-05-18
 > 관련 스크립트: `Assets/ObjectScripts/MirrorRevealEvent.cs`, `Assets/ObjectScripts/MirrorCaptureHelper.cs`
 > 기획: GAME_DESIGN.md 4번 섹션 "방2 — 기록 보관실"

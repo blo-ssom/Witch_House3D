@@ -10,5 +10,6 @@ using UnityEngine;
         PathToRoom2,
         Room2,
         MainHall,
-        Floor2
+        Floor2,
+        DrawerSmall   // 페이크 방 작은 열쇠 — 친구의 방 책상 서랍 해제용
     }
