@@ -6,9 +6,9 @@ using UnityEngine;
 ///
 /// 흐름:
 ///  1. 시작: 자물쇠 잠긴 상태. E키 누르면 "종이가 찢겨 있다. 세 조각이 비어 있다." 안내만.
-///  2. PhotoPuzzleManager.OnAllPiecesCollected 수신 → 종이판에 조각 끼워지는 연출 + 자물쇠 떨어지는 시각 변화.
+///  2. PhotoPuzzleManager.OnAllPiecesCollected 수신 → 종이판에 조각 끼워지는 연출 + 자물쇠 떨어짐 + 벽난로 불 꺼짐.
 ///  3. 보관함 E키 → 양면 메모를 들어올림 → FlipNoteUI.Open(앞, 뒷) 자동 진입.
-///  4. FlipNoteUI 닫힘 → 메인홀 열쇠 등장 + 분위기 변화 (벽난로 꺼짐, 거울 손자국 활성화).
+///  4. FlipNoteUI 닫힘 → 메인홀 열쇠 등장 + 분위기 변화 (방 조명 어두워짐, 거울 손자국 활성화).
 ///
 /// 기존 Room2AtmosphereEvent의 RevealKey 호출과 이중 호출이 일어나도
 /// PhotoPuzzleManager 측에서 puzzleSolved 플래그로 한 번만 동작하므로 안전.
@@ -129,6 +129,13 @@ public class MemoryBox : Interactable
         if (lockObject != null) lockObject.SetActive(false);
         if (lockFallenObject != null) lockFallenObject.SetActive(true);
 
+        // 벽난로 불 꺼짐 — 조각 3개 수집 즉시
+        if (audioSource != null && fireplaceOutSfx != null)
+            audioSource.PlayOneShot(fireplaceOutSfx);
+
+        if (fireplaceLight != null) fireplaceLight.enabled = false;
+        if (fireplaceFireObject != null) fireplaceFireObject.SetActive(false);
+
         // 양면 메모 시각화 (떠 있는 효과)
         if (memoVisual != null) memoVisual.SetActive(true);
 
@@ -168,14 +175,7 @@ public class MemoryBox : Interactable
 
     private IEnumerator PostMemoSequence()
     {
-        // 분위기 변화: 벽난로 꺼짐
-        if (audioSource != null && fireplaceOutSfx != null)
-            audioSource.PlayOneShot(fireplaceOutSfx);
-
-        if (fireplaceLight != null) fireplaceLight.enabled = false;
-        if (fireplaceFireObject != null) fireplaceFireObject.SetActive(false);
-
-        // 방 조명 살짝 어둡게
+        // 방 조명 살짝 어둡게 (벽난로 불은 이미 조각 수집 시 꺼짐)
         if (roomLights != null)
         {
             foreach (var l in roomLights)

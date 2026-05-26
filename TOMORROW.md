@@ -5,7 +5,15 @@
 
 ---
 
-## 오늘(5/24~25) 한 것
+## 오늘 (5/26) 한 것
+
+**방2 MemoryBox — 벽난로 불 꺼짐 타이밍 변경**
+- `MemoryBox.cs`: 불 끄기(조명 + 불꽃 오브젝트 + SFX)를 `PostMemoSequence`(메모 닫은 뒤) → `UnlockSequence`(조각 3개 수집 즉시)로 이동
+- 새 흐름: **조각 3개 → 자물쇠 떨어짐 + 불 꺼짐** / **메모 닫음 → 방 조명 다운 + 거울 손자국 + 메인홀 열쇠**
+- 문서 동기화: `TOMORROW`(불 타이밍 경고), `MEMORYBOX_SETUP`(흐름도 + 플레이테스트)
+- ⚠️ **코드만 변경됨.** 방2 씬 작업(거울 삭제·`PhotoPiece_3` 이동·불 파티클)은 미완 → 아래 2번 그대로 남음
+
+## 지난 작업 (5/24~25)
 
 **2층 Mirror Branch — 거울 잔상 → 손자국 연출(B안)로 재설계 + 코드 완료**
 - `FakeRoomMirrorEvent.cs` 재작성 (손자국 + 거울 E키 트리거) + `MirrorBranchInteract` 헬퍼 추가
@@ -49,8 +57,8 @@
 - [ ] (선택) erasure: 조각 픽업 시 친구 흔적 `SetActive(false)` 한 줄씩
 - [ ] 플레이테스트: 조각 3개 수집 → 메모 완성 → 명부 → 메인홀 열쇠
 
-> ⚠️ **불 꺼짐 타이밍**: 벽난로 불은 *조각 수집*이 아니라 **메모를 열고 닫은 뒤**(`MemoryBox.PostMemoSequence`) 꺼진다.
-> 막히면 순서대로 확인 — ① 자물쇠 떨어지나(MemoryBox `photoPuzzle` 연결?) ② E키로 메모 뜨나(Collider+Interact, FlipNoteUI+memo Sprite?) ③ 닫으면 불/열쇠 나오나(`fireplaceLight`/`fireplaceFireObject` 슬롯?). 콘솔 `[MemoryBox]` 로그 확인.
+> ⚠️ **불 꺼짐 타이밍**: 벽난로 불은 **조각 3개 수집 즉시**(`MemoryBox.UnlockSequence`) 자물쇠 떨어짐과 동시에 꺼진다. 메인홀 열쇠는 그 뒤 **메모를 열고 닫아야**(`MemoryBox.PostMemoSequence`) 나온다.
+> 막히면 순서대로 확인 — ① 자물쇠 떨어지고 불 꺼지나(MemoryBox `photoPuzzle`/`fireplaceLight`/`fireplaceFireObject` 슬롯?) ② E키로 메모 뜨나(Collider+Interact, FlipNoteUI+memo Sprite?) ③ 닫으면 열쇠 나오나. 콘솔 `[MemoryBox]` 로그 확인.
 
 ### 3. 박스 메시 + NavMesh (남으면)
 - [ ] 친구의 방(16×20) / Chase Corridor(4×8) / 지하 흰 큐브

@@ -11,12 +11,13 @@
 종이 조각 3개 수집 (PhotoPuzzleManager)
   → MemoryBox.HandleAllCollected (자동)
   → 자물쇠 떨어짐 SFX + lockObject 비활성 + lockFallenObject 활성
+  → 벽난로 불 꺼짐 (fireplaceLight 비활성 + fireplaceFireObject 비활성)
   → memoVisual 활성 (보관함 안 떠 있는 메모)
   → 플레이어가 보관함에 E키
   → FlipNoteUI.Open(앞면, 뒷면)  ← 클로즈업 자동 진입
   → 플레이어가 R / 우클릭으로 뒷면 확인
   → Esc로 닫기
-  → MemoryBox 분위기 변화: 벽난로 꺼짐, 거울 손자국 활성, 방 조명 어두워짐
+  → MemoryBox 분위기 변화: 거울 손자국 활성, 방 조명 어두워짐
   → PhotoPuzzleManager.RevealKey()  → 메인홀 열쇠 등장
 ```
 
@@ -162,11 +163,11 @@ LockBox
 ```
 1. Play
 2. 조각 1, 2, 3 모두 픽업
-3. 보관함 위에 자물쇠 떨어지고 메모 visual이 활성화되는지 확인
+3. 보관함 위에 자물쇠 떨어지고 벽난로 불 꺼지고 메모 visual이 활성화되는지 확인
 4. 보관함에 E키 → FlipNoteUI 진입
 5. 앞면 → R 또는 우클릭 → 0.5초 플립 → 뒷면(명부) 표시
 6. Esc로 닫기
-7. 벽난로 꺼짐 + 방 조명 어두워짐 + 거울 손자국 활성 확인
+7. 방 조명 어두워짐 + 거울 손자국 활성 확인
 8. 메인홀 KeyItem 등장 → 픽업
 ```
 
