@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Witch_House3D-main.slnx"
+    "dotnet.defaultSolution": "Witch_House3D.slnx"
 }
