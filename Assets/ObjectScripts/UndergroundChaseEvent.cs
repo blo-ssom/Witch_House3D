@@ -44,6 +44,17 @@ public class UndergroundChaseEvent : MonoBehaviour
 
     private void Start()
     {
+        // Player가 DontDestroyOnLoad로 넘어왔다면 인스펙터 슬롯이 비어있음 → Tag로 자동 검색
+        if (playerMove == null || playerLook == null)
+        {
+            var playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                if (playerMove == null) playerMove = playerObj.GetComponent<PlayerMove>();
+                if (playerLook == null) playerLook = playerObj.GetComponentInChildren<PlayerLook>();
+            }
+        }
+
         if (fadePanel != null)
         {
             fadePanel.gameObject.SetActive(true);

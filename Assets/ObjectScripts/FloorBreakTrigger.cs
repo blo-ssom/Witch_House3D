@@ -49,28 +49,22 @@ public class FloorBreakTrigger : MonoBehaviour
     private IEnumerator FloorBreakSequence(GameObject player)
     {
         Debug.Log("밟힘!");
-        // 1. 플레이어 이동 멈춤
-        var playerMove = player.GetComponent<PlayerMove>();
-        if (playerMove != null) playerMove.enabled = false;
 
-        // 2. 판자 하나씩 Rigidbody 활성화 → 물리적으로 떨어짐
+        // 1. 판자 하나씩 Rigidbody 활성화 → 물리적으로 떨어짐
+        //    플레이어 컨트롤은 그대로 두어, 발 밑이 사라지면 중력으로 자연스럽게 낙하.
         foreach (var plank in planks)
         {
             if (plank == null) continue;
 
-            // Rigidbody 없으면 자동 추가
             Rigidbody rb = plank.GetComponent<Rigidbody>();
             if (rb == null) rb = plank.AddComponent<Rigidbody>();
-
             rb.isKinematic = false;
 
-            // 살짝 랜덤한 힘으로 자연스럽게
             rb.AddForce(new Vector3(
                 Random.Range(-1f, 1f),
                 Random.Range(-3f, -5f),
                 Random.Range(-1f, 1f)
             ) * 3f, ForceMode.Impulse);
-
             rb.AddTorque(Random.insideUnitSphere * 2f, ForceMode.Impulse);
 
             if (audioSource != null && breakSound != null)
@@ -79,31 +73,28 @@ public class FloorBreakTrigger : MonoBehaviour
             yield return new WaitForSeconds(breakDelay);
         }
 
-        // 3. 플레이어도 아래로 떨어짐
-        StartCoroutine(FallPlayer(player));
+        // 2. 떨어지는 시간 동안 플레이어는 PlayerMove의 중력으로 자연스럽게 낙하
+        yield return new WaitForSeconds(fallDuration);
+
+        // 3. 페이드 직전에 입력 차단 (암전 중 카메라 이상 이동 방지)
+        var playerMove = player.GetComponent<PlayerMove>();
+        if (playerMove != null) playerMove.enabled = false;
+        var playerLook = player.GetComponentInChildren<PlayerLook>();
+        if (playerLook != null) playerLook.enabled = false;
 
         // 4. 암전
-        yield return new WaitForSeconds(fallDuration);
         yield return StartCoroutine(FadeOut());
 
         // 5. 씬 전환
         yield return new WaitForSeconds(0.5f);
+
+        // Player를 DontDestroyOnLoad로 보존 → UnderGround SpawnPoint로 텔레포트됨
+        var persistence = player.GetComponent<PlayerPersistence>();
+        if (persistence == null)
+            persistence = player.AddComponent<PlayerPersistence>();
+        persistence.MarkPersistent();
+
         SceneManager.LoadScene(undergroundSceneName);
-    }
-
-    private IEnumerator FallPlayer(GameObject player)
-    {
-        // CharacterController 비활성화 후 직접 Y 이동
-        var cc = player.GetComponent<CharacterController>();
-        if (cc != null) cc.enabled = false;
-
-        float elapsed = 0f;
-        while (elapsed < fallDuration)
-        {
-            elapsed += Time.deltaTime;
-            player.transform.position += Vector3.down * 8f * Time.deltaTime;
-            yield return null;
-        }
     }
 
     private IEnumerator FadeOut()

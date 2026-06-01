@@ -122,12 +122,14 @@ public class PlayerFlashlight : MonoBehaviour
 
     public void Toggle()
     {
+        if (flashlight == null) return;
         isOn = !isOn;
         flashlight.enabled = isOn;
     }
 
     public void SetOn(bool on)
     {
+        if (flashlight == null) return;
         isOn = on;
         flashlight.enabled = isOn;
     }

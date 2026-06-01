@@ -11,6 +11,9 @@ public class PlayerLook : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // 메인메뉴 설정에서 저장된 마우스 감도 적용
+        mouseSensitivity = SettingsManager.LoadSensitivity();
     }
 
     private void Update()
