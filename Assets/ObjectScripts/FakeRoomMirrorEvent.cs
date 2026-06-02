@@ -27,8 +27,12 @@ public class FakeRoomMirrorEvent : MonoBehaviour
     [Tooltip("콘솔 위 엄마 일기 NoteItem의 noteID")]
     public string motherDiaryNoteID = "mirrorbranch_mother_diary";
 
+    [Header("발동 방식")]
+    [Tooltip("켜면 일기를 읽고 메모창을 닫는 순간 손자국 연출이 뜸(거울 E키 불필요). 끄면 기존처럼 거울 상호작용 필요.")]
+    public bool triggerImmediatelyOnDiary = true;
+
     [Header("거울 상호작용 (일기 읽은 뒤 활성화)")]
-    [Tooltip("거울에 부착된 MirrorBranchInteract. 일기를 읽으면 활성화됨.")]
+    [Tooltip("거울에 부착된 MirrorBranchInteract. 즉시 발동 모드에선 비워둬도 됨.")]
     public MirrorBranchInteract mirrorInteract;
 
     [Header("손자국 연출")]
@@ -63,6 +67,7 @@ public class FakeRoomMirrorEvent : MonoBehaviour
 
     private bool diaryRead = false;
     private bool sequencePlayed = false;
+    private bool waitingForNoteClose = false;
 
     private void Start()
     {
@@ -89,12 +94,32 @@ public class FakeRoomMirrorEvent : MonoBehaviour
 
         diaryRead = true;
 
-        // 거울 상호작용 활성화 + 낮은 울림으로 "거울이 깨어났다" 신호
+        if (triggerImmediatelyOnDiary)
+        {
+            // 일기를 읽고 메모창을 닫는 순간 발동. 노트가 열려있으면 닫힐 때까지 대기.
+            if (NoteUI.Instance != null && NoteUI.Instance.IsOpen())
+                waitingForNoteClose = true;
+            else
+                TriggerMirrorSequence();   // 노트 UI를 못 찾으면 즉시 폴백
+            return;
+        }
+
+        // (기존 방식) 거울 상호작용 활성화 + 낮은 울림으로 "거울이 깨어났다" 신호
         if (mirrorInteract != null)
             mirrorInteract.SetReady(true);
 
         if (audioSource != null && mirrorAwakenSfx != null)
             audioSource.PlayOneShot(mirrorAwakenSfx);
+    }
+
+    private void Update()
+    {
+        // 메모창이 닫히는 순간 손자국 연출 발동
+        if (waitingForNoteClose && (NoteUI.Instance == null || !NoteUI.Instance.IsOpen()))
+        {
+            waitingForNoteClose = false;
+            TriggerMirrorSequence();
+        }
     }
 
     /// <summary>

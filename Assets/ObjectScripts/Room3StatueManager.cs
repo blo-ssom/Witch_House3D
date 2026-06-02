@@ -14,6 +14,10 @@ public class Room3StatueManager : MonoBehaviour
     [Tooltip("각 석상 머리에 부착된 HeadLookAt 컴포넌트를 등록. 인스펙터에서 isActive는 false로 둘 것.")]
     public HeadLookAt[] statues;
 
+    [Header("열쇠 획득 시 머리가 떨어질 석상 (선택)")]
+    [Tooltip("열쇠 줍는 순간 머리가 떨어질 석상. 비워두면 아무 일 없음.")]
+    public StatueHeadFall fallingHead;
+
     private bool activated = false;
 
     /// <summary>
@@ -24,12 +28,18 @@ public class Room3StatueManager : MonoBehaviour
         if (activated) return;
         activated = true;
 
-        if (statues == null) return;
-        foreach (var s in statues)
+        if (statues != null)
         {
-            if (s == null) continue;
-            s.Activate();
+            foreach (var s in statues)
+            {
+                if (s == null) continue;
+                s.Activate();
+            }
         }
+
+        // 지정된 석상의 머리가 떨어짐
+        if (fallingHead != null)
+            fallingHead.Drop();
 
         Debug.Log("[Room3StatueManager] 4개 석상이 추적을 시작합니다");
     }

@@ -12,6 +12,7 @@ public class DoorInteract : Interactable
 
     public bool isLocked = true;
     public KeyType requiredKey = KeyType.None;   // 추가
+    public bool isSealed = false;                // 영구 봉인(시작 문 등) — 어떤 열쇠로도 안 열림
 
     private bool isOpen = false;
     private Quaternion closedRotation;
@@ -41,6 +42,15 @@ public class DoorInteract : Interactable
 
     public override void Interact(PlayerInventory playerInventory)
     {
+        // 영구 봉인된 문은 어떤 상호작용도 막음
+        if (isSealed)
+        {
+            if (audioSource != null && doorLockedSound != null)
+                audioSource.PlayOneShot(doorLockedSound);
+            Debug.Log($"{name}: 봉인되어 열리지 않는다.");
+            return;
+        }
+
         if (isLocked)
         {
             if (playerInventory != null && playerInventory.HasKey(requiredKey))
@@ -113,6 +123,21 @@ public class DoorInteract : Interactable
     {
         isLocked = false;
         Debug.Log($"{name} 잠금 해제됨");
+    }
+
+    /// <summary>
+    /// 문을 닫고 게임 끝까지 영구 봉인. (시작 문 등 되돌아갈 수 없게)
+    /// </summary>
+    public void CloseAndSeal()
+    {
+        isOpen = false;     // Update가 closedRotation으로 슬러프 → 자동으로 닫힘
+        isLocked = true;
+        isSealed = true;
+
+        if (audioSource != null && doorCloseSound != null)
+            audioSource.PlayOneShot(doorCloseSound);
+
+        Debug.Log($"{name}: 닫고 봉인됨");
     }
 
     private void CloseDoor()

@@ -53,7 +53,14 @@ public class PlayerFlashlight : MonoBehaviour
             flashlight = CreateFlashlight();
         }
 
-        if (swayTarget == null) swayTarget = transform;
+        // swayTarget이 비어 있으면 카메라를 따라가게 (상하 시선까지 반영).
+        // 몸체(yaw만 회전)를 따라가면 손전등이 위아래를 안 따라가는 문제 방지.
+        if (swayTarget == null)
+        {
+            Camera cam = GetComponentInChildren<Camera>();
+            if (cam == null) cam = Camera.main;
+            swayTarget = cam != null ? cam.transform : transform;
+        }
 
         flashlight.transform.SetParent(null, true);
 
