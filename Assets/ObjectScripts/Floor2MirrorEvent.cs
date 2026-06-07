@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// 2층 친구의 방 거울 미스디렉션 — 7단계 축약본 (GAME_DESIGN.md).
@@ -71,6 +72,23 @@ public class Floor2MirrorEvent : MonoBehaviour
     public GameObject mirrorShatterFx;
     [Tooltip("거울 깨짐 후 본체 거울 Renderer 비활성화 (선택)")]
     public Renderer mirrorRenderer;
+
+    [Header("기어나옴(Emerge) 연출")]
+    [Tooltip("깨질 때 카메라 흔들 CameraShake (선택)")]
+    public CameraShake cameraShake;
+    public float shakeIntensity = 0.4f;
+    public float shakeDuration = 0.6f;
+    [Tooltip("깨지는 순간 짧게 켜질 전환 가림용 풀스크린 이미지(검정 권장, 선택). 스왑을 가려줌")]
+    public GameObject screenFlash;
+    public float flashDuration = 0.15f;
+    [Tooltip("귀신이 기어나오기 시작하는 위치(거울 안쪽, 낮게). 비우면 realGhostSpawn 사용")]
+    public Transform emergeStart;
+    [Tooltip("귀신이 기어나와 멈추는 위치(방 안 바닥, NavMesh 위)")]
+    public Transform emergeEnd;
+    [Tooltip("기어나오는 데 걸리는 시간(초). 기어나옴 애니 길이와 비슷하게")]
+    public float emergeDuration = 1.3f;
+    [Tooltip("기어나오는 동안 플레이어 쪽을 바라보게")]
+    public bool facePlayerWhileEmerging = true;
 
     [Header("north 문 근접 트리거")]
     [Tooltip("north 문 앞 트리거 콜라이더 GameObject. 7단계까지 비활성, 6단계에서 활성화.")]
@@ -247,31 +265,89 @@ public class Floor2MirrorEvent : MonoBehaviour
 
     private IEnumerator MirrorShatterAndChase()
     {
-        // 거울 깨짐 효과
+        // ── (1) 거울 깨짐: 소리 + 파편 + 카메라 흔들림 + 순간 가림 ──
         if (audioSource != null && mirrorShatterSfx != null)
             audioSource.PlayOneShot(mirrorShatterSfx);
 
         if (mirrorShatterFx != null) mirrorShatterFx.SetActive(true);
+        if (cameraShake != null) cameraShake.Shake(shakeIntensity, shakeDuration);
+        if (screenFlash != null) StartCoroutine(FlashOnce());
+
         if (mirrorRenderer != null) mirrorRenderer.enabled = false;
 
-        yield return new WaitForSeconds(0.2f);
+        // 깨지는 0.15초가 미러룸 귀신 → 실제 귀신 스왑을 가려줌
+        yield return new WaitForSeconds(0.15f);
 
-        // 현실 귀신 활성화
-        if (realGhost != null)
+        // ── (2) 실제 귀신 등장 준비 (자동 추격 차단 + 수동 이동 모드) ──
+        if (realGhost == null)
         {
-            if (realGhostSpawn != null)
-                realGhost.transform.position = realGhostSpawn.position;
-            realGhost.SetActive(true);
+            Debug.LogWarning("[Floor2MirrorEvent] realGhost 미연결 — emerge 생략");
+            yield break;
         }
+
+        // GhostChase가 켜져 있으면 코앞 플레이어를 감지해 즉시 추격을 시작해버림 → emerge 동안 꺼둠
+        if (ghostChase != null) ghostChase.enabled = false;
+
+        NavMeshAgent agent = realGhost.GetComponent<NavMeshAgent>();
+        if (agent != null) agent.enabled = false; // 수동 lerp 위해 끔
+
+        // 기어나옴 시작 위치(거울 안쪽, 낮게)
+        Transform startT = emergeStart != null ? emergeStart : realGhostSpawn;
+        if (startT != null) realGhost.transform.position = startT.position;
+        FacePlayer();
+
+        realGhost.SetActive(true); // Animator 기본 상태 = 기어나옴(Emerge) 자동 재생
 
         if (audioSource != null && chaseStartSfx != null)
             audioSource.PlayOneShot(chaseStartSfx);
 
-        // 추격 시작
-        if (ghostChase != null)
-            ghostChase.StartChase();
+        // ── (3) 거울에서 방 안으로 기어나오는 이동(수동 lerp) ──
+        if (emergeStart != null && emergeEnd != null)
+        {
+            Vector3 from = emergeStart.position;
+            Vector3 to = emergeEnd.position;
+            float t = 0f;
+            while (t < emergeDuration)
+            {
+                t += Time.deltaTime;
+                realGhost.transform.position = Vector3.Lerp(from, to, t / emergeDuration);
+                FacePlayer();
+                yield return null;
+            }
+            realGhost.transform.position = to;
+        }
+        else
+        {
+            // 위치 미설정 시 시간만 대기 (애니만 재생)
+            yield return new WaitForSeconds(emergeDuration);
+        }
 
-        Debug.Log("[Floor2MirrorEvent] 7단계 완료 — 거울 폭발 + 추격 시작");
+        // ── (4) 추격 시작 (NavMeshAgent 켜고 GhostChase 재가동) ──
+        if (agent != null) agent.enabled = true; // emergeEnd가 NavMesh 위여야 정상 스냅됨
+        if (ghostChase != null)
+        {
+            ghostChase.enabled = true;
+            ghostChase.StartChase();
+        }
+
+        Debug.Log("[Floor2MirrorEvent] 7단계 완료 — 거울 깨짐 → 기어나옴 → 추격 시작");
+    }
+
+    /// <summary>귀신이 플레이어 쪽(수평)을 바라보게 회전.</summary>
+    private void FacePlayer()
+    {
+        if (!facePlayerWhileEmerging || realGhost == null || playerCamera == null) return;
+        Vector3 dir = playerCamera.transform.position - realGhost.transform.position;
+        dir.y = 0f;
+        if (dir.sqrMagnitude > 0.0001f)
+            realGhost.transform.rotation = Quaternion.LookRotation(dir);
+    }
+
+    private IEnumerator FlashOnce()
+    {
+        screenFlash.SetActive(true);
+        yield return new WaitForSeconds(flashDuration);
+        screenFlash.SetActive(false);
     }
 
     private bool IsLookingAtMirror()
