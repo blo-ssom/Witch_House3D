@@ -12,6 +12,7 @@ using UnityEngine.SceneManagement;
 ///  F4 : 다음 씬 로드 (Build Settings 순서 기준)
 ///  F5 : 현재 씬 재시작
 ///  F6 : 바라보는 지점으로 순간이동 (노클립 점프)
+///  F7 : 친구의 방 거울 시퀀스 강제 시작 (조건 무시)
 ///  F9 : 화면 도움말 표시/숨김
 /// </summary>
 public class DevCheats : MonoBehaviour
@@ -46,6 +47,7 @@ public class DevCheats : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F4)) LoadNextScene();
         if (Input.GetKeyDown(KeyCode.F5)) ReloadScene();
         if (Input.GetKeyDown(KeyCode.F6)) TeleportToLook();
+        if (Input.GetKeyDown(KeyCode.F7)) ForceFloor2Mirror();
         if (Input.GetKeyDown(KeyCode.F9)) showHelp = !showHelp;
     }
 
@@ -137,13 +139,21 @@ public class DevCheats : MonoBehaviour
         Log("[F6] 바라보는 곳으로 순간이동");
     }
 
+    private void ForceFloor2Mirror()
+    {
+        var ev = FindObjectOfType<Floor2MirrorEvent>();
+        if (ev == null) { Log("Floor2MirrorEvent를 못 찾음 (이 씬에 없음)"); return; }
+        ev.DebugForceStart();
+        Log("[F7] 친구의 방 거울 시퀀스 강제 시작 — 이제 거울을 쳐다보세요");
+    }
+
     private void Log(string msg) => Debug.Log($"<color=yellow>[DevCheats]</color> {msg}");
 
     private void OnGUI()
     {
         if (!enableCheats || !showHelp) return;
 
-        const float w = 240f, h = 158f;
+        const float w = 240f, h = 176f;
         GUI.color = new Color(0f, 0f, 0f, 0.6f);
         GUI.Box(new Rect(8, 8, w, h), GUIContent.none);
         GUI.color = Color.white;
@@ -157,6 +167,7 @@ public class DevCheats : MonoBehaviour
         GUILayout.Label("F4  다음 씬", RichLabel());
         GUILayout.Label("F5  씬 재시작", RichLabel());
         GUILayout.Label("F6  바라보는 곳 순간이동", RichLabel());
+        GUILayout.Label("F7  거울 시퀀스 강제 시작", RichLabel());
         GUILayout.Label("F9  도움말 숨김/표시", RichLabel());
         GUILayout.EndArea();
     }

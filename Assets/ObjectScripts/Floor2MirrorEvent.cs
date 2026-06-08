@@ -55,11 +55,9 @@ public class Floor2MirrorEvent : MonoBehaviour
     public float lightFadeDuration = 1.2f;
     public float spotlightFadeIn  = 1.2f;
 
-    [Header("거울 속 귀신 (MirrorOnly 레이어)")]
-    [Tooltip("거울 속에서만 보일 귀신 GameObject. 시작 시 비활성.")]
-    public GameObject mirrorGhost;
-    public Transform mirrorGhostPosition;
-    public float ghostMinHoldOnFirstGaze = 1.5f;
+    [Header("거울 귀신 연출 (MirrorGhostReveal 위임)")]
+    [Tooltip("거울에 붙은 MirrorGhostReveal. 조건 3개 충족 시 이걸 발동하고, 끝나면 north 개방+추격으로 이어감. 기어옴 연출은 이 컴포넌트에서 설정.")]
+    public MirrorGhostReveal mirrorReveal;
 
     [Header("현실 귀신 (Default 레이어)")]
     [Tooltip("실제 추격할 귀신 GameObject. 시작 시 비활성.")]
@@ -73,21 +71,15 @@ public class Floor2MirrorEvent : MonoBehaviour
     [Tooltip("거울 깨짐 후 본체 거울 Renderer 비활성화 (선택)")]
     public Renderer mirrorRenderer;
 
-    [Header("기어나옴(Emerge) 연출")]
+    [Header("거울 깨짐 연출")]
     [Tooltip("깨질 때 카메라 흔들 CameraShake (선택)")]
     public CameraShake cameraShake;
     public float shakeIntensity = 0.4f;
     public float shakeDuration = 0.6f;
-    [Tooltip("깨지는 순간 짧게 켜질 전환 가림용 풀스크린 이미지(검정 권장, 선택). 스왑을 가려줌")]
+    [Tooltip("깨지는 순간 짧게 켜질 전환 가림용 풀스크린 이미지(검정 권장, 선택)")]
     public GameObject screenFlash;
     public float flashDuration = 0.15f;
-    [Tooltip("귀신이 기어나오기 시작하는 위치(거울 안쪽, 낮게). 비우면 realGhostSpawn 사용")]
-    public Transform emergeStart;
-    [Tooltip("귀신이 기어나와 멈추는 위치(방 안 바닥, NavMesh 위)")]
-    public Transform emergeEnd;
-    [Tooltip("기어나오는 데 걸리는 시간(초). 기어나옴 애니 길이와 비슷하게")]
-    public float emergeDuration = 1.3f;
-    [Tooltip("기어나오는 동안 플레이어 쪽을 바라보게")]
+    [Tooltip("귀신 등장 시 플레이어 쪽을 바라보게")]
     public bool facePlayerWhileEmerging = true;
 
     [Header("north 문 근접 트리거")]
@@ -116,7 +108,7 @@ public class Floor2MirrorEvent : MonoBehaviour
 
     private void Start()
     {
-        if (mirrorGhost != null) mirrorGhost.SetActive(false);
+        if (mirrorReveal != null) mirrorReveal.SetReady(false); // 조건 충족 전엔 E로 안 나오게 막음
         if (realGhost != null) realGhost.SetActive(false);
         if (mirrorShatterFx != null) mirrorShatterFx.SetActive(false);
         if (northDoorTriggerObject != null) northDoorTriggerObject.SetActive(false);
@@ -183,11 +175,20 @@ public class Floor2MirrorEvent : MonoBehaviour
         }
     }
 
+    /// <summary>[테스트용] 조건 3개 무시하고 시퀀스 강제 시작 (DevCheats F7).</summary>
+    public void DebugForceStart()
+    {
+        if (sequenceStarted) { Debug.Log("[Floor2MirrorEvent] 이미 시작됨 — 무시"); return; }
+        Debug.Log("[Floor2MirrorEvent] (치트) 조건 무시 강제 시작");
+        sequenceStarted = true;
+        StartCoroutine(EventSequence());
+    }
+
     private IEnumerator EventSequence()
     {
-        Debug.Log("[Floor2MirrorEvent] 7단계 시작");
+        Debug.Log("[Floor2MirrorEvent] 클라이맥스 시작 (단순화: 조건충족 → 거울깨짐 → 추격)");
 
-        // (2) south 입구 문 자동 잠금
+        // (1) south 입구 문 자동 잠금 (도망 못 가게)
         if (entranceDoor != null)
         {
             entranceDoor.isLocked = true;
@@ -198,7 +199,7 @@ public class Floor2MirrorEvent : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f);
 
-        // (3) 방 조명 페이드 다운 + 거울 스포트라이트 페이드 인 (동시)
+        // (2) 방 조명 페이드 다운 + 거울 스포트라이트 (짧은 분위기 빌드업)
         Coroutine dim = StartCoroutine(FadeRoomLights(roomDimRatio, lightFadeDuration));
         if (mirrorSpotlight != null)
         {
@@ -211,46 +212,22 @@ public class Floor2MirrorEvent : MonoBehaviour
         }
         if (dim != null) yield return dim;
 
-        // (4) 거울 응시 대기 → 거울 속 귀신 등장
-        yield return new WaitUntil(IsLookingAtMirror);
-        if (mirrorGhost != null)
-        {
-            if (mirrorGhostPosition != null)
-                mirrorGhost.transform.position = mirrorGhostPosition.position;
-            mirrorGhost.SetActive(true);
-        }
-        if (audioSource != null && ghostAppearSfx != null)
-            audioSource.PlayOneShot(ghostAppearSfx);
+        yield return new WaitForSeconds(0.5f);
 
-        yield return new WaitForSeconds(ghostMinHoldOnFirstGaze);
-
-        // (5) 뒤돌아봄 대기 — 실제 책상 쪽엔 아무것도 없음 (scene 구성으로 보장)
-        yield return new WaitUntil(() => !IsLookingAtMirror());
-
-        // (6) 다시 거울 응시 → 귀신 사라짐 + north 문 자동 개방
-        yield return new WaitUntil(IsLookingAtMirror);
-        if (mirrorGhost != null) mirrorGhost.SetActive(false);
-        if (audioSource != null && ghostVanishSfx != null)
-            audioSource.PlayOneShot(ghostVanishSfx);
-
-        yield return new WaitForSeconds(0.3f);
-
+        // (3) north 문 개방 (도망갈 길 확보)
         if (northDoor != null)
         {
             northDoor.isLocked = false;
             northDoor.requiredKey = KeyType.None;
-
             if (forceOpenNorth && playerCamera != null)
                 northDoor.ForceOpen(playerCamera.transform);
-
             if (audioSource != null && northDoorOpenSfx != null)
                 audioSource.PlayOneShot(northDoorOpenSfx);
         }
 
-        if (northDoorTriggerObject != null)
-            northDoorTriggerObject.SetActive(true);
-
-        Debug.Log("[Floor2MirrorEvent] 6단계 완료 — north 문 개방, 추격 트리거 대기");
+        // (4) 거울 깨짐 + 귀신 기어나옴 + 추격 즉시 발동 (미스디렉션 생략)
+        Debug.Log("[Floor2MirrorEvent] 거울 깨짐 + 추격 발동");
+        TriggerNorthApproach();
     }
 
     /// <summary>
@@ -269,68 +246,47 @@ public class Floor2MirrorEvent : MonoBehaviour
         if (audioSource != null && mirrorShatterSfx != null)
             audioSource.PlayOneShot(mirrorShatterSfx);
 
-        if (mirrorShatterFx != null) mirrorShatterFx.SetActive(true);
+        if (mirrorShatterFx != null)
+        {
+            mirrorShatterFx.SetActive(true);
+            // Play On Awake 설정과 무관하게 확실히 재생
+            var ps = mirrorShatterFx.GetComponentInChildren<ParticleSystem>();
+            if (ps != null) ps.Play(true);
+            else Debug.LogWarning("[Floor2MirrorEvent] mirrorShatterFx에 ParticleSystem이 없음");
+        }
         if (cameraShake != null) cameraShake.Shake(shakeIntensity, shakeDuration);
         if (screenFlash != null) StartCoroutine(FlashOnce());
 
         if (mirrorRenderer != null) mirrorRenderer.enabled = false;
 
-        // 깨지는 0.15초가 미러룸 귀신 → 실제 귀신 스왑을 가려줌
-        yield return new WaitForSeconds(0.15f);
+        // 파편이 터지는 짧은 순간이 귀신 등장을 가려줌
+        yield return new WaitForSeconds(0.2f);
 
-        // ── (2) 실제 귀신 등장 준비 (자동 추격 차단 + 수동 이동 모드) ──
+        // ── (2) 귀신을 방 안 스폰 위치(NavMesh 위)에 바로 등장 ──
         if (realGhost == null)
         {
-            Debug.LogWarning("[Floor2MirrorEvent] realGhost 미연결 — emerge 생략");
+            Debug.LogWarning("[Floor2MirrorEvent] realGhost 미연결 — 추격 생략");
             yield break;
         }
 
-        // GhostChase가 켜져 있으면 코앞 플레이어를 감지해 즉시 추격을 시작해버림 → emerge 동안 꺼둠
-        if (ghostChase != null) ghostChase.enabled = false;
-
-        NavMeshAgent agent = realGhost.GetComponent<NavMeshAgent>();
-        if (agent != null) agent.enabled = false; // 수동 lerp 위해 끔
-
-        // 기어나옴 시작 위치(거울 안쪽, 낮게)
-        Transform startT = emergeStart != null ? emergeStart : realGhostSpawn;
-        if (startT != null) realGhost.transform.position = startT.position;
+        if (realGhostSpawn != null)
+            realGhost.transform.position = realGhostSpawn.position;
         FacePlayer();
-
-        realGhost.SetActive(true); // Animator 기본 상태 = 기어나옴(Emerge) 자동 재생
+        realGhost.SetActive(true);
 
         if (audioSource != null && chaseStartSfx != null)
             audioSource.PlayOneShot(chaseStartSfx);
 
-        // ── (3) 거울에서 방 안으로 기어나오는 이동(수동 lerp) ──
-        if (emergeStart != null && emergeEnd != null)
-        {
-            Vector3 from = emergeStart.position;
-            Vector3 to = emergeEnd.position;
-            float t = 0f;
-            while (t < emergeDuration)
-            {
-                t += Time.deltaTime;
-                realGhost.transform.position = Vector3.Lerp(from, to, t / emergeDuration);
-                FacePlayer();
-                yield return null;
-            }
-            realGhost.transform.position = to;
-        }
-        else
-        {
-            // 위치 미설정 시 시간만 대기 (애니만 재생)
-            yield return new WaitForSeconds(emergeDuration);
-        }
-
-        // ── (4) 추격 시작 (NavMeshAgent 켜고 GhostChase 재가동) ──
-        if (agent != null) agent.enabled = true; // emergeEnd가 NavMesh 위여야 정상 스냅됨
+        // ── (3) 즉시 추격 시작 (NavMeshAgent + GhostChase) ──
+        NavMeshAgent agent = realGhost.GetComponent<NavMeshAgent>();
+        if (agent != null) agent.enabled = true;  // realGhostSpawn이 NavMesh 위여야 정상 작동
         if (ghostChase != null)
         {
             ghostChase.enabled = true;
             ghostChase.StartChase();
         }
 
-        Debug.Log("[Floor2MirrorEvent] 7단계 완료 — 거울 깨짐 → 기어나옴 → 추격 시작");
+        Debug.Log("[Floor2MirrorEvent] 거울 깨짐 → 귀신 등장 → 즉시 추격");
     }
 
     /// <summary>귀신이 플레이어 쪽(수평)을 바라보게 회전.</summary>

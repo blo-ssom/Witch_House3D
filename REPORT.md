@@ -31,7 +31,7 @@
 
 ### 기술 스택
 - C# 스크립트 약 30종 (PlayerScripts / ObjectScripts 디렉터리 구조)
-- Unity AI Navigation 2.0.10 (NavMeshAgent 기반 적 AI 추격)
+- Unity AI Navigation (NavMeshAgent 기반 적 AI 추격)
 - URP Lit 셰이더 기반 PBR 워크플로우
 - 코루틴 기반 이벤트 시퀀싱, 싱글톤 매니저 + static event 통신
 
@@ -50,13 +50,11 @@
    - static event(`OnNoteRead`, `OnPieceCollected`, `OnAllPiecesCollected`)로 결합도 낮춤
 2. **플레이어 컨트롤러 구현**
    - `PlayerMove` / `PlayerLook` / `PlayerInteraction` / `PlayerInventory` / `PlayerFlashlight`
-   - 1인칭 카메라, 3m Raycast 상호작용, KeyType enum 기반 HashSet 키 관리
+   - 1인칭 카메라, KeyType enum 기반 HashSet 키 관리
 3. **퍼즐 / 이벤트 시퀀스 구현**
    - 방1 액자 퍼즐(`PaintingFlip`, `PaintingFallEvent`)
-   - 샹들리에 낙하 이벤트(`ChandelierEvent`)
    - 방2 사진 조각 수집 + 분위기 변화(`PhotoPuzzleManager`, `Room2AtmosphereEvent`, `MemoryBox`)
    - 방3 초상화·석상 퍼즐(`PortraitCover`, `PortraitTracker`, `Room3StatueManager`)
-   - 2층 거울 미스디렉션 7단계(`Floor2MirrorEvent`, `MirrorBranchInteract`, `FakeRoomMirrorEvent`)
 4. **적 AI 및 추격 시퀀스**
    - `GhostChase` — NavMeshAgent 기반 추격 AI (4m/s, 감지 10m, 포착 1.2m)
    - `Floor2GhostEvent` / `UndergroundChaseEvent` 추격 트리거 + 바닥 붕괴(`FloorBreakTrigger`) 씬 전환

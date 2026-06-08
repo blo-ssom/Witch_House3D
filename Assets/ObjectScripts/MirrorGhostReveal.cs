@@ -44,6 +44,16 @@ public class MirrorGhostReveal : Interactable
     [Tooltip("페이드인 직후 이 시간 동안은 뒤돌아봐도 안 사라짐 (귀신을 충분히 보게)")]
     public float minVisible = 0.5f;
 
+    [Header("기어옴 연출 (선택)")]
+    [Tooltip("귀신이 기어오기 시작하는 위치(거울 쪽/멀게 보임). 비우면 기어옴 없이 제자리 페이드인")]
+    public Transform crawlStart;
+    [Tooltip("귀신이 기어와 멈추는 위치(플레이어 쪽/가깝게). crawlStart와 함께 채워야 작동")]
+    public Transform crawlEnd;
+    [Tooltip("기어오는 시간(초). 보통 fadeInDuration과 비슷하게")]
+    public float crawlDuration = 2.5f;
+    [Tooltip("기어오는 동안 진행 방향(플레이어 쪽)을 바라보게")]
+    public bool faceCrawlDir = true;
+
     [Header("프롬프트")]
     public string readyPrompt = "E : 거울을 들여다본다";
 
@@ -53,6 +63,9 @@ public class MirrorGhostReveal : Interactable
 
     private bool ready = true;
     private bool playing = false;
+
+    /// <summary>연출이 진행 중인지 — Floor2MirrorEvent가 끝날 때까지 대기하는 데 사용.</summary>
+    public bool IsPlaying => playing;
     private Renderer[] ghostRenderers;
     private MaterialPropertyBlock mpb;
     private static readonly int BaseColorID = Shader.PropertyToID("_BaseColor"); // URP Lit/Unlit
@@ -99,8 +112,17 @@ public class MirrorGhostReveal : Interactable
         ghost.SetActive(true);
         SetGhostAlpha(0f);
 
+        // 0) 기어옴: 시작 위치로 옮기고 페이드인과 동시에 플레이어 쪽으로 lerp
+        Coroutine crawlCo = null;
+        if (crawlStart != null && crawlEnd != null)
+        {
+            ghost.transform.position = crawlStart.position;
+            crawlCo = StartCoroutine(CrawlGhost());
+        }
+
         // 1) 서서히 떠오름
         yield return Fade(0f, 1f, fadeInDuration);
+        if (crawlCo != null) yield return crawlCo;
 
         // 2) 최소 노출 시간 보장 (이 동안은 뒤돌아봐도 안 꺼짐)
         if (minVisible > 0f) yield return new WaitForSeconds(minVisible);
@@ -121,6 +143,30 @@ public class MirrorGhostReveal : Interactable
 
         onRevealFinished?.Invoke();
         playing = false;
+    }
+
+    /// <summary>귀신이 crawlStart→crawlEnd(플레이어 쪽)로 기어옴. 제자리 기는 애니는 그대로 두고 위치만 lerp.</summary>
+    private IEnumerator CrawlGhost()
+    {
+        Vector3 from = crawlStart.position;
+        Vector3 to = crawlEnd.position;
+
+        if (faceCrawlDir)
+        {
+            Vector3 dir = to - from;
+            dir.y = 0f;
+            if (dir.sqrMagnitude > 0.0001f)
+                ghost.transform.rotation = Quaternion.LookRotation(dir);
+        }
+
+        float t = 0f;
+        while (t < crawlDuration)
+        {
+            t += Time.deltaTime;
+            ghost.transform.position = Vector3.Lerp(from, to, t / crawlDuration);
+            yield return null;
+        }
+        ghost.transform.position = to;
     }
 
     private bool LookedAway()
