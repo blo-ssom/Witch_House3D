@@ -29,10 +29,17 @@
   - [ ] `ghostObject` ← 지하 귀신 GameObject
   - [ ] `ghostChase` ← 지하 귀신의 GhostChase
 
-### 7. 제단
-- [ ] Cube 하나(제단 모양) + **Collider**
-- [ ] Add Component → **AltarInteractable**
-- [ ] **Layer = Interact** (E키 조사 가능하게)
+### 7. 촛불 순서 퍼즐 (제단 폐기 → 교체) 🕯️
+> 상세: `CANDLE_PUZZLE_SETUP.md`. 코드 완료, 씬 와이어링만 남음.
+- [ ] 촛불 8개 **원형(시계 배치)** — 들어오기 전 방 메모(손그림 약도)와 개수·각도 일치
+- [ ] **빨간 점 = 시작 촛불** 1개만 식별되게 (색/위치 다르게)
+- [ ] 각 촛불: **Collider + Layer=Interact** + `CandleInteractable` (flameVisual/flameLight 연결)
+- [ ] 빈 GameObject + `CandlePuzzleManager`
+  - [ ] `candleOrder` ← 촛불 8개를 **메모 순서대로** 드래그 (0번 = 빨강)
+  - [ ] `startLit` 해제 / `keyObject` ← 열쇠 / `candleOutSound` ← 촛불 꺼지는 소리
+- [ ] 열쇠(`KeyItem`): `keyType=Underground`, **onPickup → CandlePuzzleManager.OnKeyCollected** 연결
+- [ ] 들어오기 전 방에 **일기장 + 손그림 메모**(순서 단서) 배치
+- [ ] ~~제단/AltarInteractable~~ 안 써도 됨 (코드는 호환 유지)
 
 ### 8. 탈출구 + 엔딩
 - [ ] 빈 GameObject + **BoxCollider (IsTrigger 켜기)**
@@ -42,14 +49,14 @@
 - [ ] 탈출구를 지하 경로 끝(현관/출구)에 배치
 
 ### 테스트
-- [ ] 지하 들어가면 눈뜸 → 돌아다님 → 제단 E → 1.5초 후 귀신 추격 → 탈출구 도달 → 엔딩
+- [ ] 지하 들어가면 눈뜸 → 돌아다님 → 촛불 순서대로 E → 열쇠 등장 → 열쇠 획득(소등+SFX) → 귀신 추격 → 탈출구 도달 → 엔딩
 - [ ] ⚠️ **NavMesh 베이크됐는지 + 귀신이 NavMesh 위인지** 확인 (안 그럼 추격 안 됨)
 - [ ] ⭐ **현관부터 끝까지 한 번 클리어** ← 이게 진짜 목표. 되면 졸작 생존선 통과
 
 ---
 
 ## 그 다음 (클리어 빌드 나온 뒤에만)
-- [ ] **촛불 순서 퍼즐** (락유어도어식) — 마지막 방 트리거를 조건3 → 촛불 순서로 교체. 촛불 N개 + 정해진 순서대로 E키 → 틀리면 리셋 / 맞으면 거울 깨짐. (마지막 방은 이미 굴러가니 트리거만 바꿔 끼우면 됨)
+- [ ] 촛불 순서 퍼즐 단서 폴리시 — 메모 약도 ↔ 지하 배치 매칭 다듬기, 난이도 조정
 - [ ] 폴리시: 거울 파편 파티클, 엔딩 편지 변화 연출, 사운드, 조명, Fog
 
 ---
@@ -58,8 +65,10 @@
 
 **이미 작동하는 코드 (배치만 하면 됨)**
 - 마지막 방: `Floor2MirrorEvent`(단순화됨)
-- 지하: `UndergroundChaseEvent` / `AltarInteractable` / `EscapeTrigger` / `EndingSequence`
+- 지하: `UndergroundChaseEvent`(TriggerChase 추가) / `EscapeTrigger` / `EndingSequence`
+- 촛불 퍼즐: `CandlePuzzleManager` / `CandleInteractable` / `KeyItem`(onPickup 추가) — `CANDLE_PUZZLE_SETUP.md`
 - `GhostChase`: player 태그 자동검색 추가됨
+- ~~`AltarInteractable`~~ 제단 폐기(코드는 호환 유지)
 
 **디버그 치트 (DevCheats — F9로 도움말 표시)**
 - F1 모든 열쇠 / F2 모든 문 해제 / F3 속도부스트 / F4 다음 씬 / F5 씬 재시작 / F6 바라보는 곳 순간이동 / **F7 마지막 방 거울 시퀀스 강제시작**

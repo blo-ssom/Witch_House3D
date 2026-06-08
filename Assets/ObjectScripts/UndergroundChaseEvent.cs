@@ -86,14 +86,24 @@ public class UndergroundChaseEvent : MonoBehaviour
     }
 
     /// <summary>
-    /// AltarInteractable에서 호출. 제단 조사 시 추격 시작.
+    /// 마지막 추격 시작. 촛불 퍼즐(CandlePuzzleManager) 또는 제단 등 어디서든 호출 가능.
+    /// 효과음 없이 추격 시퀀스만 시작한다(호출 측에서 자기 SFX를 재생).
+    /// </summary>
+    public void TriggerChase()
+    {
+        StartCoroutine(StartChaseSequence());
+    }
+
+    /// <summary>
+    /// (구) 제단 방식 호환용. AltarInteractable에서 호출 — 제단 SFX 재생 후 추격.
+    /// 현재 설계는 촛불 퍼즐 → KeyItem.onPickup → CandlePuzzleManager가 TriggerChase()를 직접 호출.
     /// </summary>
     public void OnAltarInvestigated()
     {
         if (audioSource != null && altarSound != null)
             audioSource.PlayOneShot(altarSound);
 
-        StartCoroutine(StartChaseSequence());
+        TriggerChase();
     }
 
     private IEnumerator StartChaseSequence()
