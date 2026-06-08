@@ -68,6 +68,14 @@ public class GhostChase : MonoBehaviour
     public void StartChase()
     {
         if (isChasing) return;
+
+        // 플레이어가 다른 씬에서 넘어온 경우(지하) 인스펙터 연결이 비어 있음 → 태그로 자동 검색
+        if (player == null)
+        {
+            var p = GameObject.FindGameObjectWithTag("Player");
+            if (p != null) player = p.transform;
+        }
+
         isChasing = true;
 
         agent.enabled = true;
