@@ -1,105 +1,70 @@
-# 할 일 (업데이트 2026-05-26)
+# 할 일 (2026-06-08 갱신)
 
-> 마감 2026-06-17 (D-22) / B 전략 — 대충 다 만들고 폴리시
-> 이번 주 목표 (5/30까지): **처음~끝 클리어 가능 빌드 1개** (흰 박스여도 OK)
-
----
-
-## 오늘 (5/26) 한 것
-
-**방2 MemoryBox — 벽난로 불 꺼짐 타이밍 변경**
-- `MemoryBox.cs`: 불 끄기(조명 + 불꽃 오브젝트 + SFX)를 `PostMemoSequence`(메모 닫은 뒤) → `UnlockSequence`(조각 3개 수집 즉시)로 이동
-- 새 흐름: **조각 3개 → 자물쇠 떨어짐 + 불 꺼짐** / **메모 닫음 → 방 조명 다운 + 거울 손자국 + 메인홀 열쇠**
-- 문서 동기화: `TOMORROW`(불 타이밍 경고), `MEMORYBOX_SETUP`(흐름도 + 플레이테스트)
-- ⚠️ **코드만 변경됨.** 방2 씬 작업(거울 삭제·`PhotoPiece_3` 이동·불 파티클)은 미완 → 아래 2번 그대로 남음
-
-## 지난 작업 (5/24~25)
-
-**2층 Mirror Branch — 거울 잔상 → 손자국 연출(B안)로 재설계 + 코드 완료**
-- `FakeRoomMirrorEvent.cs` 재작성 (손자국 + 거울 E키 트리거) + `MirrorBranchInteract` 헬퍼 추가
-- 작은 열쇠(DrawerSmall) **폐기** → south 문 자동 해제 / 친구의 방 서랍은 키 없이 열림
-- `DoorInteract.ForceUnlock()` 그대로 사용
-- 의도: "거울에서 뭔가 나오려 한다" 학습 → 친구의 방 7단계 '귀신이 거울에서 튀어나옴' 복선
-
-**방2 — 재설계 결정 (코드 작업은 거의 없음)**
-- 거울(`MirrorRevealEvent`) **전면 폐기** — 거울은 2층 전용 (3번째 거울은 모티프 희석)
-- 퍼즐은 **조각 3개 수집 그대로** (대충 닫기로 결정). 3번째 조각 위치 = 천 덮인 가구 밑/구석 상자
-- 벽난로 불 = **Particle System** (무료 에셋 Unity Particle Pack 권장)
-- erasure(친구 흔적 지워짐)는 **선택** — 한 줄짜리(`SetActive(false)`)면 넣고 아니면 생략
-- 방2 = *유품 보관실*로 재해석. 소파 비대칭 배치 + 천 덮개 추가 완료 (씬)
-
-**문서 동기화**
-- `TOMORROW` / `FLOOR2_SETUP` / `GAME_DESIGN` — 손자국·거울폐기 반영
-- `MIRROR_SETUP.md` — 폐기 표시
+> **마감 2026-06-17 (D-9).**
+> **최우선 = 처음~끝(현관→지하 탈출) 클리어되는 빌드 1개. 흰 박스여도 OK.**
+> 한 번 클리어만 되면 그 뒤는 전부 폴리시 버퍼 = 마감 실패 불가능. 신기능보다 "끝까지 굴러가게"가 절대 우선.
 
 ---
 
-## 할 일 (우선순위 순)
-
-### 1. ✅ 2층 Mirror Branch 손자국 와이어링 — **완료 (5/25 밤)**
-- [x] 컴파일 에러 0 확인 (옛 `FakeRoomDoorProximity`는 코드에 이미 없음)
-- [x] 거울: Layer=Interact + Collider + `MirrorBranchInteract`(manager 연결)
-- [x] 콘솔 위 엄마 일기 `NoteItem` (noteID = `mirrorbranch_mother_diary`)
-- [x] 손자국 데칼 placeholder → `handprints[]` 등록
-- [x] SouthDoor `isLocked=true`/`requiredKey=None`, 매니저 슬롯 연결
-- [x] 플레이테스트: 일기→거울 E키→손자국→south 문 열림 OK
-
-**+ 추가로 한 것 (코드/씬 정리):**
-- [x] 동봉 헬퍼 2개를 별도 파일로 분리 — `MirrorBranchInteract.cs`, `Floor2NorthDoorTrigger.cs`
-      (Unity는 파일당 MonoBehaviour 1개 = 파일명 클래스만 Add Component에 뜸. 동봉이면 보조 클래스가 메뉴에 안 보여서 못 붙임)
-- [x] `MirrorCaptureCam` 삭제 — Audio Listener가 2개라 시계 등 3D 사운드가 무음이었음. 폐기된 방2 거울 옵션 B 잔재라 통째 삭제 안전
-
-### 2. 방2 닫기 (1시간) — **다음 최우선**
-- [ ] `Mirror_Room2` + `MirrorRevealEvent` 삭제, `PhotoPiece_3`을 새 위치(천 밑/구석)로 이동
-      ⚠️ 거울이 더는 조각3을 켜주지 않음 → `PhotoPiece_3`는 **활성 + PhotoPiece(pieceID=2) + Interact 레이어 + Collider**로 직접 갖출 것
-- [ ] 벽난로 불 파티클 프리팹 드롭 (무료 에셋)
-- [ ] `Room2AtmosphereEvent.useMemoryBox = true` 확인 (키 이중 등장 방지)
-- [ ] (선택) erasure: 조각 픽업 시 친구 흔적 `SetActive(false)` 한 줄씩
-- [ ] 플레이테스트: 조각 3개 수집 → 메모 완성 → 명부 → 메인홀 열쇠
-
-> ⚠️ **불 꺼짐 타이밍**: 벽난로 불은 **조각 3개 수집 즉시**(`MemoryBox.UnlockSequence`) 자물쇠 떨어짐과 동시에 꺼진다. 메인홀 열쇠는 그 뒤 **메모를 열고 닫아야**(`MemoryBox.PostMemoSequence`) 나온다.
-> 막히면 순서대로 확인 — ① 자물쇠 떨어지고 불 꺼지나(MemoryBox `photoPuzzle`/`fireplaceLight`/`fireplaceFireObject` 슬롯?) ② E키로 메모 뜨나(Collider+Interact, FlipNoteUI+memo Sprite?) ③ 닫으면 열쇠 나오나. 콘솔 `[MemoryBox]` 로그 확인.
-
-### 3. 박스 메시 + NavMesh (남으면)
-- [ ] 친구의 방(16×20) / Chase Corridor(4×8) / 지하 흰 큐브
-- [ ] Chase Corridor 끝 FloorBreakTrigger
-- [ ] NavMesh 베이크 → 2층 end-to-end 플레이테스트
+## 오늘(6/8) 완료한 것
+- ✅ 마지막 방(친구의 방) 단순화 — 미스디렉션 폐기, **조건3/F7 → south잠금 → 조명다운 → north개방 → 거울깨짐 → 귀신등장 → 추격** (모션까지 작동 확인)
+- ✅ Chase Corridor → 바닥꺼짐 → 지하 전환 확인
+- ✅ 지하: 공간 메시 + NavMesh 베이크 + PlayerSpawnPoint + 눈뜨기(암전 Canvas + UndergroundChaseEvent fadePanel)
+- ✅ 코드: GhostChase에 player 태그 자동검색 추가 (지하 귀신용)
 
 ---
 
-## 마감 여유 계산 (오늘 5/25 기준)
+## 집에서 할 일 — 지하 마무리 (이것만 끝내면 클리어 빌드 완성! 🎯)
 
-**남은 기계장치(mechanic) 덩어리 ≈ 6개:**
-1. 2층 손자국 와이어링  2. 방2 닫기  3. 방3 석상 퍼즐
-4. 지하(2차 추격 + 탈출)  5. 박스 메시 + NavMesh  6. end-to-end 클리어 테스트
+### 5. 지하 귀신 배치
+- [ ] 추격 귀신 prefab 복제 (마지막 방 realGhost 또는 1층 귀신 그대로)
+- [ ] **GhostChase + NavMeshAgent** 붙어있는지 확인 / **Default 레이어**
+- [ ] **시작 시 비활성**(체크 해제)으로 둠 — 제단 조사 후 등장
+- [ ] **NavMesh 위**, 플레이어 스폰에서 좀 떨어진 위치
+- [ ] player 슬롯은 **비워둬도 됨**(자동검색 추가함)
+- [ ] Animator: **Apply Root Motion 끄기** + 걷기 클립 **Loop Time 켜기** (안 그럼 모션 끊김)
 
-**여유의 핵심 = "처음~끝 클리어되는 빌드"를 *언제* 찍느냐.**
-한번 클리어만 되면 그 뒤는 전부 폴리시라 *마감 실패가 불가능*해짐. 6/17까지 남는 날이 곧 폴리시 버퍼.
+### 6. 매니저 슬롯 채우기
+- [ ] `UndergroundManager`(UndergroundChaseEvent)에:
+  - [ ] `ghostObject` ← 지하 귀신 GameObject
+  - [ ] `ghostChase` ← 지하 귀신의 GhostChase
 
-| 클리어 빌드 완성일 | 폴리시 버퍼 | 체감 |
-|---|---|---|
-| ~5/29 | 19일 | 아주 여유 |
-| ~6/1 | 16일 | 여유 |
-| ~6/8 | 9일 | 빠듯하지만 OK |
-| 6/15+ | 2일 | 위험 |
+### 7. 제단
+- [ ] Cube 하나(제단 모양) + **Collider**
+- [ ] Add Component → **AltarInteractable**
+- [ ] **Layer = Interact** (E키 조사 가능하게)
 
-**내일 분량 기준:**
-- **최소(안 뒤처짐)**: 1번 + 2번 = 약 2시간 → 2층·방2 두 덩어리 잠금
-- **여유 만들기(앞서감)**: + 3번 박스 메시 + NavMesh → 2층을 end-to-end로 돌려봄
+### 8. 탈출구 + 엔딩
+- [ ] 빈 GameObject + **BoxCollider (IsTrigger 켜기)**
+- [ ] Add Component → **EscapeTrigger**
+- [ ] `fadePanel` 연결 (암전 Canvas)
+- [ ] `endingPanel`에 간단한 "탈출 성공" 패널 연결 (편지 변화 풀연출 EndingSequence는 나중 폴리시)
+- [ ] 탈출구를 지하 경로 끝(현관/출구)에 배치
 
-→ 내일 1+2만 끝내도 6개 중 2개 처리. 이 페이스(하루 2덩어리)면 **~6/1엔 클리어 빌드** = 폴리시 16일 = 여유.
+### 테스트
+- [ ] 지하 들어가면 눈뜸 → 돌아다님 → 제단 E → 1.5초 후 귀신 추격 → 탈출구 도달 → 엔딩
+- [ ] ⚠️ **NavMesh 베이크됐는지 + 귀신이 NavMesh 위인지** 확인 (안 그럼 추격 안 됨)
+- [ ] ⭐ **현관부터 끝까지 한 번 클리어** ← 이게 진짜 목표. 되면 졸작 생존선 통과
 
 ---
 
-## 5/30까지 큰 그림
+## 그 다음 (클리어 빌드 나온 뒤에만)
+- [ ] **촛불 순서 퍼즐** (락유어도어식) — 마지막 방 트리거를 조건3 → 촛불 순서로 교체. 촛불 N개 + 정해진 순서대로 E키 → 틀리면 리셋 / 맞으면 거울 깨짐. (마지막 방은 이미 굴러가니 트리거만 바꿔 끼우면 됨)
+- [ ] 폴리시: 거울 파편 파티클, 엔딩 편지 변화 연출, 사운드, 조명, Fog
 
-| 날짜 | 목표 |
-|---|---|
-| 5/25 (오늘) | Mirror Branch 손자국 재설계+코드, 방2 결정, 문서 동기화 |
-| 5/26 | 2층 손자국 와이어링 + 방2 닫기 (+ 박스 메시) |
-| 5/27 | 방3 석상 퍼즐 + 친구의 방 7단계 작동 확인 |
-| 5/28 | 지하 박스 메시 + 2차 추격 + 탈출 트리거 |
-| 5/29 | 끝까지 클리어 빌드 1차 확인 |
-| 5/30 | 막힌 곳 핀포인트 수정 |
+---
 
-**5/31~** 폴리시 순회 (조명/Fog/SFX/손자국·불 텍스처/사이트블로커).
+## 참고 메모
+
+**이미 작동하는 코드 (배치만 하면 됨)**
+- 마지막 방: `Floor2MirrorEvent`(단순화됨)
+- 지하: `UndergroundChaseEvent` / `AltarInteractable` / `EscapeTrigger` / `EndingSequence`
+- `GhostChase`: player 태그 자동검색 추가됨
+
+**디버그 치트 (DevCheats — F9로 도움말 표시)**
+- F1 모든 열쇠 / F2 모든 문 해제 / F3 속도부스트 / F4 다음 씬 / F5 씬 재시작 / F6 바라보는 곳 순간이동 / **F7 마지막 방 거울 시퀀스 강제시작**
+
+**막히면 체크 (추격 안 될 때)**
+1. NavMesh 베이크됐나
+2. 귀신이 NavMesh 위인가
+3. NavMeshAgent + GhostChase 둘 다 있나
