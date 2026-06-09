@@ -64,8 +64,13 @@ public class UndergroundChaseEvent : MonoBehaviour
         if (playerMove != null) playerMove.enabled = false;
         if (playerLook != null) playerLook.enabled = false;
 
-        if (ghostObject != null)
+        // 안전장치: ghostObject가 실수로 이 매니저(또는 그 부모)를 가리키면
+        // 자기 자신을 비활성화해 코루틴이 죽으므로 무시한다.
+        if (ghostObject != null && ghostObject != gameObject &&
+            !transform.IsChildOf(ghostObject.transform))
             ghostObject.SetActive(false);
+        else if (ghostObject == gameObject || (ghostObject != null && transform.IsChildOf(ghostObject.transform)))
+            Debug.LogError("[UndergroundChaseEvent] ghostObject가 매니저 자신/부모를 가리킵니다. 지하 귀신으로 다시 연결하세요.", this);
 
         StartCoroutine(WakeUpSequence());
     }

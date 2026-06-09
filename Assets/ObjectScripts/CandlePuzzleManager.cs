@@ -28,6 +28,9 @@ public class CandlePuzzleManager : MonoBehaviour
     [Tooltip("체크 = 시작 시 모든 촛불 켜짐(끄는 순서 퍼즐). 해제 = 꺼진 상태로 시작(켜는 순서 퍼즐).")]
     public bool startLit = false;
 
+    [Tooltip("체크 = 첫 촛불(Element 0 = 빨간 시작 촛불)을 처음부터 켜둔다. '여기서 시작' 표시용. (켜는 순서 퍼즐일 때만 의미 있음)")]
+    public bool startCandleLit = true;
+
     [Header("정답 시 등장할 열쇠")]
     [Tooltip("시작 시 자동 비활성. 퍼즐 완성 시 SetActive(true).")]
     public GameObject keyObject;
@@ -48,14 +51,24 @@ public class CandlePuzzleManager : MonoBehaviour
     // 촛불이 도달해야 할 목표 상태. startLit이면 '꺼짐', 아니면 '켜짐'.
     private bool Target => !startLit;
 
+    // 시작 촛불(Element 0)을 미리 켜두면 그 한 칸은 이미 완료된 것으로 간주 → 다음 칸부터.
+    private bool PreLitFirst => startCandleLit && !startLit;
+    private int StartStep => PreLitFirst ? 1 : 0;
+
+    // 각 촛불의 초기/리셋 상태. 시작 촛불만 예외적으로 켜둔다.
+    private bool InitialLit(int index) =>
+        (PreLitFirst && index == 0) ? true : startLit;
+
     private void Start()
     {
-        foreach (var c in candleOrder)
+        for (int i = 0; i < candleOrder.Count; i++)
         {
+            var c = candleOrder[i];
             if (c == null) continue;
             c.Bind(this);
-            c.SetLit(startLit, playSound: false);
+            c.SetLit(InitialLit(i), playSound: false);
         }
+        currentStep = StartStep;
         if (keyObject != null) keyObject.SetActive(false);
     }
 
@@ -85,9 +98,9 @@ public class CandlePuzzleManager : MonoBehaviour
 
     private void ResetCandles()
     {
-        currentStep = 0;
-        foreach (var c in candleOrder)
-            if (c != null) c.SetLit(startLit, playSound: false);
+        currentStep = StartStep;
+        for (int i = 0; i < candleOrder.Count; i++)
+            if (candleOrder[i] != null) candleOrder[i].SetLit(InitialLit(i), playSound: false);
         Debug.Log("[CandlePuzzle] 순서 틀림 → 리셋");
     }
 
