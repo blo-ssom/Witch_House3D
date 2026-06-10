@@ -20,9 +20,27 @@ public class GhostChase : MonoBehaviour
     public Transform player;
 
     [Header("추격 설정")]
-    public float chaseSpeed    = 4f;     // 추격 속도
+    public float chaseSpeed    = 4f;     // 추격 속도 (rubberBand 꺼졌을 때만 사용)
     public float detectRange   = 10f;    // 감지 범위
     public float catchDistance = 1.2f;   // 잡히는 거리
+
+    [Header("고무줄 추격 — 멀면 빠르게, 가까우면 살짝 느리게")]
+    [Tooltip("끄면 기존처럼 chaseSpeed 고정. 켜면 거리에 따라 closeSpeed~farSpeed 사이로 자동 조절")]
+    public bool  rubberBand  = true;
+    [Tooltip("이 거리 안 = closeSpeed (아슬아슬 근접 유지)")]
+    public float closeRange  = 3.5f;
+    [Tooltip("이 거리 밖 = farSpeed (순식간에 따라붙음)")]
+    public float farRange    = 10f;
+    [Tooltip("플레이어 달리기(3.2)보다 살짝 느리게 — 달리는 동안엔 간신히 거리가 벌어진다")]
+    public float closeSpeed  = 2.9f;
+    [Tooltip("한눈팔거나 막히면 이 속도로 따라붙는다")]
+    public float farSpeed    = 4.8f;
+
+    [Header("근접 루프 사운드 (선택 — 비워두면 무시)")]
+    [Tooltip("가까울수록 커지는 루프 SFX (심장박동/숨소리). Loop 켜둔 별도 AudioSource 연결")]
+    public AudioSource proximityLoop;
+    [Tooltip("이 거리 밖이면 근접 사운드 볼륨 0")]
+    public float proximityMaxDistance = 12f;
 
     [Header("활성화")]
     [Tooltip("false면 추격 안 함 → 이벤트에서 true로 변경")]
@@ -93,10 +111,33 @@ public class GhostChase : MonoBehaviour
         // 플레이어 위치로 이동
         agent.SetDestination(player.position);
 
-        // 잡히는 거리 체크
         float dist = Vector3.Distance(transform.position, player.position);
+
+        // 고무줄 속도 — 가까우면 살짝 느리게(아슬아슬), 멀면 빠르게(공포 유지)
+        if (rubberBand)
+        {
+            float t = Mathf.InverseLerp(closeRange, farRange, dist);
+            agent.speed = Mathf.Lerp(closeSpeed, farSpeed, t);
+        }
+
+        UpdateProximityAudio(dist);
+
+        // 잡히는 거리 체크
         if (dist <= catchDistance)
             CatchPlayer();
+    }
+
+    // 거리 기반 근접 사운드 — 가까울수록 볼륨/피치 상승
+    private void UpdateProximityAudio(float dist)
+    {
+        if (proximityLoop == null) return;
+
+        float closeness = 1f - Mathf.Clamp01(dist / proximityMaxDistance);
+        proximityLoop.volume = closeness;
+        proximityLoop.pitch  = Mathf.Lerp(0.9f, 1.25f, closeness);
+
+        if (!proximityLoop.isPlaying)
+            proximityLoop.Play();
     }
 
     private void CatchPlayer()
@@ -105,6 +146,9 @@ public class GhostChase : MonoBehaviour
         isCaught = true;
 
         agent.isStopped = true;
+
+        if (proximityLoop != null)
+            proximityLoop.Stop();
 
         if (audioSource != null && catchSound != null)
             audioSource.PlayOneShot(catchSound);

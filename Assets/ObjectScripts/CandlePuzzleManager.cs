@@ -36,6 +36,10 @@ public class CandlePuzzleManager : MonoBehaviour
     public GameObject keyObject;
     public AudioClip solveSound;     // 열쇠 등장 SFX (선택)
 
+    [Header("오답 피드백")]
+    [Tooltip("순서 틀렸을 때 재생 — 바람에 일괄 꺼지는 소리 권장. 비워두면 무음 (선택)")]
+    public AudioClip wrongSound;
+
     [Header("열쇠 획득 → 소등 + 추격")]
     public AudioClip candleOutSound; // 촛불 꺼지는 사운드 (한 번 재생)
     [Tooltip("소등 후 추격 시작까지 딜레이(초)")]
@@ -101,6 +105,11 @@ public class CandlePuzzleManager : MonoBehaviour
         currentStep = StartStep;
         for (int i = 0; i < candleOrder.Count; i++)
             if (candleOrder[i] != null) candleOrder[i].SetLit(InitialLit(i), playSound: false);
+
+        // 오답 피드백 — "틀렸다"를 확실히 인지시킴 (없으면 버그로 오해)
+        if (audioSource != null && wrongSound != null)
+            audioSource.PlayOneShot(wrongSound);
+
         Debug.Log("[CandlePuzzle] 순서 틀림 → 리셋");
     }
 
