@@ -1247,13 +1247,71 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c7ac402c76204064a9dd8f392e94f986, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 152604403}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c7ac402c76204064a9dd8f392e94f986, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 152604402}
   m_SourcePrefab: {fileID: 100100000, guid: c7ac402c76204064a9dd8f392e94f986, type: 3}
 --- !u!1 &152604401 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c7ac402c76204064a9dd8f392e94f986, type: 3}
   m_PrefabInstance: {fileID: 152604400}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &152604402
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152604401}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.4, y: 0.4, z: 0.4}
+  m_Center: {x: -0.00006332714, y: -0.00040482217, z: 0.0003200136}
+--- !u!114 &152604403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152604401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9541e281e8cac849a6f6ba819fdf390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeyItem
+  interactPrompt: "E : \uC0C1\uD638\uC791\uC6A9"
+  keyType: 9
+  pickupSound: {fileID: 0}
+  pickupVolume: 1
+  onPickup:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 394695877}
+        m_TargetAssemblyTypeName: CandlePuzzleManager, Assembly-CSharp
+        m_MethodName: OnKeyCollected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &173103967
 GameObject:
   m_ObjectHideFlags: 0
@@ -3182,6 +3240,7 @@ MonoBehaviour:
   startCandleLit: 1
   keyObject: {fileID: 152604401}
   solveSound: {fileID: 0}
+  wrongSound: {fileID: 0}
   candleOutSound: {fileID: 0}
   chaseDelay: 0.4
   audioSource: {fileID: 0}
@@ -7371,6 +7430,13 @@ MonoBehaviour:
   chaseSpeed: 4
   detectRange: 10
   catchDistance: 1.2
+  rubberBand: 1
+  closeRange: 3.5
+  farRange: 10
+  closeSpeed: 2.9
+  farSpeed: 4.8
+  proximityLoop: {fileID: 0}
+  proximityMaxDistance: 12
   isChasing: 0
   gameOverUI: {fileID: 0}
   audioSource: {fileID: 0}
