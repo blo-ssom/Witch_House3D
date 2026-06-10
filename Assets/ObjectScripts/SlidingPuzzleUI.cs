@@ -426,29 +426,43 @@ public class SlidingPuzzleUI : MonoBehaviour
         panelGO.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.92f);
         panel = panelGO;
 
-        // 3.5) 보드 액자 — 어두운 나무톤 이중 프레임
-        var frameGO = new GameObject("BoardFrame", typeof(RectTransform), typeof(Image));
-        frameGO.transform.SetParent(panelGO.transform, false);
-        var frameRT = frameGO.GetComponent<RectTransform>();
-        frameRT.anchorMin = frameRT.anchorMax = new Vector2(0.5f, 0.5f);
-        frameRT.pivot = new Vector2(0.5f, 0.5f);
-        frameRT.sizeDelta = new Vector2(boardPixelSize + 56f, boardPixelSize + 56f);
-        var frameImg = frameGO.GetComponent<Image>();
-        frameImg.color = new Color(0.16f, 0.11f, 0.07f, 0.98f);
-        frameImg.raycastTarget = false;
-        var frameOutline = frameGO.AddComponent<Outline>();
-        frameOutline.effectColor = new Color(0f, 0f, 0f, 0.8f);
-        frameOutline.effectDistance = new Vector2(6f, -6f);
+        // 3.5) 보드 액자 — 명암 그라디언트로 입체(3D) 몰딩 표현
+        // 층 구성: 드롭섀도 → 나무 바깥면(상명하암) → 몰딩 단차(역그라디언트) → 안쪽 매트(움푹)
 
-        var frameInnerGO = new GameObject("BoardFrameInner", typeof(RectTransform), typeof(Image));
-        frameInnerGO.transform.SetParent(panelGO.transform, false);
-        var fiRT = frameInnerGO.GetComponent<RectTransform>();
-        fiRT.anchorMin = fiRT.anchorMax = new Vector2(0.5f, 0.5f);
-        fiRT.pivot = new Vector2(0.5f, 0.5f);
-        fiRT.sizeDelta = new Vector2(boardPixelSize + 16f, boardPixelSize + 16f);
-        var fiImg = frameInnerGO.GetComponent<Image>();
-        fiImg.color = new Color(0.04f, 0.03f, 0.02f, 1f);
-        fiImg.raycastTarget = false;
+        // 드롭섀도 — 액자가 배경에서 떠 있는 느낌
+        MakeUIRect(panelGO.transform, "BoardShadow",
+            new Vector2(boardPixelSize + 76f, boardPixelSize + 76f), new Vector2(10f, -14f),
+            new Color(0f, 0f, 0f, 0.55f));
+
+        // 바깥 나무면 — 위에서 빛 받는 상명하암
+        var frameImg = MakeUIRect(panelGO.transform, "BoardFrame",
+            new Vector2(boardPixelSize + 56f, boardPixelSize + 56f), Vector2.zero,
+            new Color(0.20f, 0.135f, 0.085f, 1f));
+        var frameGrad = frameImg.gameObject.AddComponent<UIVerticalGradient>();
+        frameGrad.topColor = new Color(1.45f, 1.45f, 1.4f, 1f);   // 윗부분 하이라이트
+        frameGrad.bottomColor = new Color(0.55f, 0.5f, 0.5f, 1f); // 아랫부분 그늘
+        var frameRim = frameImg.gameObject.AddComponent<Outline>();
+        frameRim.effectColor = new Color(0.5f, 0.38f, 0.22f, 0.85f); // 좌상단 림 라이트
+        frameRim.effectDistance = new Vector2(-2f, 2f);
+        var frameDark = frameImg.gameObject.AddComponent<Outline>();
+        frameDark.effectColor = new Color(0f, 0f, 0f, 0.9f);          // 우하단 외곽 그림자
+        frameDark.effectDistance = new Vector2(3f, -4f);
+
+        // 몰딩 단차 — 역방향 그라디언트라 깎인 경사면처럼 보임
+        var stepImg = MakeUIRect(panelGO.transform, "BoardFrameStep",
+            new Vector2(boardPixelSize + 34f, boardPixelSize + 34f), Vector2.zero,
+            new Color(0.145f, 0.095f, 0.06f, 1f));
+        var stepGrad = stepImg.gameObject.AddComponent<UIVerticalGradient>();
+        stepGrad.topColor = new Color(0.55f, 0.55f, 0.55f, 1f);   // 위가 어둡고
+        stepGrad.bottomColor = new Color(1.35f, 1.3f, 1.25f, 1f); // 아래가 밝음 = 안으로 깎임
+
+        // 안쪽 매트 — 움푹 들어간 바닥
+        var fiImg = MakeUIRect(panelGO.transform, "BoardFrameInner",
+            new Vector2(boardPixelSize + 16f, boardPixelSize + 16f), Vector2.zero,
+            new Color(0.04f, 0.03f, 0.02f, 1f));
+        var fiLip = fiImg.gameObject.AddComponent<Outline>();
+        fiLip.effectColor = new Color(0.45f, 0.36f, 0.24f, 0.5f); // 하단 안쪽 모서리가 빛을 받음
+        fiLip.effectDistance = new Vector2(0f, -2f);
 
         // 3.6) 힌트 텍스트
         var uiFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
@@ -477,6 +491,23 @@ public class SlidingPuzzleUI : MonoBehaviour
         boardRT.sizeDelta = new Vector2(boardPixelSize, boardPixelSize);
         boardRT.anchoredPosition = Vector2.zero;
         boardRoot = boardRT;
+
+        // 4.5) 안쪽 그림자 — 액자가 사진 위에 드리우는 그림자 (보드보다 나중 = 타일 위에 그려짐)
+        float inset = 22f;
+        // 위쪽 (가장 진함 — 빛이 위에서 오므로)
+        var shTop = MakeUIRect(panelGO.transform, "InnerShadow_Top",
+            new Vector2(boardPixelSize, inset), new Vector2(0f, (boardPixelSize - inset) * 0.5f),
+            Color.white);
+        var shTopGrad = shTop.gameObject.AddComponent<UIVerticalGradient>();
+        shTopGrad.topColor = new Color(0f, 0f, 0f, 0.55f);
+        shTopGrad.bottomColor = new Color(0f, 0f, 0f, 0f);
+        // 아래쪽 (옅게)
+        var shBot = MakeUIRect(panelGO.transform, "InnerShadow_Bottom",
+            new Vector2(boardPixelSize, inset * 0.6f), new Vector2(0f, -(boardPixelSize - inset * 0.6f) * 0.5f),
+            Color.white);
+        var shBotGrad = shBot.gameObject.AddComponent<UIVerticalGradient>();
+        shBotGrad.topColor = new Color(0f, 0f, 0f, 0f);
+        shBotGrad.bottomColor = new Color(0f, 0f, 0f, 0.3f);
 
         // 5) 닫기 버튼 (우상단 어두운 X — ESC로도 닫힘)
         if (closeButton == null)
@@ -513,5 +544,21 @@ public class SlidingPuzzleUI : MonoBehaviour
         rt.anchorMax = Vector2.one;
         rt.offsetMin = Vector2.zero;
         rt.offsetMax = Vector2.zero;
+    }
+
+    /// <summary>중앙 앵커 단색 사각형 Image 생성 (액자 레이어용).</summary>
+    private static Image MakeUIRect(Transform parent, string name, Vector2 size, Vector2 pos, Color color)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(Image));
+        go.transform.SetParent(parent, false);
+        var rt = go.GetComponent<RectTransform>();
+        rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0.5f);
+        rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.sizeDelta = size;
+        rt.anchoredPosition = pos;
+        var img = go.GetComponent<Image>();
+        img.color = color;
+        img.raycastTarget = false;
+        return img;
     }
 }
