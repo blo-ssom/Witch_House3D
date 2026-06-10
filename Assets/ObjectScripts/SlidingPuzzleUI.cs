@@ -65,6 +65,10 @@ public class SlidingPuzzleUI : MonoBehaviour
     private bool solved = false;
     private Action onSolvedCallback;
 
+    // 자동 생성 모드 스타일 요소
+    private Image previewGhost;   // 타일 뒤에 흐릿하게 깔리는 완성본 잔상
+    private Sprite lastSlice;     // 빈칸 자리 조각 — 완성 시 채워넣는 연출용
+
     // 퍼즐 여는 동안 잠깐 끄는 플레이어 조작들
     private readonly List<Behaviour> disabledControls = new List<Behaviour>();
 
@@ -135,6 +139,19 @@ public class SlidingPuzzleUI : MonoBehaviour
         board = new int[tileCount];
         tileSize = Mathf.Min(boardRoot.rect.width, boardRoot.rect.height) / gridSize;
 
+        // 완성본 잔상 — 타일 뒤에 흐릿하게 깔아 목표를 보여준다
+        var ghostGO = new GameObject("PreviewGhost", typeof(RectTransform), typeof(Image));
+        var grt = ghostGO.GetComponent<RectTransform>();
+        grt.SetParent(boardRoot, false);
+        grt.anchorMin = Vector2.zero;
+        grt.anchorMax = Vector2.one;
+        grt.offsetMin = Vector2.zero;
+        grt.offsetMax = Vector2.zero;
+        previewGhost = ghostGO.GetComponent<Image>();
+        previewGhost.sprite = src;
+        previewGhost.color = new Color(1f, 1f, 1f, 0.13f);
+        previewGhost.raycastTarget = false;
+
         Texture2D tex = src.texture;
         // 텍스처에서 src가 차지하는 영역 기준으로 분할
         Rect texRect = src.rect;
@@ -163,10 +180,27 @@ public class SlidingPuzzleUI : MonoBehaviour
             Image img = go.GetComponent<Image>();
             img.sprite = slice;
 
+            // 타일 입체감 — 어두운 테두리 + 그림자
+            var tileOutline = go.AddComponent<Outline>();
+            tileOutline.effectColor = new Color(0f, 0f, 0f, 0.9f);
+            tileOutline.effectDistance = new Vector2(1.5f, -1.5f);
+            var tileShadow = go.AddComponent<Shadow>();
+            tileShadow.effectColor = new Color(0f, 0f, 0f, 0.5f);
+            tileShadow.effectDistance = new Vector2(3f, -3f);
+
             int captured = id;
             go.GetComponent<Button>().onClick.AddListener(() => OnTileClicked(captured));
 
             tileRects[id] = rt;
+        }
+
+        // 빈칸(마지막) 조각도 잘라서 보관 — 완성 시 채워넣는 연출용
+        {
+            int lrow = (tileCount - 1) / gridSize;
+            int lcol = (tileCount - 1) % gridSize;
+            float lpx = texRect.x + lcol * subW;
+            float lpy = texRect.y + (gridSize - 1 - lrow) * subH;
+            lastSlice = Sprite.Create(tex, new Rect(lpx, lpy, subW, subH), new Vector2(0.5f, 0.5f), 100f);
         }
 
         // 초기(완성) 상태: board[i] = i, 마지막은 빈칸
@@ -244,6 +278,32 @@ public class SlidingPuzzleUI : MonoBehaviour
 
         if (solveSound != null && audioSource != null)
             audioSource.PlayOneShot(solveSound);
+
+        // 빈칸에 마지막 조각이 서서히 떠올라 그림이 완성되는 연출
+        if (lastSlice != null && boardRoot != null)
+        {
+            var go = new GameObject("Tile_Last", typeof(RectTransform), typeof(Image), typeof(CanvasGroup));
+            var rt = go.GetComponent<RectTransform>();
+            rt.SetParent(boardRoot, false);
+            rt.anchorMin = rt.anchorMax = new Vector2(0f, 1f);
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.sizeDelta = new Vector2(tileSize - tileGap, tileSize - tileGap);
+            rt.anchoredPosition = PosToAnchored(blankPos);
+            var img = go.GetComponent<Image>();
+            img.sprite = lastSlice;
+            img.raycastTarget = false;
+
+            var cg = go.GetComponent<CanvasGroup>();
+            cg.alpha = 0f;
+            float ft = 0f;
+            const float fadeDur = 0.6f;
+            while (ft < fadeDur)
+            {
+                ft += Time.unscaledDeltaTime;
+                cg.alpha = Mathf.Clamp01(ft / fadeDur);
+                yield return null;
+            }
+        }
 
         Debug.Log("[SlidingPuzzle] 퍼즐 완성!");
 
@@ -363,8 +423,68 @@ public class SlidingPuzzleUI : MonoBehaviour
         var panelGO = new GameObject("SlidingPuzzlePanel", typeof(RectTransform), typeof(Image));
         panelGO.transform.SetParent(canvasGO.transform, false);
         Stretch(panelGO.GetComponent<RectTransform>());
-        panelGO.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.88f);
+        panelGO.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.92f);
         panel = panelGO;
+
+        // 3.5) 보드 액자 — 어두운 나무톤 이중 프레임
+        var frameGO = new GameObject("BoardFrame", typeof(RectTransform), typeof(Image));
+        frameGO.transform.SetParent(panelGO.transform, false);
+        var frameRT = frameGO.GetComponent<RectTransform>();
+        frameRT.anchorMin = frameRT.anchorMax = new Vector2(0.5f, 0.5f);
+        frameRT.pivot = new Vector2(0.5f, 0.5f);
+        frameRT.sizeDelta = new Vector2(boardPixelSize + 56f, boardPixelSize + 56f);
+        var frameImg = frameGO.GetComponent<Image>();
+        frameImg.color = new Color(0.16f, 0.11f, 0.07f, 0.98f);
+        frameImg.raycastTarget = false;
+        var frameOutline = frameGO.AddComponent<Outline>();
+        frameOutline.effectColor = new Color(0f, 0f, 0f, 0.8f);
+        frameOutline.effectDistance = new Vector2(6f, -6f);
+
+        var frameInnerGO = new GameObject("BoardFrameInner", typeof(RectTransform), typeof(Image));
+        frameInnerGO.transform.SetParent(panelGO.transform, false);
+        var fiRT = frameInnerGO.GetComponent<RectTransform>();
+        fiRT.anchorMin = fiRT.anchorMax = new Vector2(0.5f, 0.5f);
+        fiRT.pivot = new Vector2(0.5f, 0.5f);
+        fiRT.sizeDelta = new Vector2(boardPixelSize + 16f, boardPixelSize + 16f);
+        var fiImg = frameInnerGO.GetComponent<Image>();
+        fiImg.color = new Color(0.04f, 0.03f, 0.02f, 1f);
+        fiImg.raycastTarget = false;
+
+        // 3.6) 제목 + 힌트 텍스트
+        var uiFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+
+        var titleGO = new GameObject("Title", typeof(RectTransform), typeof(Text));
+        titleGO.transform.SetParent(panelGO.transform, false);
+        var titleRT = titleGO.GetComponent<RectTransform>();
+        titleRT.anchorMin = titleRT.anchorMax = new Vector2(0.5f, 0.5f);
+        titleRT.pivot = new Vector2(0.5f, 0f);
+        titleRT.anchoredPosition = new Vector2(0f, boardPixelSize * 0.5f + 46f);
+        titleRT.sizeDelta = new Vector2(900f, 60f);
+        var titleText = titleGO.GetComponent<Text>();
+        titleText.text = "흐트러진 기억";
+        titleText.font = uiFont;
+        titleText.fontSize = 44;
+        titleText.alignment = TextAnchor.MiddleCenter;
+        titleText.color = new Color(0.78f, 0.70f, 0.55f);
+        titleText.raycastTarget = false;
+        var titleShadow = titleGO.AddComponent<Shadow>();
+        titleShadow.effectColor = new Color(0f, 0f, 0f, 0.9f);
+        titleShadow.effectDistance = new Vector2(2f, -2f);
+
+        var hintGO = new GameObject("Hint", typeof(RectTransform), typeof(Text));
+        hintGO.transform.SetParent(panelGO.transform, false);
+        var hintRT = hintGO.GetComponent<RectTransform>();
+        hintRT.anchorMin = hintRT.anchorMax = new Vector2(0.5f, 0.5f);
+        hintRT.pivot = new Vector2(0.5f, 1f);
+        hintRT.anchoredPosition = new Vector2(0f, -(boardPixelSize * 0.5f + 30f));
+        hintRT.sizeDelta = new Vector2(900f, 30f);
+        var hintText = hintGO.GetComponent<Text>();
+        hintText.text = "조각을 눌러 사진을 복원하라   —   ESC 닫기";
+        hintText.font = uiFont;
+        hintText.fontSize = 20;
+        hintText.alignment = TextAnchor.MiddleCenter;
+        hintText.color = new Color(0.5f, 0.45f, 0.38f);
+        hintText.raycastTarget = false;
 
         // 4) 보드 루트 (중앙 정사각)
         var boardGO = new GameObject("BoardRoot", typeof(RectTransform));
@@ -376,7 +496,7 @@ public class SlidingPuzzleUI : MonoBehaviour
         boardRT.anchoredPosition = Vector2.zero;
         boardRoot = boardRT;
 
-        // 5) 닫기 버튼 (우상단 빨간 사각 — 폰트 의존 없음. ESC로도 닫힘)
+        // 5) 닫기 버튼 (우상단 어두운 X — ESC로도 닫힘)
         if (closeButton == null)
         {
             var btnGO = new GameObject("CloseButton", typeof(RectTransform), typeof(Image), typeof(Button));
@@ -386,8 +506,22 @@ public class SlidingPuzzleUI : MonoBehaviour
             brt.pivot = new Vector2(1f, 1f);
             brt.anchoredPosition = new Vector2(-40f, -40f);
             brt.sizeDelta = new Vector2(64f, 64f);
-            btnGO.GetComponent<Image>().color = new Color(0.6f, 0.1f, 0.1f, 0.95f);
+            btnGO.GetComponent<Image>().color = new Color(0.18f, 0.06f, 0.06f, 0.95f);
+            var btnOutline = btnGO.AddComponent<Outline>();
+            btnOutline.effectColor = new Color(0f, 0f, 0f, 0.8f);
+            btnOutline.effectDistance = new Vector2(2f, -2f);
             closeButton = btnGO.GetComponent<Button>();
+
+            var xGO = new GameObject("X", typeof(RectTransform), typeof(Text));
+            xGO.transform.SetParent(btnGO.transform, false);
+            Stretch(xGO.GetComponent<RectTransform>());
+            var xText = xGO.GetComponent<Text>();
+            xText.text = "×";
+            xText.font = uiFont;
+            xText.fontSize = 40;
+            xText.alignment = TextAnchor.MiddleCenter;
+            xText.color = new Color(0.8f, 0.68f, 0.6f);
+            xText.raycastTarget = false;
         }
     }
 
