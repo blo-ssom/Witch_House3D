@@ -41,6 +41,10 @@ public class Room3StatueManager : MonoBehaviour
         if (fallingHead != null)
             fallingHead.Drop();
 
+        // 복도 점프스케어 무장 (배치 안 했으면 무시)
+        var jumpscare = FindObjectOfType<StatueJumpscare>();
+        if (jumpscare != null) jumpscare.Arm();
+
         Debug.Log("[Room3StatueManager] 4개 석상이 추적을 시작합니다");
     }
 }
