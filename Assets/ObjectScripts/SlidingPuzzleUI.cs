@@ -450,26 +450,8 @@ public class SlidingPuzzleUI : MonoBehaviour
         fiImg.color = new Color(0.04f, 0.03f, 0.02f, 1f);
         fiImg.raycastTarget = false;
 
-        // 3.6) 제목 + 힌트 텍스트
+        // 3.6) 힌트 텍스트
         var uiFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-
-        var titleGO = new GameObject("Title", typeof(RectTransform), typeof(Text));
-        titleGO.transform.SetParent(panelGO.transform, false);
-        var titleRT = titleGO.GetComponent<RectTransform>();
-        titleRT.anchorMin = titleRT.anchorMax = new Vector2(0.5f, 0.5f);
-        titleRT.pivot = new Vector2(0.5f, 0f);
-        titleRT.anchoredPosition = new Vector2(0f, boardPixelSize * 0.5f + 46f);
-        titleRT.sizeDelta = new Vector2(900f, 60f);
-        var titleText = titleGO.GetComponent<Text>();
-        titleText.text = "흐트러진 기억";
-        titleText.font = uiFont;
-        titleText.fontSize = 44;
-        titleText.alignment = TextAnchor.MiddleCenter;
-        titleText.color = new Color(0.78f, 0.70f, 0.55f);
-        titleText.raycastTarget = false;
-        var titleShadow = titleGO.AddComponent<Shadow>();
-        titleShadow.effectColor = new Color(0f, 0f, 0f, 0.9f);
-        titleShadow.effectDistance = new Vector2(2f, -2f);
 
         var hintGO = new GameObject("Hint", typeof(RectTransform), typeof(Text));
         hintGO.transform.SetParent(panelGO.transform, false);
