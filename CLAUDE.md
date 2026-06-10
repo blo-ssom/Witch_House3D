@@ -100,3 +100,41 @@ Assets/
 - `MIRROR_SETUP.md` — 방2 거울 옵션 B (페이크 텍스처 스왑) 셋업
 - `MEMORYBOX_SETUP.md` — 방2 보관함 + 양면 메모 (FlipNoteUI) 와이어링
 - `FLOOR2_SETUP.md` — 2층 Mirror Branch·친구의 방·Chase Corridor 통합 셋업 (2026-05-22 구조 변경 반영)
+
+---
+
+## 🔥 HANDOFF — 현재 상태와 다음 작업 (2026-06-11 새벽 기준, 마감 6/17)
+
+> 이 섹션은 작업 컴퓨터가 바뀌어도 이어서 작업하기 위한 인계서. 완료되면 갱신/삭제할 것.
+
+### 최근 완료 (커밋 ~7d9aa44, 전부 푸시됨)
+- 지하 엔딩 와이어링 완료 (EscapeTrigger→EndingSequence, 편지 글리치+크레딧). 나눔고딕 TMP 폰트 추가 + LiberationSans fallback 등록(전 씬 한글 깨짐 해결)
+- **방3 리뉴얼 완전체**: 석상 시선 사슬 퍼즐(전원이 중앙 사자상 응시→사자가 첫 석상 응시=시작 단서→정답 순서 WingedLion→Girl→Broken→Man→정답 시 다음 석상 응시) → 완성 시 사자상 파편 붕괴(LionBreakEvent, 물리 미사용 shatter) → 방2 열쇠 → 기존 위핑엔젤 추적 → **복도 점프스케어**(StatueJumpscare: Meshy 베일 여인상이 복도 끝→문 나서면 눈앞, 받침대만 남음)
+- 상호작용 프롬프트 통일: 문 `[E]` / 열쇠 `[E] : 줍기` / 노트 `[E] : 읽기` / 석상 `[E] : 살펴보기` / 촛불 `[E] : 켜기`. InteractText 크로스헤어 오른쪽으로 이동. **UnderGround에 GameUI+InteractText 신설**(프롬프트 안 뜨던 버그 수정)
+- 슬라이딩 퍼즐 UI 입체 액자(UIVerticalGradient) + 방2 단서그림 월드 나무액자(R2_FramedPicture) + 이스터에그 하트(ForYou/SlowSpin)
+
+### ⚠️ 미해결 사건: WH.unity 무단 변경 → git restore로 복구됨
+- AtmosphereController가 플레이 중 바꾼 RenderSettings(Fog/Ambient)가 **플레이 종료 후에도 에디터에 잔류**하는 Unity 함정 + R2_Asset 캐비닛 4개 삭제(경위불명)가 저장됐었음 → 디스크는 git restore 완료
+- **다음 세션 첫 작업: WH 씬 열고 검증** — R2_Asset에 Cabinet 4개 존재 + Lighting의 FogEnd=20 확인. 잘못돼 있으면 `git restore Assets/Scenes/WH.unity` 후 씬 다시 열기 (저장 금지)
+- 재발 방지: AtmosphereController에 OnDisable 시 원래 RenderSettings 복원 코드 추가 권장
+
+### 🔴 크리티컬 (전체 감사 결과 — 이것부터)
+1. **지하 촛불 퍼즐 단서 없음** — candleOrder 8개+오답 전체리셋인데 단서 미배치 → 클리어 불가. 해결: 정답을 "빨간 초부터 시계방향"으로 재배열(인스펙터 드래그) 또는 손그림 단서 배치
+2. **방2 양면 메모 비어있음** — FlipNoteUI 씬 미배치 + 앞/뒷면 텍스처 미제작 (문구 확정본은 GAME_DESIGN.md 방2 섹션). 현재 보관함 열면 "(양면 메모 UI 미설정)" 폴백. 스토리 심장이라 최우선
+3. **DevCheats 활성** (F1 전체열쇠/F2 전체문/F4 씬스킵) — 빌드 전 차단
+4. **IntroSequence 미배치** — 시작 편지 인트로가 어느 씬에도 없음. 엔딩(편지 변화) 임팩트를 위해 필요
+
+### 🟡 게임성
+- 달리기 무의미(walk 3.0/run 3.2) → run 4.5~5 권장. 스태미나는 PlayerMove에 구현돼 있음
+- key=None+locked 문은 첫 E에 그냥 열림(HasKey(None)=true) → 방 순서 강제 없음. Room3 열쇠는 트리거 전용(문 안 엶). 의도 확인
+- 잠긴 문 화면 피드백 없음(콘솔 로그만)
+- **풀런(시작→엔딩) 테스트 미실시**
+
+### 🟢 그 외
+- SFX 전반 부재(최대 공백): 시선퍼즐 3(stoneGrind/wrong/solve)·사자붕괴 2(crack/thud)·점프스케어 스팅·엔딩 3(door/letter/glitch) + GAME_DESIGN.md SFX 리스트
+- 허브(홀) 4단계 변화 미구현 — 축소판(클리어마다 조명 끄기) 또는 컷
+- MainMenu 씬에 방2 사본이 로직 컴포넌트째 포함 — 정리 권장. MemoryBox "Doll" UG 잔재 1개
+- MemoryBox/PhotoPuzzleManager의 keyToReveal 비어있음(메인홀 열쇠 요구 문이 없어 진행은 됨)
+
+### 권장 일정 (6일)
+1일차: 크리티컬 1·2·3 / 2일차: 인트로+달리기+잠금프롬프트 / 3~4일: SFX 일괄 / 5일: 풀런 테스트×2(블라인드 1회 포함) / 6일: 버그픽스+빌드
