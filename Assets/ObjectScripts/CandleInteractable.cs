@@ -43,7 +43,8 @@ public class CandleInteractable : Interactable
     public override string GetInteractPrompt()
     {
         if (locked) return "";
-        return promptMessage;
+        if (IsLit) return "";          // 이미 켜진 초에는 프롬프트 숨김
+        return "[E] : 켜기";
     }
 
     /// <summary>매니저가 호출. 시각/사운드만 갱신.</summary>

@@ -13,7 +13,7 @@ public class NoteItem : Interactable
 
     public override string GetInteractPrompt()
     {
-        return "E : 메모 읽기";
+        return "[E] : 읽기";
     }
 
     public override void Interact(PlayerInventory playerInventory)

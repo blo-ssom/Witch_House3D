@@ -18,6 +18,11 @@ public class DoorInteract : Interactable
     private Quaternion closedRotation;
     private Quaternion openedRotation;
 
+    public override string GetInteractPrompt()
+    {
+        return "[E]";
+    }
+
     private void Start()
     {
         if (doorPivot == null)

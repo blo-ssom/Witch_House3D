@@ -14,6 +14,11 @@ public class KeyItem : Interactable
     [Tooltip("열쇠 획득 시 호출. 예: 지하 촛불 퍼즐 CandlePuzzleManager.OnKeyCollected")]
     public UnityEvent onPickup;
 
+    public override string GetInteractPrompt()
+    {
+        return "[E] : 줍기";
+    }
+
     public override void Interact(PlayerInventory playerInventory)
     {
         if (playerInventory == null) return;

@@ -35,8 +35,6 @@ public class StatueGazeInteract : Interactable
     private void Start()
     {
         if (head == null) head = transform;
-        if (interactPrompt == "E : 상호작용")
-            interactPrompt = "E : 석상을 살펴본다";
     }
 
     /// <summary>매니저가 Start에서 호출해 자신을 등록.</summary>
@@ -47,7 +45,7 @@ public class StatueGazeInteract : Interactable
 
     public override string GetInteractPrompt()
     {
-        return locked ? "" : interactPrompt;
+        return locked ? "" : "[E] : 살펴보기";
     }
 
     public override void Interact(PlayerInventory playerInventory)

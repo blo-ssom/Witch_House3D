@@ -41,7 +41,7 @@ public class StatueInteract : Interactable
     {
         if (head == null) head = transform;
         if (interactPrompt == "E : 상호작용")
-            interactPrompt = "E : 석상을 살펴본다";
+            interactPrompt = "[E] : 살펴보기";
     }
 
     public override string GetInteractPrompt()
