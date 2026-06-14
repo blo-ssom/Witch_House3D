@@ -28,6 +28,15 @@ public class PlayerMove : MonoBehaviour
     [Tooltip("스태미나 낮을수록 커지는 숨소리. Loop 켜둔 AudioSource 연결")]
     public AudioSource breathingLoop;
 
+    [Header("Footsteps")]
+    [Tooltip("한 걸음(보폭) 거리(m). 작을수록 발소리가 잦아짐. 속도가 변해도 보폭에 맞춰 박자가 일정.")]
+    public float strideLength = 1.9f;
+    [Range(0f, 1f)] public float footstepVolume = 0.55f;
+    private AudioSource footstepSource;   // Resources/Footsteps/ 자동 로드
+    private AudioClip[] footstepClips;
+    private float distanceSinceStep;
+    private bool movingThisFrame;
+
     // 외부(UI 등) 조회용
     public float StaminaNormalized => useStamina ? stamina / maxStamina : 1f;
     public bool  IsExhausted       => exhausted;
@@ -44,12 +53,19 @@ public class PlayerMove : MonoBehaviour
         controller = GetComponent<CharacterController>();
         stamina = maxStamina;
         currentSpeed = walkSpeed;
+
+        // 발소리 — 전용 AudioSource + Resources 클립 로드
+        footstepSource = gameObject.AddComponent<AudioSource>();
+        footstepSource.playOnAwake = false;
+        footstepSource.spatialBlend = 0f; // 본인 발소리는 2D
+        footstepClips = Resources.LoadAll<AudioClip>("Footsteps");
     }
 
     private void Update()
     {
         Move();
         ApplyGravity();
+        UpdateFootsteps();   // 중력 적용 후 호출 → controller.isGrounded 정확
     }
 
     private void Move()
@@ -79,9 +95,34 @@ public class PlayerMove : MonoBehaviour
         currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, speedChangeRate * Time.deltaTime);
 
         controller.Move(move * currentSpeed * Time.deltaTime);
+        movingThisFrame = isMoving;
 
         if (useStamina)
             UpdateStamina(running);
+    }
+
+    private void UpdateFootsteps()
+    {
+        if (footstepClips == null || footstepClips.Length == 0) return;
+
+        if (movingThisFrame && controller.isGrounded && currentSpeed > 0.1f)
+        {
+            // 거리 기반 — 실제 이동 거리가 한 보폭에 도달할 때마다 발소리.
+            // 속도(가속/감속)가 변해도 발 딛는 박자가 항상 일정해 타이밍이 자연스럽다.
+            distanceSinceStep += currentSpeed * Time.deltaTime;
+            if (distanceSinceStep >= strideLength)
+            {
+                distanceSinceStep = 0f;
+                var clip = footstepClips[Random.Range(0, footstepClips.Length)];
+                footstepSource.pitch = Random.Range(0.94f, 1.06f); // 단조로움 방지
+                footstepSource.PlayOneShot(clip, footstepVolume);
+            }
+        }
+        else
+        {
+            // 멈춤 → 다시 걸을 때 반 보폭쯤 뒤 첫 발(즉시 터지지 않게 자연스럽게)
+            distanceSinceStep = strideLength * 0.5f;
+        }
     }
 
     private void UpdateStamina(bool running)

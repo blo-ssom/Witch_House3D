@@ -52,6 +52,7 @@ public class DoorInteract : Interactable
         {
             if (audioSource != null && doorLockedSound != null)
                 audioSource.PlayOneShot(doorLockedSound);
+            if (GameUI.Instance != null) GameUI.Instance.ShowMessage("열리지 않게 봉인되어 있다.");
             Debug.Log($"{name}: 봉인되어 열리지 않는다.");
             return;
         }
@@ -67,6 +68,7 @@ public class DoorInteract : Interactable
             {
                 if (audioSource != null && doorLockedSound != null)
                     audioSource.PlayOneShot(doorLockedSound);
+                if (GameUI.Instance != null) GameUI.Instance.ShowMessage("잠겨 있다. 열쇠가 필요하다.");
                 Debug.Log($"{requiredKey} 열쇠가 필요하다.");
             }
 
