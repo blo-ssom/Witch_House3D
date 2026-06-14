@@ -1,79 +1,52 @@
-# 할 일 (2026-06-08 갱신)
+# 내일 학교에서 할 일 (2026-06-15 밤 갱신)
 
-> **마감 2026-06-17 (D-9).**
-> **최우선 = 처음~끝(현관→지하 탈출) 클리어되는 빌드 1개. 흰 박스여도 OK.**
-> 한 번 클리어만 되면 그 뒤는 전부 폴리시 버퍼 = 마감 실패 불가능. 신기능보다 "끝까지 굴러가게"가 절대 우선.
-
----
-
-## 오늘(6/8) 완료한 것
-- ✅ 마지막 방(친구의 방) 단순화 — 미스디렉션 폐기, **조건3/F7 → south잠금 → 조명다운 → north개방 → 거울깨짐 → 귀신등장 → 추격** (모션까지 작동 확인)
-- ✅ Chase Corridor → 바닥꺼짐 → 지하 전환 확인
-- ✅ 지하: 공간 메시 + NavMesh 베이크 + PlayerSpawnPoint + 눈뜨기(암전 Canvas + UndergroundChaseEvent fadePanel)
-- ✅ 코드: GhostChase에 player 태그 자동검색 추가 (지하 귀신용)
+> **마감 2026-06-17 (D-2).**
+> 우선순위: ① 플레이 테스트로 오늘 작업 검증 → ② 풀런 클리어 확인 → ③ 남은 SFX/폴리시.
 
 ---
 
-## 집에서 할 일 — 지하 마무리 (이것만 끝내면 클리어 빌드 완성! 🎯)
+## 0. 먼저 — 플레이 테스트로 오늘 추가분 검증 (제일 중요)
+오늘 만든 건 전부 코드/임포트까지만 됐고 **귀로 확인은 아직 안 함.** WH 씬 플레이해서:
 
-### 5. 지하 귀신 배치
-- [ ] 추격 귀신 prefab 복제 (마지막 방 realGhost 또는 1층 귀신 그대로)
-- [ ] **GhostChase + NavMeshAgent** 붙어있는지 확인 / **Default 레이어**
-- [ ] **시작 시 비활성**(체크 해제)으로 둠 — 제단 조사 후 등장
-- [ ] **NavMesh 위**, 플레이어 스폰에서 좀 떨어진 위치
-- [ ] player 슬롯은 **비워둬도 됨**(자동검색 추가함)
-- [ ] Animator: **Apply Root Motion 끄기** + 걷기 클립 **Loop Time 켜기** (안 그럼 모션 끊김)
+- [ ] **발소리** — 나무 소리 톤 OK? 너무 잦/뜸하면 `PlayerMove`의 `strideLength`(기본 1.9, 크게=뜸/작게=잦음), 시끄러우면 `footstepVolume`(0.55)
+- [ ] **분위기 사운드** — 삐걱/노크/발소리/숨소리/속삭임. 너무 뜸하면 `AmbientHorrorSound.cs`의 `AddLayer` 간격 숫자 줄이기. 유령신음(숨소리/속삭임) 톤 과하면 볼륨/교체
+- [ ] **촛불 정답음(Win sound)** — 호러톤에 너무 밝으면 교체 (지하 퍼즐 다 풀면 나는 소리)
+- [ ] **밝기 슬라이더** — 일시정지>설정에서 밝기 움직일 때 화면 밝기 실제로 변하나? (안 변하면 `BrightnessController` Volume priority가 기존보다 낮은 것 → priority 올리기)
+- [ ] **일시정지 메뉴(ESC)** — 계속하기 복귀(커서 잠김) / 설정 / 메인메뉴로 / 게임 종료 작동, 노트·슬라이딩퍼즐 열고 ESC 누르면 그것만 닫히는지(가드)
+- [ ] **메뉴 버튼음** — 메인메뉴/일시정지 버튼 클릭·호버음
+- [ ] **타이틀 폰트** — 메인메뉴 "MANOR" 송명체로 보이는지
 
-### 6. 매니저 슬롯 채우기
-- [ ] `UndergroundManager`(UndergroundChaseEvent)에:
-  - [ ] `ghostObject` ← 지하 귀신 GameObject
-  - [ ] `ghostChase` ← 지하 귀신의 GhostChase
+## 1. 풀런(현관→엔딩) 클리어 테스트 ⭐
+- [ ] 시작~지하 탈출까지 한 번에 클리어 (졸작 생존선)
+- [ ] ⚠️ **소프트락 미검증**: `SR_Enter_Door`(계단방 입구, MainHall키 잠금)를 방2 안 거치고 갈 수 있는지 — 못 가면 열쇠 못 얻어 소프트락. 좌표상 계단문(0.1,-48.8)이 시작(29,-46.9)과 방2(-11.7,-36.4) 사이. 풀런으로 반드시 확인
 
-### 7. 촛불 순서 퍼즐 (제단 폐기 → 교체) 🕯️
-> 상세: `CANDLE_PUZZLE_SETUP.md`. 코드 완료, 씬 와이어링만 남음.
-- [ ] 촛불 8개 **원형(시계 배치)** — 들어오기 전 방 메모(손그림 약도)와 개수·각도 일치
-- [ ] **빨간 점 = 시작 촛불** 1개만 식별되게 (색/위치 다르게)
-- [ ] 각 촛불: **Collider + Layer=Interact** + `CandleInteractable` (flameVisual/flameLight 연결)
-- [ ] 빈 GameObject + `CandlePuzzleManager`
-  - [ ] `candleOrder` ← 촛불 8개를 **메모 순서대로** 드래그 (0번 = 빨강)
-  - [ ] `startLit` 해제 / `keyObject` ← 열쇠 / `candleOutSound` ← 촛불 꺼지는 소리
-- [ ] 열쇠(`KeyItem`): `keyType=Underground`, **onPickup → CandlePuzzleManager.OnKeyCollected** 연결
-- [ ] 들어오기 전 방에 **일기장 + 손그림 메모**(순서 단서) 배치
-- [ ] ~~제단/AltarInteractable~~ 안 써도 됨 (코드는 호환 유지)
+## 2. 남은 SFX (전부 CC0로 — OpenGameArt. `Assets/Audio/CREDITS.txt` 갱신 잊지 말기)
+- [ ] 점프스케어 스팅어 (StatueJumpscare 등)
+- [ ] 석상 사자 파편 붕괴 (LionBreakEvent)
+- [ ] 시선 퍼즐 완성음 (Room3StatueManager)
+- [ ] 엔딩 SFX (EndingSequence)
+- [ ] 추격 BGM (이미 Chase.wav 있음 — 쓸지 확인)
+- [ ] 벽난로 불꽃·종이 타는 소리 / 거울 낮은 울림 / 종이 펄럭임 (메모리박스·미러 이벤트)
+> 받는 법: OpenGameArt에서 CC0만, 페이지 라이선스 확인 → PowerShell로 다운 → Resources나 Audio 폴더 → 인스펙터/매니저 연결. (오늘 UI·촛불·분위기 다 이 방식)
 
-### 8. 탈출구 + 엔딩
-- [ ] 빈 GameObject + **BoxCollider (IsTrigger 켜기)**
-- [ ] Add Component → **EscapeTrigger**
-- [ ] `fadePanel` 연결 (암전 Canvas)
-- [ ] `endingPanel`에 간단한 "탈출 성공" 패널 연결 (편지 변화 풀연출 EndingSequence는 나중 폴리시)
-- [ ] 탈출구를 지하 경로 끝(현관/출구)에 배치
-
-### 테스트
-- [ ] 지하 들어가면 눈뜸 → 돌아다님 → 촛불 순서대로 E → 열쇠 등장 → 열쇠 획득(소등+SFX) → 귀신 추격 → 탈출구 도달 → 엔딩
-- [ ] ⚠️ **NavMesh 베이크됐는지 + 귀신이 NavMesh 위인지** 확인 (안 그럼 추격 안 됨)
-- [ ] ⭐ **현관부터 끝까지 한 번 클리어** ← 이게 진짜 목표. 되면 졸작 생존선 통과
+## 3. 마감 직전 마무리
+- [ ] **DevCheats 차단** (F1 전체열쇠/F2 전체문/F4 씬스킵 등 빌드 들어가면 안 됨)
+- [ ] 빌드 한 번 뽑아보기
+- [ ] **커밋** (오늘 작업: 폰트/밝기/일시정지/사운드 — 아직 커밋 안 함)
 
 ---
 
-## 그 다음 (클리어 빌드 나온 뒤에만)
-- [ ] 촛불 순서 퍼즐 단서 폴리시 — 메모 약도 ↔ 지하 배치 매칭 다듬기, 난이도 조정
-- [ ] 폴리시: 거울 파편 파티클, 엔딩 편지 변화 연출, 사운드, 조명, Fog
+## 오늘(6/15) 완료한 것 (참고)
+- 메인메뉴 타이틀 = 송명체 폰트 / 일기·편지용 나눔펜 SDF 준비(미적용)
+- 설정에 **밝기 슬라이더** 추가 (URP Post Exposure, `BrightnessController`)
+- **인게임 일시정지 메뉴(ESC)** 신설 (`PauseMenu.cs`, 런타임 UI)
+- 사운드(전부 CC0): UI 클릭/호버, 촛불 4종, 분위기 5종(`AmbientHorrorSound.cs`), 플레이어 나무 발소리
+- 발소리 버그(isGrounded) 수정 + 나무 톤 교체
 
----
-
-## 참고 메모
-
-**이미 작동하는 코드 (배치만 하면 됨)**
-- 마지막 방: `Floor2MirrorEvent`(단순화됨)
-- 지하: `UndergroundChaseEvent`(TriggerChase 추가) / `EscapeTrigger` / `EndingSequence`
-- 촛불 퍼즐: `CandlePuzzleManager` / `CandleInteractable` / `KeyItem`(onPickup 추가) — `CANDLE_PUZZLE_SETUP.md`
-- `GhostChase`: player 태그 자동검색 추가됨
-- ~~`AltarInteractable`~~ 제단 폐기(코드는 호환 유지)
-
-**디버그 치트 (DevCheats — F9로 도움말 표시)**
-- F1 모든 열쇠 / F2 모든 문 해제 / F3 속도부스트 / F4 다음 씬 / F5 씬 재시작 / F6 바라보는 곳 순간이동 / **F7 마지막 방 거울 시퀀스 강제시작**
-
-**막히면 체크 (추격 안 될 때)**
-1. NavMesh 베이크됐나
-2. 귀신이 NavMesh 위인가
-3. NavMeshAgent + GhostChase 둘 다 있나
+## 새로 생긴 스크립트/위치 (참고)
+- `Assets/ObjectScripts/MainMenu/BrightnessController.cs` — 전역 밝기(자동 부트스트랩)
+- `Assets/ObjectScripts/MainMenu/PauseMenu.cs` — 일시정지(자동 부트스트랩, 게임씬만)
+- `Assets/ObjectScripts/MainMenu/UIButtonSound.cs` — 버튼 클릭/호버음 (Resources/UISfx)
+- `Assets/ObjectScripts/AmbientHorrorSound.cs` — 분위기 5종 (Resources/Ambient/<카테고리>)
+- `PlayerMove.cs` — 발소리 추가 (Resources/Footsteps)
+- 사운드 출처: `Assets/Audio/CREDITS.txt`

@@ -1,0 +1,30 @@
+사운드 출처 / 라이선스 (CC0 = 저작권 포기, 크레딧 의무 없음. 기록용)
+=================================================================
+
+[UI]
+- UI/click*.wav, rollover*.wav, mouseclick*.wav, switch*.wav
+  출처: OpenGameArt "51 UI sound effects (buttons, switches and clicks)"
+  https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks
+  라이선스: CC0
+
+[촛불 Candle]
+- Candle_Ignite_fire-1_cc0.wav  (점화)
+  출처: OpenGameArt "Fire Crackling"  https://opengameart.org/content/fire-crackling  / CC0
+- Candle_Solve_Win_cc0.wav  (정답)
+  출처: OpenGameArt "Win sound effect"  https://opengameart.org/content/win-sound-effect  / CC0
+- Candle_Extinguish_air_cc0.ogg  (소화)  / Candle_Wrong_hit_cc0.ogg  (오답)
+  출처: OpenGameArt "100 CC0 SFX #2"  https://opengameart.org/content/100-cc0-sfx-2  / CC0
+
+[분위기 Ambient]  (Resources/Ambient/<카테고리>/, AmbientHorrorSound가 로드)
+- Creak (삐걱임), Knock (노크) — wood_squeak / wood_hit
+  출처: OpenGameArt "100 CC0 metal and wood SFX"  https://opengameart.org/content/100-cc0-metal-and-wood-sfx  / CC0
+- Footstep (분위기 발소리) — sfx100v2_footstep_wood
+  출처: OpenGameArt "100 CC0 SFX #2"  https://opengameart.org/content/100-cc0-sfx-2  / CC0
+- 플레이어 발소리 (Resources/Footsteps/step_wood_1~3) — 나무 바닥 발소리
+  출처: OpenGameArt "Different steps on wood, stone, leaves, gravel and mud" (wood01~03)
+  https://opengameart.org/content/different-steps-on-wood-stone-leaves-gravel-and-mud  / CC0
+  (PlayerMove가 Resources/Footsteps 에서 자동 로드, 이동 중 보폭 간격 재생)
+- Breath (숨소리), Whisper (속삭임) — qubodup-GhostMoan
+  출처: OpenGameArt "Ghost Monster Voice Moaning & Growling" (qubodup)  https://opengameart.org/content/ghost-monster-voice-moaning-growling  / CC0
+
+(주의) CC-BY 등 크레딧 필수 라이선스 음원은 사용하지 않음. 새 음원 추가 시 CC0 우선.
