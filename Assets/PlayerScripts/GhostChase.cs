@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -54,14 +55,75 @@ public class GhostChase : MonoBehaviour
     public AudioClip   chaseSound;
     public AudioClip   catchSound;
 
+    [Header("애니메이션 — 이동속도에 크롤 재생속도 연동 (발 미끄러짐 방지)")]
+    [Tooltip("비워두면 자식에서 자동 검색")]
+    public Animator animator;
+    [Tooltip("크롤 클립이 자연스럽게 보이는 기준 이동속도. 발이 밀리면 줄이고, 종종걸음이면 늘린다")]
+    public float animMoveReference = 3.5f;
+    [Tooltip("재생속도 하한/상한 — 너무 느리거나 빨라 보이지 않게 클램프")]
+    public float animSpeedMin = 0.6f;
+    public float animSpeedMax = 1.6f;
+
+    [Tooltip("비워두면 컨트롤러 기본 클립(Crawl) 사용. 지하 마지막 추격은 여기에 Running Crawl 클립을 넣는다")]
+    public AnimationClip chaseClipOverride;
+
+    public enum FlashlightChaseMode { None, ForceOff, Dim }
+    [Header("추격 중 플래시라이트")]
+    [Tooltip("None=그대로 / ForceOff=완전히 꺼짐(2층) / Dim=밝기 감쇠(지하)")]
+    public FlashlightChaseMode flashlightOnChase = FlashlightChaseMode.None;
+    [Tooltip("Dim 모드일 때 밝기 배수 (0.5 = 절반)")]
+    [Range(0f, 1f)] public float flashlightDimMultiplier = 0.45f;
+
+    [Header("추격 중 깜빡임 (사라졌다 나타남)")]
+    [Tooltip("켜면 추격 중 유령이 주기적으로 잠깐 사라졌다 다시 나타난다")]
+    public bool blinkDuringChase = true;
+    [Tooltip("깜빡임 사이 간격(초). 약간의 랜덤이 더해진다")]
+    public float blinkInterval = 3.5f;
+    [Tooltip("사라져 있는 시간(초)")]
+    public float blinkHideDuration = 0.45f;
+    [Tooltip("켜면 사라진 동안 플레이어 주변(뒤/옆)으로 순간이동해서 다시 나타난다")]
+    public bool teleportOnBlink = false;
+    [Tooltip("순간이동 시 플레이어로부터의 최소/최대 거리")]
+    public float teleportMinDistance = 5f;
+    public float teleportMaxDistance = 9f;
+
+    [Header("추격 중 빨간 화면")]
+    [Tooltip("켜면 추격 동안 화면이 빨갛게 물든다(GameUI 사용)")]
+    public bool redScreenOnChase = true;
+
     private NavMeshAgent agent;
     private bool isCaught = false;
+    private Renderer[] ghostRenderers;
+    private PlayerFlashlight playerFlashlight;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = chaseSpeed;
         agent.enabled = false;  // 시작 시 비활성화
+
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
+
+        ghostRenderers = GetComponentsInChildren<Renderer>(true);
+
+        ApplyClipOverride();
+    }
+
+    // chaseClipOverride가 있으면 컨트롤러의 클립을 런타임에 교체 (2층=Crawl 기본 / 지하=Running Crawl)
+    private void ApplyClipOverride()
+    {
+        if (chaseClipOverride == null || animator == null || animator.runtimeAnimatorController == null)
+            return;
+
+        var aoc = new AnimatorOverrideController(animator.runtimeAnimatorController);
+        var overrides = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+        aoc.GetOverrides(overrides);
+        if (overrides.Count > 0)
+        {
+            aoc[overrides[0].Key] = chaseClipOverride;
+            animator.runtimeAnimatorController = aoc;
+        }
     }
 
     private void Update()
@@ -101,7 +163,77 @@ public class GhostChase : MonoBehaviour
         if (audioSource != null && chaseSound != null)
             audioSource.PlayOneShot(chaseSound);
 
+        // 플래시라이트 제어 (2층=강제 OFF / 지하=Dim)
+        ApplyFlashlightMode();
+
+        // 빨간 화면 시작
+        if (redScreenOnChase && GameUI.Instance != null)
+            GameUI.Instance.SetChaseDanger(true);
+
+        // 깜빡임 시작
+        if (blinkDuringChase)
+            StartCoroutine(BlinkRoutine());
+
         Debug.Log("[GhostChase] 추격 시작!");
+    }
+
+    private void ApplyFlashlightMode()
+    {
+        if (flashlightOnChase == FlashlightChaseMode.None) return;
+
+        if (playerFlashlight == null)
+            playerFlashlight = FindObjectOfType<PlayerFlashlight>();
+        if (playerFlashlight == null) return;
+
+        if (flashlightOnChase == FlashlightChaseMode.ForceOff)
+            playerFlashlight.ForceOff();
+        else if (flashlightOnChase == FlashlightChaseMode.Dim)
+            playerFlashlight.SetDim(flashlightDimMultiplier);
+    }
+
+    // 추격 중 잠깐 사라졌다 다시 나타남 (+선택적 순간이동)
+    private IEnumerator BlinkRoutine()
+    {
+        while (!isCaught && isChasing)
+        {
+            yield return new WaitForSeconds(blinkInterval + Random.Range(-0.8f, 0.8f));
+            if (isCaught) yield break;
+
+            SetGhostVisible(false);
+
+            if (teleportOnBlink)
+                TryTeleportNearPlayer();
+
+            yield return new WaitForSeconds(blinkHideDuration);
+
+            SetGhostVisible(true);
+        }
+    }
+
+    private void SetGhostVisible(bool visible)
+    {
+        if (ghostRenderers == null) return;
+        foreach (var r in ghostRenderers)
+            if (r != null) r.enabled = visible;
+    }
+
+    // 사라진 동안 플레이어 주변 NavMesh 위로 순간이동
+    private void TryTeleportNearPlayer()
+    {
+        if (player == null || !agent.enabled) return;
+
+        for (int i = 0; i < 6; i++)
+        {
+            float ang = Random.Range(0f, Mathf.PI * 2f);
+            float dist = Random.Range(teleportMinDistance, teleportMaxDistance);
+            Vector3 candidate = player.position + new Vector3(Mathf.Cos(ang), 0f, Mathf.Sin(ang)) * dist;
+
+            if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+            {
+                agent.Warp(hit.position);
+                return;
+            }
+        }
     }
 
     private void Chase()
@@ -121,10 +253,31 @@ public class GhostChase : MonoBehaviour
         }
 
         UpdateProximityAudio(dist);
+        UpdateCrawlAnimSpeed();
+
+        // 빨간 화면 강도 — 가까울수록 진하게
+        if (redScreenOnChase && GameUI.Instance != null)
+        {
+            float closeness = 1f - Mathf.Clamp01(dist / proximityMaxDistance);
+            GameUI.Instance.SetDangerLevel(closeness);
+        }
 
         // 잡히는 거리 체크
         if (dist <= catchDistance)
             CatchPlayer();
+    }
+
+    // 실제 이동속도에 크롤 재생속도를 맞춰 발 미끄러짐 제거
+    private void UpdateCrawlAnimSpeed()
+    {
+        if (animator == null) return;
+
+        // 실제 수평 이동속도 기준 (막히면 0 → 애니도 거의 멈춤)
+        Vector3 v = agent.velocity;
+        v.y = 0f;
+        float speed = v.magnitude;
+
+        animator.speed = Mathf.Clamp(speed / animMoveReference, animSpeedMin, animSpeedMax);
     }
 
     // 거리 기반 근접 사운드 — 가까울수록 볼륨/피치 상승
@@ -146,6 +299,15 @@ public class GhostChase : MonoBehaviour
         isCaught = true;
 
         agent.isStopped = true;
+
+        if (animator != null)
+            animator.speed = 1f;  // 잡는 순간 크롤 정상속도로 복귀
+
+        SetGhostVisible(true);  // 잡힐 땐 반드시 보이게
+
+        // 빨간 화면 강한 플래시
+        if (redScreenOnChase && GameUI.Instance != null)
+            GameUI.Instance.FlashCatch();
 
         if (proximityLoop != null)
             proximityLoop.Stop();

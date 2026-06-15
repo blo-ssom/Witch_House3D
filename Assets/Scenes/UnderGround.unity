@@ -8443,6 +8443,20 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   chaseSound: {fileID: 0}
   catchSound: {fileID: 0}
+  animator: {fileID: 0}
+  animMoveReference: 3.5
+  animSpeedMin: 0.6
+  animSpeedMax: 1.6
+  chaseClipOverride: {fileID: -203655887218126122, guid: e690c68e776907843b1498c4d9041731, type: 3}
+  flashlightOnChase: 2
+  flashlightDimMultiplier: 0.45
+  blinkDuringChase: 1
+  blinkInterval: 3.5
+  blinkHideDuration: 0.45
+  teleportOnBlink: 0
+  teleportMinDistance: 5
+  teleportMaxDistance: 9
+  redScreenOnChase: 1
 --- !u!195 &797771096
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -17691,6 +17705,10 @@ MonoBehaviour:
   messageText: {fileID: 0}
   defaultMessageDuration: 2.2
   messageFadeDuration: 0.4
+  dangerColor: {r: 0.6, g: 0, b: 0, a: 1}
+  dangerMaxAlpha: 0.5
+  dangerMinAlpha: 0.12
+  dangerPulseSpeed: 3.2
 --- !u!1001 &1719709202
 PrefabInstance:
   m_ObjectHideFlags: 0

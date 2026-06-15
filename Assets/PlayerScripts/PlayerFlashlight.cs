@@ -46,6 +46,10 @@ public class PlayerFlashlight : MonoBehaviour
     private Quaternion currentRotation;
     private Vector3 lastTargetPosition;
 
+    // 추격 연출용: 강제 OFF(토글 잠금) / 밝기 감쇠
+    private bool lockedOff = false;
+    private float dimMultiplier = 1f;
+
     private void Start()
     {
         if (flashlight == null)
@@ -76,6 +80,8 @@ public class PlayerFlashlight : MonoBehaviour
 
     private void Update()
     {
+        if (lockedOff) return;  // 강제 OFF 중엔 토글 불가
+
         if (Input.GetKeyDown(toggleKey))
         {
             Toggle();
@@ -118,13 +124,32 @@ public class PlayerFlashlight : MonoBehaviour
             {
                 float n = Mathf.PerlinNoise(Time.time * flickerSpeed, 0f);
                 float modulation = 1f + (n - 0.5f) * 2f * flickerStrength;
-                flashlight.intensity = baseIntensity * modulation;
+                flashlight.intensity = baseIntensity * modulation * dimMultiplier;
             }
             else
             {
-                flashlight.intensity = baseIntensity;
+                flashlight.intensity = baseIntensity * dimMultiplier;
             }
         }
+    }
+
+    /// <summary>추격 연출: 손전등을 강제로 끄고 토글을 잠근다 (2층 추격용).</summary>
+    public void ForceOff()
+    {
+        lockedOff = true;
+        SetOn(false);
+    }
+
+    /// <summary>강제 OFF 해제 — 다시 토글 가능.</summary>
+    public void ReleaseForce()
+    {
+        lockedOff = false;
+    }
+
+    /// <summary>밝기 감쇠 배수 설정 (1=원래, 0.5=절반). 지하 추격용.</summary>
+    public void SetDim(float multiplier)
+    {
+        dimMultiplier = Mathf.Clamp01(multiplier);
     }
 
     public void Toggle()
@@ -137,6 +162,7 @@ public class PlayerFlashlight : MonoBehaviour
     public void SetOn(bool on)
     {
         if (flashlight == null) return;
+        if (lockedOff && on) return;  // 강제 OFF 중엔 켤 수 없음
         isOn = on;
         flashlight.enabled = isOn;
     }
