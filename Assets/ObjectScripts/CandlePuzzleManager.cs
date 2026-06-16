@@ -36,6 +36,13 @@ public class CandlePuzzleManager : MonoBehaviour
     public GameObject keyObject;
     public AudioClip solveSound;     // 열쇠 등장 SFX (선택)
 
+    [Header("완성 시 오브젝트 이동 (선택 — 비밀통로 등)")]
+    [Tooltip("촛불 다 맞추면 이 오브젝트를 moveTargetPosition으로 옮긴다")]
+    public Transform moveOnSolve;
+    public Vector3 moveTargetPosition;
+    [Tooltip("이동 시간(초). 0이면 즉시 순간이동")]
+    public float moveDuration = 1.5f;
+
     [Header("오답 피드백")]
     [Tooltip("순서 틀렸을 때 재생 — 바람에 일괄 꺼지는 소리 권장. 비워두면 무음 (선택)")]
     public AudioClip wrongSound;
@@ -119,7 +126,22 @@ public class CandlePuzzleManager : MonoBehaviour
         if (audioSource != null && solveSound != null)
             audioSource.PlayOneShot(solveSound);
         if (keyObject != null) keyObject.SetActive(true);
+        if (moveOnSolve != null) StartCoroutine(MoveOnSolveRoutine());
         Debug.Log("[CandlePuzzle] 정답! 열쇠 등장.");
+    }
+
+    private IEnumerator MoveOnSolveRoutine()
+    {
+        Vector3 start = moveOnSolve.position;
+        if (moveDuration <= 0f) { moveOnSolve.position = moveTargetPosition; yield break; }
+        float t = 0f;
+        while (t < moveDuration)
+        {
+            t += Time.deltaTime;
+            moveOnSolve.position = Vector3.Lerp(start, moveTargetPosition, Mathf.SmoothStep(0f, 1f, t / moveDuration));
+            yield return null;
+        }
+        moveOnSolve.position = moveTargetPosition;
     }
 
     /// <summary>퍼즐 열쇠의 KeyItem.onPickup 이벤트에 연결. 열쇠 획득 시 호출.</summary>

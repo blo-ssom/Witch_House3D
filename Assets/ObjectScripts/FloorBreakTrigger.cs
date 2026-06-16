@@ -87,6 +87,10 @@ public class FloorBreakTrigger : MonoBehaviour
     {
         Debug.Log("[FloorBreak] 밟힘! 붕괴 시퀀스 시작.");
 
+        // 추격 중인 귀신 멈춤 — 붕괴/추락 중 잡혀서 게임오버 되는 것 방지
+        foreach (var gc in FindObjectsByType<GhostChase>(FindObjectsSortMode.None))
+            gc.StopChase();
+
         // 참조 자동 탐색
         if (playerCamera == null) playerCamera = Camera.main;
         if (cameraShake == null && playerCamera != null)

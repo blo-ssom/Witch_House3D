@@ -25,15 +25,27 @@ public class UndergroundChaseEvent : MonoBehaviour
     [Header("플레이어")]
     public PlayerMove playerMove;
     public PlayerLook playerLook;
+    [Tooltip("지하 진입 시 손전등을 다시 켜고(2층 추격의 강제 OFF/감쇠를 해제) 밝기를 복구한다.")]
+    public PlayerFlashlight playerFlashlight;
 
     [Header("추격 시작 연출")]
     [Tooltip("제단 조사 후 추격 시작까지 딜레이")]
     public float chaseStartDelay = 1.5f;
+    [Tooltip("추격 중 손전등을 어둡게 할지 (기본 OFF — 그냥 켜진 채 유지)")]
+    public bool dimFlashlightInChase = false;
+    [Range(0f, 1f)] public float chaseFlashlightDim = 0.5f;
 
     [Header("SFX")]
     public AudioSource audioSource;
     public AudioClip ambientSound;
     public AudioClip altarSound;
+    [Tooltip("지하 추격 시작 시 루프 재생할 BGM (예: Chase.wav)")]
+    public AudioClip chaseBgm;
+    [Range(0f, 1f)] public float chaseBgmVolume = 0.7f;
+    [Tooltip("추격 직전 멀리서 들리는 경고음(숨소리/비명) — 갑작스러운 등장 완화용")]
+    public AudioClip warningSfx;
+    [Tooltip("경고음 후 실제 추격이 시작되기까지의 긴장 대기 시간")]
+    public float buildupDelay = 2f;
 
     public static UndergroundChaseEvent Instance { get; private set; }
 
@@ -45,14 +57,17 @@ public class UndergroundChaseEvent : MonoBehaviour
     private void Start()
     {
         // Player가 DontDestroyOnLoad로 넘어왔다면 인스펙터 슬롯이 비어있음 → Tag로 자동 검색
-        if (playerMove == null || playerLook == null)
+        if (playerMove == null || playerLook == null || playerFlashlight == null)
         {
             var playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj != null)
             {
                 if (playerMove == null) playerMove = playerObj.GetComponent<PlayerMove>();
                 if (playerLook == null) playerLook = playerObj.GetComponentInChildren<PlayerLook>();
+                if (playerFlashlight == null) playerFlashlight = playerObj.GetComponentInChildren<PlayerFlashlight>();
             }
+            // 그래도 못 찾으면 씬 전체에서 검색 (지하 자체 플레이어용)
+            if (playerFlashlight == null) playerFlashlight = FindObjectOfType<PlayerFlashlight>();
         }
 
         if (fadePanel != null)
@@ -87,6 +102,14 @@ public class UndergroundChaseEvent : MonoBehaviour
         if (playerMove != null) playerMove.enabled = true;
         if (playerLook != null) playerLook.enabled = true;
 
+        // 지하 진입 시 손전등 복구: 2층 추격에서 강제 OFF/감쇠된 상태를 풀고 다시 켠다.
+        if (playerFlashlight != null)
+        {
+            playerFlashlight.ReleaseForce();
+            playerFlashlight.SetDim(1f);
+            playerFlashlight.SetOn(true);
+        }
+
         Debug.Log("[UndergroundChaseEvent] 눈 뜨기 완료. 자유 탐색 시작.");
     }
 
@@ -115,6 +138,24 @@ public class UndergroundChaseEvent : MonoBehaviour
     {
         yield return new WaitForSeconds(chaseStartDelay);
 
+        // 빌드업: 추격 직전 멀리서 경고음 + 긴장 대기 (갑작스러운 등장 완화)
+        if (audioSource != null && warningSfx != null)
+            audioSource.PlayOneShot(warningSfx);
+        yield return new WaitForSeconds(buildupDelay);
+
+        // 추격 BGM 루프 시작
+        if (chaseBgm != null && audioSource != null)
+        {
+            audioSource.clip = chaseBgm;
+            audioSource.loop = true;
+            audioSource.volume = chaseBgmVolume;
+            audioSource.Play();
+        }
+
+        // (선택) 추격 중 손전등 감쇠
+        if (dimFlashlightInChase && playerFlashlight != null)
+            playerFlashlight.SetDim(chaseFlashlightDim);
+
         if (ghostObject != null)
             ghostObject.SetActive(true);
 
@@ -122,6 +163,27 @@ public class UndergroundChaseEvent : MonoBehaviour
             ghostChase.StartChase();
 
         Debug.Log("[UndergroundChaseEvent] 제단 조사 → 2차 추격 시작!");
+    }
+
+    /// <summary>추격 BGM을 페이드아웃하고 멈춘다 (엔딩 진입 등).</summary>
+    public void FadeOutChaseBgm(float dur = 2f)
+    {
+        if (audioSource != null && audioSource.isPlaying)
+            StartCoroutine(FadeBgmRoutine(dur));
+    }
+
+    private IEnumerator FadeBgmRoutine(float dur)
+    {
+        float start = audioSource.volume;
+        float t = 0f;
+        while (t < dur)
+        {
+            t += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(start, 0f, t / dur);
+            yield return null;
+        }
+        audioSource.Stop();
+        audioSource.volume = start;
     }
 
     private IEnumerator FadeIn()

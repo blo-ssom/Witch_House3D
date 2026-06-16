@@ -93,6 +93,7 @@ public class GhostChase : MonoBehaviour
 
     private NavMeshAgent agent;
     private bool isCaught = false;
+    private bool stopped = false;
     private Renderer[] ghostRenderers;
     private PlayerFlashlight playerFlashlight;
 
@@ -128,7 +129,7 @@ public class GhostChase : MonoBehaviour
 
     private void Update()
     {
-        if (isCaught || player == null) return;
+        if (isCaught || stopped || player == null) return;
 
         if (!isChasing)
         {
@@ -175,6 +176,27 @@ public class GhostChase : MonoBehaviour
             StartCoroutine(BlinkRoutine());
 
         Debug.Log("[GhostChase] 추격 시작!");
+    }
+
+    /// <summary>추격을 자연스럽게 멈춘다(붕괴·씬전환 등). 그 자리에 서고 더는 잡지 않음.</summary>
+    public void StopChase()
+    {
+        if (isCaught || stopped) return;
+        stopped = true;
+        isChasing = false;
+
+        if (agent != null && agent.enabled)
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
+        }
+        if (animator != null) animator.speed = 0f;   // 크롤 정지 — 그 자리에 멎음
+        SetGhostVisible(true);
+        if (proximityLoop != null) proximityLoop.Stop();
+        if (redScreenOnChase && GameUI.Instance != null)
+            GameUI.Instance.SetChaseDanger(false);
+
+        Debug.Log("[GhostChase] 추격 중단 (멈춤)");
     }
 
     private void ApplyFlashlightMode()

@@ -41,6 +41,12 @@ public class EscapeTrigger : MonoBehaviour
 
     private IEnumerator EscapeSequence(GameObject player)
     {
+        // 엔딩 진입 — 추격 멈추고 추격 BGM 페이드아웃
+        foreach (var gc in FindObjectsByType<GhostChase>(FindObjectsSortMode.None))
+            gc.StopChase();
+        if (UndergroundChaseEvent.Instance != null)
+            UndergroundChaseEvent.Instance.FadeOutChaseBgm(2f);
+
         // 플레이어 이동 멈춤
         var move = player.GetComponent<PlayerMove>();
         if (move != null) move.enabled = false;

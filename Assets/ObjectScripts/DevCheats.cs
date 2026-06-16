@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 ///  F1 : 모든 열쇠 지급 (KeyType 전부)
 ///  F2 : 씬 안의 모든 문 잠금 해제(DoorInteract.ForceUnlock)
 ///  F3 : 이동 속도 부스트 토글 (빠른 이동)
-///  F4 : 다음 씬 로드 (Build Settings 순서 기준)
+///  F4 : 방2 슬라이딩 퍼즐 즉시 완성 (시연용 — 바로 통과)
 ///  F5 : 현재 씬 재시작
 ///  F6 : 바라보는 지점으로 순간이동 (노클립 점프)
 ///  F7 : 친구의 방 거울 시퀀스 강제 시작 (조건 무시)
@@ -44,7 +44,7 @@ public class DevCheats : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F1)) GiveAllKeys();
         if (Input.GetKeyDown(KeyCode.F2)) UnlockAllDoors();
         if (Input.GetKeyDown(KeyCode.F3)) ToggleSpeedBoost();
-        if (Input.GetKeyDown(KeyCode.F4)) LoadNextScene();
+        if (Input.GetKeyDown(KeyCode.F4)) SolveSlidingPuzzle();
         if (Input.GetKeyDown(KeyCode.F5)) ReloadScene();
         if (Input.GetKeyDown(KeyCode.F6)) TeleportToLook();
         if (Input.GetKeyDown(KeyCode.F7)) ForceFloor2Mirror();
@@ -96,16 +96,12 @@ public class DevCheats : MonoBehaviour
         }
     }
 
-    private void LoadNextScene()
+    private void SolveSlidingPuzzle()
     {
-        int next = SceneManager.GetActiveScene().buildIndex + 1;
-        if (next >= SceneManager.sceneCountInBuildSettings)
-        {
-            Log("[F4] 다음 씬 없음 (마지막 씬)");
-            return;
-        }
-        Log($"[F4] 다음 씬 로드 (index {next})");
-        SceneManager.LoadScene(next);
+        var spi = FindObjectOfType<SlidingPuzzleInteract>();
+        if (spi == null) { Log("[F4] SlidingPuzzleInteract 없음 (이 씬에 방2 퍼즐 없음)"); return; }
+        spi.ForceSolve();
+        Log("[F4] 방2 슬라이딩 퍼즐 즉시 완성");
     }
 
     private void ReloadScene()
@@ -164,7 +160,7 @@ public class DevCheats : MonoBehaviour
         GUILayout.Label("F1  모든 열쇠 지급", RichLabel());
         GUILayout.Label("F2  모든 문 잠금 해제", RichLabel());
         GUILayout.Label("F3  속도 부스트 토글", RichLabel());
-        GUILayout.Label("F4  다음 씬", RichLabel());
+        GUILayout.Label("F4  방2 퍼즐 즉시 완성", RichLabel());
         GUILayout.Label("F5  씬 재시작", RichLabel());
         GUILayout.Label("F6  바라보는 곳 순간이동", RichLabel());
         GUILayout.Label("F7  거울 시퀀스 강제 시작", RichLabel());

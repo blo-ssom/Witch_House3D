@@ -144,7 +144,37 @@ public class DoorInteract : Interactable
         if (audioSource != null && doorCloseSound != null)
             audioSource.PlayOneShot(doorCloseSound);
 
+        // 닫히는 동안 회전하는 문 콜라이더가 플레이어를 밀어내지 않도록
+        // 물리 콜라이더를 잠시 껐다가, 거의 다 닫히면 다시 켠다(봉인 유지).
+        StartCoroutine(DisableBlockingWhileClosing());
+
         Debug.Log($"{name}: 닫고 봉인됨");
+    }
+
+    private System.Collections.IEnumerator DisableBlockingWhileClosing()
+    {
+        var cols = doorPivot.GetComponentsInChildren<Collider>();
+        var toRestore = new System.Collections.Generic.List<Collider>();
+        foreach (var c in cols)
+        {
+            // 물리(비트리거) 콜라이더만 끔 — 상호작용용 트리거 콜라이더는 보존
+            if (c != null && !c.isTrigger && c.enabled)
+            {
+                c.enabled = false;
+                toRestore.Add(c);
+            }
+        }
+
+        // 거의 다 닫힐 때까지 대기 (안전장치로 최대 3초)
+        float t = 0f;
+        while (Quaternion.Angle(doorPivot.localRotation, closedRotation) > 1f && t < 3f)
+        {
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        foreach (var c in toRestore)
+            if (c != null) c.enabled = true;
     }
 
     private void CloseDoor()

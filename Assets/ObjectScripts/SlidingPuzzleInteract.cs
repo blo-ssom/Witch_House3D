@@ -19,6 +19,12 @@ public class SlidingPuzzleInteract : Interactable
     public string unsolvedPrompt = "E : 흐트러진 사진을 맞추다";
     public string solvedPrompt   = "E : 완성된 사진";
 
+    [Header("완성 시 분위기")]
+    [Tooltip("완성 시 끌 오브젝트들 (벽난로 불 파티클·라이트 등) — SetActive(false)")]
+    public GameObject[] turnOffOnSolve;
+    [Tooltip("방2에 가둔 입구 문 — 완성 시 봉인/잠금 해제")]
+    public DoorInteract exitDoor;
+
     private bool solved = false;
 
     private void Start()
@@ -48,6 +54,13 @@ public class SlidingPuzzleInteract : Interactable
         SlidingPuzzleUI.Instance.OpenPuzzle(puzzleImage, OnSolved);
     }
 
+    /// <summary>[치트/외부] 퍼즐을 즉시 완성 처리 (UI 안 열고 바로).</summary>
+    public void ForceSolve()
+    {
+        if (solved) return;
+        OnSolved();
+    }
+
     private void OnSolved()
     {
         solved = true;
@@ -59,5 +72,17 @@ public class SlidingPuzzleInteract : Interactable
             PhotoPuzzleManager.Instance.RevealKey();
         else
             Debug.LogWarning("[SlidingPuzzleInteract] PhotoPuzzleManager가 없어 열쇠를 등장시키지 못함");
+
+        // 벽난로 불·라이트 끄기
+        if (turnOffOnSolve != null)
+            foreach (var go in turnOffOnSolve)
+                if (go != null) go.SetActive(false);
+
+        // 가둔 입구 문 봉인/잠금 해제 (이제 나갈 수 있음)
+        if (exitDoor != null)
+        {
+            exitDoor.isSealed = false;
+            exitDoor.isLocked = false;
+        }
     }
 }

@@ -64,6 +64,13 @@ public class FakeRoomMirrorEvent : MonoBehaviour
     public AudioClip handprintSfx;
     [Tooltip("south 문 잠금 해제 알림 (선택)")]
     public AudioClip unlockSfx;
+    [Tooltip("손자국이 다 뜬 직후 터지는 공포음(비명/쿵) — 점프 요소")]
+    public AudioClip scareSfx;
+
+    [Header("마무리 공포 연출 (점프)")]
+    [Tooltip("손자국 후 잠깐 정적 → 암전 + 공포음으로 깜짝 놀래킨다")]
+    public bool finalScare = true;
+    public float scareBlackoutDuration = 0.35f;
 
     private bool diaryRead = false;
     private bool sequencePlayed = false;
@@ -165,6 +172,17 @@ public class FakeRoomMirrorEvent : MonoBehaviour
             }
         }
 
+        // 2.5 마무리 공포: 잠깐 정적 → 암전 + 공포음 → 복귀 (점프 요소)
+        if (finalScare)
+        {
+            yield return new WaitForSeconds(0.6f);
+            SetRoomLights(false);
+            if (audioSource != null && scareSfx != null)
+                audioSource.PlayOneShot(scareSfx);
+            yield return new WaitForSeconds(scareBlackoutDuration);
+            SetRoomLights(true);
+        }
+
         // 3. 마무리 조명 깜빡 (불안 마침표)
         yield return StartCoroutine(FlickerLights(flickerDuration));
 
@@ -210,6 +228,12 @@ public class FakeRoomMirrorEvent : MonoBehaviour
 
         c.a = endA;
         mat.SetColor(prop, c);
+    }
+
+    private void SetRoomLights(bool on)
+    {
+        if (roomLights == null) return;
+        foreach (var l in roomLights) if (l != null) l.enabled = on;
     }
 
     private IEnumerator FlickerLights(float duration)
