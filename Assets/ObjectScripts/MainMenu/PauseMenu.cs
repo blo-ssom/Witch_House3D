@@ -61,17 +61,25 @@ public class PauseMenu : MonoBehaviour
         if (_instance == this) _instance = null;
     }
 
+    private bool wasBlockingLastFrame = false;
+
     private void Update()
     {
-        if (!Input.GetKeyDown(KeyCode.Escape)) return;
+        bool blockingNow = IsBlockingUIOpen();
+        bool escPressed = Input.GetKeyDown(KeyCode.Escape);
+        // 이번 프레임 또는 '직전 프레임'에 노트/퍼즐이 열려 있었으면, 이 ESC는 그 UI를
+        // 닫는 입력이므로 일시정지를 열지 않는다 (스크립트 실행 순서와 무관하게 처리).
+        bool recentlyBlocking = blockingNow || wasBlockingLastFrame;
+        wasBlockingLastFrame = blockingNow;
 
+        if (!escPressed) return;
         if (isPaused) { Resume(); return; }
 
         // ── 열기 가드 ──
+        if (recentlyBlocking) return;                     // 노트/퍼즐 닫는 ESC (메뉴 안 열림)
         if (Time.timeScale == 0f) return;                 // 게임오버/엔딩 등 이미 멈춤
         var look = FindObjectOfType<PlayerLook>();
         if (look == null || !look.enabled) return;        // 컷신/오프닝 중
-        if (IsBlockingUIOpen()) return;                   // 노트/퍼즐 열림(ESC는 그쪽이 처리)
 
         Pause();
     }
@@ -83,6 +91,7 @@ public class PauseMenu : MonoBehaviour
         if (flip != null && flip.panel != null && flip.panel.activeSelf) return true;
         var slide = FindObjectOfType<SlidingPuzzleUI>();
         if (slide != null && slide.IsOpen()) return true;
+        if (ClueViewer.IsViewerOpen) return true;          // 지하 단서 뷰어
         return false;
     }
 

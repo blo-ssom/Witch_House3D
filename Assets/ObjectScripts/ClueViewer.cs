@@ -23,6 +23,7 @@ public class ClueViewer : Interactable
     private static GameObject overlayGO;
     private static RawImage rawImage;
     private static bool isOpen;
+    public static bool IsViewerOpen => isOpen;
 
     public override string GetInteractPrompt()
     {
